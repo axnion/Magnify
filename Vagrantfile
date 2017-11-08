@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
 
     config.vm.synced_folder ".", "/vagrant", disabled: true
-    config.vm.synced_folder "files", "/etc/vagrant"
+    config.vm.synced_folder "config", "/etc/vagrant"
     config.vm.provision "init", type: "shell", path: "scripts/init.sh"
     config.vm.provider 'virtualbox' do |vb|
   	    vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
