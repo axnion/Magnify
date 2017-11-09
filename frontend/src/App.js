@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as exampleActions from './actions/example';
 import logo from './logo.svg';
 import './App.css';
 
+const mapStateToProps = state => ({
+  examples: state.example.examples,
+  error: state.example.error,
+  isWaiting: state.example.isWaiting,
+});
+
+const propTypes = {
+  examples: PropTypes.arrayOf(PropTypes.any),
+};
+
 class App extends Component {
+  componentWillMount() {
+    this.props.getExamples();
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,11 +28,20 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          List of example documents:
         </p>
+        <ul>
+        {
+          this.props.examples.map(example => (
+            <li key={example._id}>{example.title}: {example.body}</li>
+          ))
+        }
+        </ul>
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = propTypes;
+
+export default connect(mapStateToProps, exampleActions)(App);
