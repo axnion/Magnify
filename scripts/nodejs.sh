@@ -9,4 +9,5 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update && sudo apt-get install yarn
 sudo apt-get -y remove nodejs
 sudo ln -s /usr/bin/node /usr/bin/nodejs
-cd /vagrant && yarn
+cd /frontend && yarn
+cd /backend && yarn
