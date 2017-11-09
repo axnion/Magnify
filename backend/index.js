@@ -11,7 +11,7 @@ const routes = require('./routes');
 const app  = express();
 
 mongoose.Promise = bluebird;
-mongoose.connect(config.mongo.url);
+mongoose.connect(config.mongo.url, { useMongoClient: true });
 
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
