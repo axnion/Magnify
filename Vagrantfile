@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/xenial64"
     config.vm.synced_folder "frontend", "/vagrant/frontend"
     config.vm.synced_folder "backend", "/vagrant/backend"
+    config.vm.synced_folder "admintools", "/vagrant/admintools"
 
     config.vm.provision "nodejs", type: "shell", path: "scripts/nodejs.sh"
     config.vm.provision "mongodb", type: "shell", path: "scripts/mongodb.sh"
