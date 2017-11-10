@@ -18,4 +18,10 @@ if(commander.company) {
   }
 
   database.addCompany(commander.company)
+  database.getCompanyByName(commander.company).then(function(results) {
+    console.log("----")
+    console.log(results)
+    console.log("----")
+  })
+//  database.addAccount(commander.username, commander.password, true, company.id)
 }
