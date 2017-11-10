@@ -1,4 +1,6 @@
 const commander = require('commander')
+const database = require('./database/database')
+
 
 commander
   .version('1.0')
@@ -15,7 +17,5 @@ if(commander.company) {
     console.log('Please specify a password')
   }
 
-  console.log(commander.username)
-  console.log(commander.password)
-  console.log(commander.company)
+  database.addCompany(commander.company)
 }
