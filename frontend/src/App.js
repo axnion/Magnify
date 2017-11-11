@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as exampleActions from './actions/example';
-import logo from './logo.svg';
 import './App.css';
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';
+import AddRepresentativeForm from './AddRepresentativeForm';
 
 const mapStateToProps = state => ({
   examples: state.example.examples,
@@ -24,6 +24,7 @@ const sideBarStyle = {
   backgroundImage: "url(" + leftside + ")",
   borderRight: "1px solid black",
   float: "left",
+  textAlign: "center",
 }
 
 class App extends Component {
@@ -38,9 +39,10 @@ class App extends Component {
           <img src={topBanner} className="App-top-banner" alt="Top banner" />
         </header>
         <div style={sideBarStyle}>
-          <button>Add representative</button>
+          <button className="sidebar-btn">Add representative</button>
         </div>
         <div className="App-content">
+          <AddRepresentativeForm onClick={()=> console.log("hej")}/>
         </div>
       </div>
     );
@@ -50,4 +52,3 @@ class App extends Component {
 App.propTypes = propTypes;
 
 export default connect(mapStateToProps, exampleActions)(App);
-//className="App-side-bar-left"
