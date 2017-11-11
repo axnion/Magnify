@@ -44,14 +44,14 @@ export function mockCreateAccount(data) {
       return setTimeout(() => {
         const {username, password, admin, company} = data;
 
-        if(username === undefined || password === undefined || admin === undefined || company === undefined) {
+        if(!username || !password || !admin || !company) {
           return reject('Please enter all required data');
         }
 
         data._id = crypto.randomBytes(16).toString('hex');
 
         return resolve(data);
-      }, 500);
+      }, 2000);
     })
     .then((response) => {
       console.log(response);

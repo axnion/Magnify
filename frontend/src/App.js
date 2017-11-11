@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getExamples } from './actions/example';
 import { mockCreateCompany } from './actions/company';
-import logo from './logo.svg';
 import './App.css';
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';

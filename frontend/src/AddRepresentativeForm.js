@@ -1,49 +1,100 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class AddRepresentativeForm extends React.Component {
+import {mockCreateAccount} from './actions/account.js'
+
+class AddRepresentativeForm2 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {name: '', password: ''};
+    this.state = {name: '', password: '', hasSubmitted: false};
 
+    this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-
     this.setState({[event.target.name]: event.target.value});
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.name);
-    this.setState({name: '', password: ''})
     event.preventDefault();
+
+    const data = {
+      admin: "placeholder",
+      company: "placeholder",
+      username: this.state.name,
+      password: this.state.password,
+    }
+
+    this.sendForm(data);
+    this.state.hasSubmitted = true;
+
+    this.setState({name: '', password: ''});
+  }
+
+  submitMessage(error, hasSubmitted, isWaiting) {
+    if (error && !isWaiting && hasSubmitted) {
+      return (
+        <p>Could not add new representative. {error} </p>
+      )
+    } else if (!error && !isWaiting && hasSubmitted) {
+      return (
+        <p>representative added!</p>
+      )
+    }
   }
 
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>Add representative to company</h1>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input 
-            name="name" 
-            type="text" 
-            value={this.state.name} 
-            onChange={this.handleChange}/>
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input 
-            name="password" 
-            type="text"
-            value={this.state.password}
-            onChange={this.handleChange}/>
-        </div>
-        <input type="submit" value="Add" />
+        <fieldset disabled={this.props.isWaiting}>
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input 
+              name="name" 
+              type="text" 
+              value={this.state.name} 
+              onChange={this.handleChange}/>
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input 
+              name="password" 
+              type="text"
+              value={this.state.password}
+              onChange={this.handleChange}/>
+          </div>
+          <input type="submit" value="Add" />
+          {this.submitMessage(
+            this.props.error, 
+            this.state.hasSubmitted, 
+            this.props.isWaiting)}
+        </fieldset>
       </form>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    sendForm: data => {
+      dispatch(mockCreateAccount(data));
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    isWaiting: state.account.isWaiting,
+    error: state.account.error,
+  }
+}
+  
+const AddRepresentativeForm = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddRepresentativeForm2)
 
 export default AddRepresentativeForm;
