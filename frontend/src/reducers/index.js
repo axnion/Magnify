@@ -3,4 +3,6 @@ import example from './example';
 
 export default combineReducers({
   example,
+  company,
+  account,
 });
