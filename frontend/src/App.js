@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as exampleActions from './actions/example';
+import { getExamples } from './actions/example';
+import { mockCreateCompany } from './actions/company';
+import logo from './logo.svg';
 import './App.css';
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';
@@ -9,8 +11,14 @@ import AddRepresentativeForm from './AddRepresentativeForm';
 
 const mapStateToProps = state => ({
   examples: state.example.examples,
+  companies: state.company.companies,
   error: state.example.error,
   isWaiting: state.example.isWaiting,
+});
+
+const bindActions = dispatch => ({
+  getExamples: () => dispatch(getExamples()),
+  mockCreateCompany: (data) => dispatch(mockCreateCompany(data)),
 });
 
 const propTypes = {
@@ -29,7 +37,9 @@ const sideBarStyle = {
 
 class App extends Component {
   componentWillMount() {
+    console.log("mounting");
     this.props.getExamples();
+    this.props.mockCreateCompany({ name: 'TestCompany' });
   }
 
   render() {
@@ -51,4 +61,4 @@ class App extends Component {
 
 App.propTypes = propTypes;
 
-export default connect(mapStateToProps, exampleActions)(App);
+export default connect(mapStateToProps, bindActions)(App);
