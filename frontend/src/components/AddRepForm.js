@@ -30,7 +30,7 @@ class AddRepForm extends React.Component {
     this.setState({name: '', password: ''});
   }
 
-  submitMessage(error, hasSubmitted, isWaiting) {
+  printSubmitMessage(error, hasSubmitted, isWaiting) {
     if (error && !isWaiting && hasSubmitted) {
       return (
         <p>Could not add new representative. {error} </p>
@@ -64,7 +64,7 @@ class AddRepForm extends React.Component {
               onChange={this.handleChange}/>
           </div>
           <input type="submit" value="Add" />
-          {this.submitMessage(
+          {this.printSubmitMessage(
             this.props.error, 
             this.state.hasSubmitted, 
             this.props.isWaiting)}
