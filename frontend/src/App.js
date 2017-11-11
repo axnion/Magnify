@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { getExamples } from './actions/example';
 import { mockCreateCompany } from './actions/company';
 import './App.css';
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';
-import AddRepresentativeForm from './AddRepresentativeForm';
+import AddRepFormContainer from './containers/AddRepFormContainer';
 
 const mapStateToProps = state => ({
   examples: state.example.examples,
@@ -51,7 +52,7 @@ class App extends Component {
           <button className="sidebar-btn">Add representative</button>
         </div>
         <div className="App-content">
-          <AddRepresentativeForm onClick={()=> console.log("hej")}/>
+          <AddRepFormContainer/>
         </div>
       </div>
     );
