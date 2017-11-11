@@ -1,10 +1,11 @@
+import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
 const endpoint = '/company';
 
-function beginGetCompany() {
-  return { type: types.GET_COMPANY };
+function beginGetCompanies() {
+  return { type: types.GET_COMPANIES };
 }
 
 function getCompaniesSuccess(payload) {
@@ -64,5 +65,31 @@ export function createCompany(data) {
       .catch((response) => {
         dispatch(createCompanyError(response.message));
       });
+  };
+}
+
+export function mockCreateCompany(data) {
+  return (dispatch) => {
+    dispatch(beginCreateCompany());
+
+    return new Promise((resolve, reject) => {
+      return setTimeout(() => {
+        if(data.name === undefined) {
+          return reject('Please enter all required data');
+        }
+
+        data._id = crypto.randomBytes(16).toString('hex');
+
+        return resolve(data);
+      }, 500);
+    })
+    .then((response) => {
+      console.log(response);
+      dispatch(createCompanySuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(createCompanyError(error));
+    });
   };
 }

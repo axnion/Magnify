@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
@@ -32,5 +33,33 @@ export function createAccount(data) {
       .catch((response) => {
         dispatch(createAccountError(response.message));
       });
+  };
+}
+
+export function mockCreateAccount(data) {
+  return (dispatch) => {
+    dispatch(beginCreateAccount());
+
+    return new Promise((resolve, reject) => {
+      return setTimeout(() => {
+        const {username, password, admin, company} = data;
+
+        if(username === undefined || password === undefined || admin === undefined || company === undefined) {
+          return reject('Please enter all required data');
+        }
+
+        data._id = crypto.randomBytes(16).toString('hex');
+
+        return resolve(data);
+      }, 500);
+    })
+    .then((response) => {
+      console.log(response);
+      dispatch(createAccountSuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(createAccountError(error));
+    });
   };
 }
