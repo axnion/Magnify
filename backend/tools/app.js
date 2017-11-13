@@ -1,8 +1,8 @@
 const commander = require('commander')
 const mongoose = require('mongoose')
 const config = require('../config.js')
-const companyFacade = require("../model/Company/facade")
-const accountFacade = require("../model/Account/facade")
+const companyFacade = require("../model/company/facade")
+const accountFacade = require("../model/account/facade")
 
 mongoose.Promise = require('bluebird')
 mongoose.connect(config.mongo.url, { useMongoClient: true });
