@@ -24,4 +24,42 @@ describe("Representative", () => {
         });
     });
   });
+  
+  describe("/POST", () => {
+    it("should post an representative", done => {
+      const representative = new CR({username: "Henrik", password: "1234", admin: false, company: [{name: "Awesome"}]});
+      chai
+        .request(server)
+        .post("/CompanyRepresentative")
+        .send(representative)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.should.be.json;
+		  res.body.should.be.a("object");
+		  res.body.should.have.property('username');
+		  res.body.should.have.property('password');
+		  res.body.should.have.property('admin');
+		  res.body.should.have.property('company');
+		  res.body.username.should.equal('Henrik');
+		  res.body.password.should.equal('1234');
+		  res.body.admin.should.equal(false);
+          done();
+        });
+    });
+
+    it.skip("should not POST faulty representative object", done => {
+      const badRepresentative = new CR({username: "Henrik", password: "1234", admin: false});
+
+      chai
+        .request(server)
+        .post("/CompanyRepresentative")
+        .send(badRepresentative)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+  });		
+			
+  
 });
