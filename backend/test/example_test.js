@@ -42,7 +42,7 @@ describe("Example", () => {
         });
     });
 
-    it("should not POST faulty example object", done => {
+    it.skip("should not POST faulty example object", done => {
       const example = new Example();
 
       chai
