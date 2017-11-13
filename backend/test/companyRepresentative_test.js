@@ -46,8 +46,29 @@ describe("Representative", () => {
           done();
         });
     });
-
-    it.skip("should not POST faulty representative object", done => {
+	
+	it("duplicate username POST should result in error", done => {
+		var rep1 = new CR({username: "myName", password: "1234", admin: false, company: [{name: "Awesome"}]});
+		var rep2 = new CR({username: "myName", password: "12345", admin: false, company: [{name: "Awesome2"}]});
+		
+		chai
+			.request(server)
+			.post("/CompanyRepresentative")
+			.send(rep1)
+			.end((err, res) => {
+				done();
+			});
+		chai
+			.request(server)
+			.post("/CompanyRepresentative")		
+			.send(rep2)
+			.end((err, res) => {
+				res.should.have.status(500);
+				done();
+			});
+	});
+		
+	it("should not POST faulty representative object", done => {
       const badRepresentative = new CR({username: "Henrik", password: "1234", admin: false});
 
       chai

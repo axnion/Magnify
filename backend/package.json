@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -L index.js",
     "start": "node index.js",
-    "test": "mocha --timeout 10000 --reporter spec"
+    "test": "mocha --timeout 10000 --reporter spec --watch"
   },
   "engines": {
     "node": ">=6"

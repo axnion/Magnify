@@ -1,4 +1,4 @@
-const server = require("../index.js");
+/*const server = require("../index.js");
 const Example = require("../model/example/schema");
 
 const chai = require("chai");
@@ -74,3 +74,4 @@ describe("Example", () => {
     });
   });
 });
+*/

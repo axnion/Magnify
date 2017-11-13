@@ -12,21 +12,19 @@ class CompanyRepresentativeController extends Controller {
 
 		//Check authorization. Is this done here?
 		
-		
 		var representativeToCreate = req.body;
-				
+
 		//Check if company exists
 		//Return error if not exists
 		
 		//Check admin false
-		//Set false otherwise
+		//Return error if not false
 		//Assumes only one company admin acceptable (already created when company created)
 		
 		//Add representative to database
-		 CompanyRepresentativeFacade.create(req.body)		
-			.then(CompanyRepresentativeFacade.find(req.body))
+		 CompanyRepresentativeFacade.create(representativeToCreate)		
 			.then(resp => res.status(201).json(resp))
-			.catch(err => console.log("Error occured in function createRepresentative /model/CompanyRepresentative/controller: " + err));
+			.catch(err => next(err));
 	}
 	
 	
