@@ -55,17 +55,11 @@ describe("Representative", () => {
 			.request(server)
 			.post("/CompanyRepresentative")
 			.send(rep1)
-			.end((err, res) => {
-				done();
-			});
-		chai
-			.request(server)
-			.post("/CompanyRepresentative")		
-			.send(rep2)
-			.end((err, res) => {
+			.send(rep2).end((err, res) => {
 				res.should.have.status(500);
 				done();
 			});
+			
 	});
 		
 	it("should not POST faulty representative object", done => {

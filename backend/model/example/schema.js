@@ -7,5 +7,15 @@ const exampleSchema = new Schema({
   body: { type: String }
 });
 
+var example 
 
-module.exports = mongoose.model('Example', exampleSchema);
+try {
+	example = mongoose.model('Example')
+}catch (error)
+{
+	example = mongoose.model('Example', exampleSchema);
+} 
+
+
+
+module.exports = example;

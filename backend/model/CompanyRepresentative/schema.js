@@ -13,7 +13,15 @@ const representativeSchema = new Schema({
 	company: [companySchema]
 });
 
-var representatives = mongoose.model('companyRepresentative', representativeSchema);
+var representatives 
+
+//Used for testing to make sure model is not already in database
+try {
+	representatives = mongoose.model('companyRepresentative')
+}catch (error)
+{
+	representatives = mongoose.model('companyRepresentative', representativeSchema);
+} 
 
 module.exports = representatives;
 
