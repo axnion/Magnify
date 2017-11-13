@@ -1,6 +1,11 @@
 const commander = require('commander')
-const database = require('./database/database')
+const mongoose = require('mongoose')
+const config = require('../config.js')
+const companyFacade = require("../model/Company/facade")
+const accountFacade = require("../model/CompanyRepresentative/facade")
 
+mongoose.Promise = require('bluebird')
+mongoose.connect(config.mongo.url, { useMongoClient: true });
 
 commander
   .version('1.0')
@@ -16,12 +21,22 @@ if(commander.company) {
   if (!commander.password) {
     console.log('Please specify a password')
   }
+  if (!commander.company) {
+    console.log('Please specify a company')
+  }
 
-  database.addCompany(commander.company)
-  database.getCompanyByName(commander.company).then(function(results) {
-    console.log("----")
-    console.log(results)
-    console.log("----")
+  companyFacade.addCompany({name: commander.company}).then(function(results) {
+    console.log("Added company")
+
+    return accountFacade.addNewCompanyRepresentative( {
+      username: commander.username,
+      password: commander.password,
+      admin: true,
+      company: results.id
+    })
+  }).then(function() {
+    exit(0)
+  }).catch(function(err) {
+    console.log(err)
   })
-//  database.addAccount(commander.username, commander.password, true, company.id)
 }

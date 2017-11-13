@@ -8,6 +8,4 @@ const companySchema = new Schema({
 
 //module.exports =  companySchema;
 
-var companies = mongoose.model('company', companySchema);
-
-module.exports = companies;
+module.exports = mongoose.model('Company', companySchema);

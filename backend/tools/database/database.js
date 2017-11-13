@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Company = require('./schemas/Company')
 const Account = require('./schemas/Account')
 
-mongoose.connect(config.mongo.url)
+mongoose.createConnection(config.mongo.url)
 mongoose.Promise = require('bluebird')
 
 exports.addCompany = function(name) {
@@ -17,20 +17,24 @@ exports.addCompany = function(name) {
   })
 }
 
-exports.getCompanyByName = function(name) {
+getCompanyByName = function(name) {
   return Company.findOne({name: name}).exec();
 }
 
-exports.addAccount = function(username, password, admin, company) {
-  const account = Account({
-    username: username,
-    password: password,
-    admin: admin,
-    company: company
-  })
+exports.addAccount = function(username, password, admin, companyName) {
+  getCompanyByName(companyName).then(function(results) {
+    const account = Account({
+      username: username,
+      password: password,
+      admin: admin,
+      company: results.id
+    }).catch(function(err) {
+      console.log(err)
+    })
 
-  account.save(function(err) {
-    if (err) throw err
-    console.log('Account ' + username + ' was created')
+    account.save(function(err) {
+      if (err) throw err
+      console.log('Account ' + username + ' was created')
+    })
   })
 }
