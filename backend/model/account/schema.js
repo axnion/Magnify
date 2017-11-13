@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const config = require('../../config')
 const Schema = mongoose.Schema;
-const companySchema = require("../Company/schema")
+const companySchema = require("../company/schema")
 
 
-const representativeSchema = new Schema({
+const accountSchema = new Schema({
 	username: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
 	admin: {type: Boolean, required: true},
@@ -13,7 +13,7 @@ const representativeSchema = new Schema({
 });
 
 // Hash password before save
-representativeSchema.pre('save', function(next) {
+accountSchema.pre('save', function(next) {
 	let account = this;
 
 	// Skip if password has not changed
@@ -35,21 +35,24 @@ representativeSchema.pre('save', function(next) {
 	})
 })
 
-representatives.methods.comparePassword = function(candidate, callback) {
+/**
+*
+*/
+accountSchema.methods.comparePassword = function(candidate, callback) {
 	bcrypt.compare(candidate, this.password, function(err, isMatch) {
 		if (err) return callback(err)
 		callback(null, isMatch)
 	})
 }
 
-var representatives
+var accounts
 
 //Used for testing to make sure model is not already in database
 try {
-	representatives = mongoose.model('companyRepresentative')
+	accounts = mongoose.model('account')
 }catch (error)
 {
-	representatives = mongoose.model('companyRepresentative', representativeSchema);
+	accounts = mongoose.model('account', accountSchema);
 }
 
-module.exports = representatives;
+module.exports = accounts;

@@ -6,6 +6,4 @@ const companySchema = new Schema({
   name: { type: String, required: true, unique: true }
 });
 
-//module.exports =  companySchema;
-
 module.exports = mongoose.model('Company', companySchema);
