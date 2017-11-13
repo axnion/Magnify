@@ -35,7 +35,7 @@ if(commander.company) {
       company: results.id
     })
   }).then(function() {
-    exit(0)
+    console.log("done")
   }).catch(function(err) {
     console.log(err)
   })

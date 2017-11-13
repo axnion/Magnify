@@ -13,6 +13,7 @@
   },
   "author": "Fredrik Wällstedt <fw222ek@student.lnu.se>",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "commander": "^2.11.0",
