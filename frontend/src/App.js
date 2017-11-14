@@ -1,29 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { Link, Route} from 'react-router-dom'
 
-import { getExamples } from './actions/example';
-import { mockCreateCompany } from './actions/company';
-import './App.css';
+import './App.css'
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';
-import AddRepFormContainer from './containers/AddRepFormContainer';
-
-const mapStateToProps = state => ({
-  examples: state.example.examples,
-  companies: state.company.companies,
-  error: state.example.error,
-  isWaiting: state.example.isWaiting,
-});
-
-const bindActions = dispatch => ({
-  getExamples: () => dispatch(getExamples()),
-  mockCreateCompany: (data) => dispatch(mockCreateCompany(data)),
-});
-
-const propTypes = {
-  examples: PropTypes.arrayOf(PropTypes.any),
-};
+import AddRepFormContainer from './containers/AddRepFormContainer.js'
 
 //Put this here to add background image, all other css is in css file
 const sideBarStyle = {
@@ -35,30 +16,18 @@ const sideBarStyle = {
   textAlign: "center",
 }
 
-class App extends Component {
-  componentWillMount() {
-    console.log("mounting");
-    this.props.getExamples();
-    this.props.mockCreateCompany({ name: 'TestCompany' });
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={topBanner} className="App-top-banner" alt="Top banner" />
-        </header>
-        <div style={sideBarStyle}>
-          <button className="sidebar-btn">Add representative</button>
-        </div>
-        <div className="App-content">
-          <AddRepFormContainer/>
-        </div>
+export default () => {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Link to="/"><img src={topBanner} className="App-top-banner" alt="Top banner" /></Link>
+      </header>
+      <div style={sideBarStyle}>
+        <Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link>
       </div>
-    );
-  }
+      <div className="App-content">
+        <Route path="/addRep" component={AddRepFormContainer} />
+      </div>
+    </div>
+  )
 }
-
-App.propTypes = propTypes;
-
-export default connect(mapStateToProps, bindActions)(App);

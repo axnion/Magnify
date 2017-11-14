@@ -25,6 +25,7 @@ class AddRepForm extends React.Component {
     }
 
     this.sendForm(data);
+    
     this.state.hasSubmitted = true;
 
     this.setState({name: '', password: ''});
