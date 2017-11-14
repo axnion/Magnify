@@ -4,7 +4,7 @@ const router = new Router();
 
 router.route('/')
   .get((...args) => controller.find(...args))
-  .post((...args) => controller.addAccount(...args));
+  .post((...args) => controller.createAccount(...args));
 
 router.route('/:id')
   .put((...args) => controller.update(...args))
