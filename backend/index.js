@@ -5,9 +5,12 @@ const bodyParser = require('body-parser');
 const morgan     = require('morgan');
 const bluebird   = require('bluebird');
 const cors       = require('cors');
+const passport   = require('passport');
 
 const config = require('./config');
 const routes = require('./routes');
+
+const configurePassport = require('./config/passport');
 
 const app  = express();
 
@@ -21,10 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
+configurePassport(app, passport);
+
 app.use('/', routes);
 
-app.listen(config.server.port, () => {
+if(!module.parent){ app.listen(config.server.port, () => {
   console.log(`Magic happens on port ${config.server.port}`);
-});
+});}
 
 module.exports = app;

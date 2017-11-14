@@ -6,4 +6,13 @@ const companySchema = new Schema({
   name: { type: String, required: true, unique: true }
 });
 
-module.exports = mongoose.model('Company', companySchema);
+var company;
+
+//Used for testing to make sure model is not already in database
+try {
+  company = mongoose.model('Company');
+} catch (error) {
+  company = mongoose.model('Company', companySchema);
+}
+
+module.exports = company;

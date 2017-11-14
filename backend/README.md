@@ -12,17 +12,13 @@ node 6.3.x or later and mongodb
 
 ## developing
 
-run mongodd on a separated terminal instance:
-
-```
-mongod
-```
-
 run the app:
 
 ```bash
-npm run dev
+JWT_SECRET=keyboardcat npm run dev
 ```
+
+the JWT_SECRET environment variable can of course be anything, not just keyboardcat
 
 the app runs on `localhost:8080`
 
