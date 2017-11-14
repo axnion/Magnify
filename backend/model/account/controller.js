@@ -13,9 +13,18 @@ class AccountController extends Controller {
 
   createAccount(req, res, next) {
 
-    // Check authorization. Is this done here?
+    // Check authorization. Is this done here? Yes!
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) return res.status(500).json({ message: info });
 
-    const newAccount = req.body;
+      if (!user || user.admin === false) return res.status(401).json({ message: 'Not authorized' });
+
+      return AccountFacade.create(req.body)
+        .then(resp => res.status(201).json(resp))
+        .catch(err => next(err));
+    })(req, res, next);
+
+    /* const newAccount = req.body;
 
     // Check if company exists
     // Return error if not exists
@@ -27,7 +36,7 @@ class AccountController extends Controller {
     // Add representative to database
     AccountFacade.create(newAccount)
       .then(resp => res.status(201).json(resp))
-      .catch(err => next(err));
+      .catch(err => next(err)); */
   }
 
   login(req, res, next) {
