@@ -11,4 +11,7 @@ router.route('/:id')
   .get((...args) => controller.findById(...args))
   .delete((...args) => controller.remove(...args));
 
+router.route('/login')
+  .post((...args) => controller.login(...args));
+
 module.exports = router;
