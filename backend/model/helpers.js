@@ -5,7 +5,8 @@ exports.generateJWTToken = (user) => {
   const u = {
     sub: user.id,
     username: user.username,
-    admin: user.admin
+    admin: user.admin,
+	company: user.company
   };
 
   return jwt.sign(u, process.env.JWT_SECRET, {

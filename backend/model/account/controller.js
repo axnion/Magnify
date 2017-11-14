@@ -18,7 +18,7 @@ class AccountController extends Controller {
       Authentication: Bearer ${jwtToken}
 
     Body:
-      { "username": "user", "password": "pass", "admin": "false", "company": "5a0afb68e85c280848adc49d" }
+      { "username": "user", "password": "pass", "admin": "false"}
 
     NOTE: The JWT Token is retrieved from the login route, /accounts/login. The company must be in ObjectID format and
     it must be an ObjectID of a company that exists (will throw an error otherwise).
@@ -32,8 +32,8 @@ class AccountController extends Controller {
 
       if (!user || user.admin === false) return res.status(401).json({ message: 'Not authorized' });
 
-      return AccountFacade.create(req.body)
-        .then(resp => res.status(201).json(resp))
+      return AccountFacade.createAccount(req.body, user.company)
+        .then(resp => res.status(201).json({username: resp.username}))
         .catch(err => next(err));
     })(req, res, next);
   }

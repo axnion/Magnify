@@ -30,7 +30,7 @@ if (commander.company) {
     .then(function(results) {
       console.log("Added company");
 
-      return accountFacade.addAccount({
+      return accountFacade.create({
         username: commander.username,
         password: commander.password,
         admin: true,
