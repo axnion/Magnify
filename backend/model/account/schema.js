@@ -12,7 +12,9 @@ const accountSchema = new Schema({
 	company: {type: mongoose.Schema.ObjectId, ref: 'Company',required: true}
 });
 
-// Hash password before save
+/**
+* Create hash of password when it is changed before saving to database.
+*/
 accountSchema.pre('save', function(next) {
 	let account = this;
 
@@ -26,9 +28,6 @@ accountSchema.pre('save', function(next) {
 		// Hash password
 		bcrypt.hash(account.password, salt, function(err, hash) {
 			if (err) return next(err)
-
-			console.log(hash)
-
 			account.password = hash
 			next()
 		})
@@ -36,7 +35,7 @@ accountSchema.pre('save', function(next) {
 })
 
 /**
-*
+* Comparason method for comparing a candidate password to the saved hash
 */
 accountSchema.methods.comparePassword = function(candidate, callback) {
 	bcrypt.compare(candidate, this.password, function(err, isMatch) {
