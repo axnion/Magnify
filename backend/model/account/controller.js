@@ -6,9 +6,22 @@ const generateJWTToken = require('../helpers').generateJWTToken;
 class AccountController extends Controller {
 
   /*
-  req: body: representative to add in format:
-    {username: "name", password: "pass", admin: false, company: [{name: "companyName"}]
-  res: 201 successfull,
+  req: body
+  res: 201 successful
+  */
+
+  /*
+    The request must be structured in this format:
+
+    Headers:
+      Content-Type: application/json
+      Authentication: Bearer ${jwtToken}
+
+    Body:
+      { "username": "user", "password": "pass", "admin": "false", "company": "5a0afb68e85c280848adc49d" }
+
+    NOTE: The JWT Token is retrieved from the login route, /accounts/login. The company must be in ObjectID format and
+    it must be an ObjectID of a company that exists (will throw an error otherwise).
   */
 
   createAccount(req, res, next) {
@@ -38,6 +51,31 @@ class AccountController extends Controller {
       .then(resp => res.status(201).json(resp))
       .catch(err => next(err)); */
   }
+
+  /*
+    The request must be structured in this format:
+
+    Headers:
+      Content-Type: application/x-www-form-urlencoded
+
+    Body:
+      username: username
+      password: password
+
+    The response will look kind of like this:
+
+    {
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "user": {
+          "username": "username",
+          "id": "5a0afb68e85c280848adc49e",
+          "admin": true
+      }
+    }
+
+    Copy the accessToken to use in the createAccount route. Make sure you login with an admin user or
+    you will not be able to create new accounts!
+  */
 
   login(req, res, next) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
