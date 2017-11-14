@@ -28,7 +28,7 @@ describe("Company", () => {
 
     it("Should GET a specific company", done => {
       const company = new Company({
-        name: "Awesome corp"
+        name: "Awesome_corp"
       });
 
       chai
@@ -39,8 +39,15 @@ describe("Company", () => {
           res.should.have.status(201);
           res.body.should.be.a("object");
           res.body.should.have.property("name");
-          res.body.name.should.equal("Awesome corp");
-          done();
+          res.body.name.should.equal("Awesome_corp");
+
+          chai
+            .request(server)
+            .get("/company/" + res.body._id)
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
         });
     });
   });

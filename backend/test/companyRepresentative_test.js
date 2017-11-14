@@ -6,7 +6,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const should = chai.should();
 
-describe("Representative", () => {
+describe.skip("Representative", () => {
   beforeEach(done => {
     CR.remove({}, err => {
       done();
