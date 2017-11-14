@@ -3,11 +3,11 @@ const companySchema = require('./schema');
 
 class CompanyFacade extends Facade {
   getCompanyByName(name){
-		return findOne({name:name});
+		return this.findOne({name:name});
 	}
 
   getCompanyById(id){
-		return findById(id);
+		return this.findById(id);
 	}
 
   addCompany(company) {

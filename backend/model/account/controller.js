@@ -14,18 +14,14 @@ class AccountController extends Controller {
   createAccount(req, res, next) {
 
     // Check authorization. Is this done here?
-
-    const newAccount = req.body;
-
-    // Check if company exists
-    // Return error if not exists
-
+		
+	
     // Check admin false
     // Return error if not false
     // Assumes only one company admin acceptable (already created when company created)
 
     // Add representative to database
-    AccountFacade.create(newAccount)
+	return AccountFacade.createAccount(req.body)
       .then(resp => res.status(201).json(resp))
       .catch(err => next(err));
   }
