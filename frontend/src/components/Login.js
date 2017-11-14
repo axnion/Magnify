@@ -1,10 +1,10 @@
 import React from 'react';
 
-class AddRepForm extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
      //hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = {name: '', password: '', hasSubmitted: false};
+    this.state = {username: '', password: '', hasSubmitted: false};
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -19,9 +19,7 @@ class AddRepForm extends React.Component {
     event.preventDefault();
 
     const data = {
-      admin: "placeholder",
-      company: "placeholder",
-      username: this.state.name,
+      username: this.state.username,
       password: this.state.password,
     }
 
@@ -33,11 +31,11 @@ class AddRepForm extends React.Component {
   printSubmitMessage(error, hasSubmitted, isWaiting) {
     if (error && !isWaiting && hasSubmitted) {
       return (
-        <p>Could not add new representative. {error} </p>
+        <p>Could not log in. {error} </p>
       )
     } else if (!error && !isWaiting && hasSubmitted) {
       return (
-        <p>representative added!</p>
+        <p>Logged in!</p>
       )
     }
   }
@@ -45,12 +43,12 @@ class AddRepForm extends React.Component {
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>Add representative to company</h1>
+        <h1>Login</h1>
         <fieldset disabled={this.props.isWaiting}>
           <div>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="username">Username:</label>
             <input 
-              name="name" 
+              name="username" 
               type="text" 
               value={this.state.name} 
               onChange={this.handleChange}/>
@@ -74,4 +72,4 @@ class AddRepForm extends React.Component {
   }
 }
 
-export default AddRepForm;
+export default Login;
