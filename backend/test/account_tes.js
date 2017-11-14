@@ -1,20 +1,24 @@
 /* eslint-disable */
 const server = require("../index.js");
 const CR = require("../model/account/schema");
+const companyFacade = require("../model/company/facade");
 
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const should = chai.should();
 
-describe.skip("Representative", () => {
+describe("Accounts", () => {
   beforeEach(done => {
     CR.remove({}, err => {
-      done();
     });
+	//Adds two companies to database to make it able to add accounts 
+	companyFacade.addCompany({ name: "Company1" });
+	companyFacade.addCompany({ name: "Company2" });
+	
   });
 
   describe("/GET", () => {
-    it("should GET all representatives", done => {
+    it("should GET all accounts", done => {
       chai
         .request(server)
         .get("/account")
@@ -27,7 +31,7 @@ describe.skip("Representative", () => {
   });
 
   describe("/POST", () => {
-    it("should post an representative", done => {
+    it.skip("should post an account", done => {
       const representative = new CR({
         username: "Henrik",
         password: "1234",
@@ -53,7 +57,7 @@ describe.skip("Representative", () => {
         });
     });
 
-    it("duplicate username POST should result in error", done => {
+    it.skip("duplicate username POST should result in error", done => {
       var rep1 = new CR({
         username: "myName",
         password: "1234",
@@ -85,7 +89,7 @@ describe.skip("Representative", () => {
         });
     });
 
-    it("should not POST faulty representative object", done => {
+    it.skip("should not POST faulty account object", done => {
       const badRepresentative = new CR({
         username: "Henrik",
         password: "1234",

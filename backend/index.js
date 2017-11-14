@@ -23,8 +23,8 @@ app.use(morgan('tiny'));
 
 app.use('/', routes);
 
-app.listen(config.server.port, () => {
+if(!module.parent){ app.listen(config.server.port, () => {
   console.log(`Magic happens on port ${config.server.port}`);
-});
+});}
 
 module.exports = app;
