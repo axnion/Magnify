@@ -75,7 +75,6 @@ describe("Company", () => {
         .request(server)
         .post("/company")
         .send(companyA)
-        .send(companyB)
         .end((err, res) => {
           res.should.have.status(201);
           chai

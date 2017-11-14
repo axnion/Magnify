@@ -71,10 +71,17 @@ describe("Representative", () => {
         .request(server)
         .post("/account")
         .send(rep1)
-        .send(rep2)
         .end((err, res) => {
-          res.should.have.status(500);
-          done();
+          res.should.have.status(201);
+
+          chai
+            .request(server)
+            .post("/account")
+            .send(rep2)
+            .end((err, res) => {
+              res.should.have.status(500);
+              done();
+            });
         });
     });
 
