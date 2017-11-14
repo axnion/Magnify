@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
 const Schema = mongoose.Schema;
-const companySchema = require('../company/schema');
+const Company = require('../company/schema');
 
 const accountSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -34,6 +34,21 @@ accountSchema.pre('save', function(next) {
   });
 });
 
+// Check if company exists
+accountSchema.pre('save', function(next) {
+  const account = this;
+
+  // Skip if company has not changed
+  if (!account.isModified('company')) return next();
+
+  Company.findOne({ _id: account.company }, (err, company) => {
+    if (err) return next(err);
+    if (!company) return next(new Error(`Company with ID ${account.company} not found.`));
+
+    next();
+  });
+});
+
 /**
 *
 */
@@ -44,9 +59,9 @@ accountSchema.methods.comparePassword = function(candidate, callback) {
   });
 };
 
-var accounts;
+let accounts;
 
-//Used for testing to make sure model is not already in database
+// Used for testing to make sure model is not already in database
 try {
   accounts = mongoose.model('account');
 } catch (error) {
