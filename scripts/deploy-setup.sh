@@ -12,5 +12,4 @@ ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 ssh-copy-id -p $PROD_PORT -o StrictHostKeyChecking=no $PROD_USER@$PROD_URI
 
 # Add the production repo
-# TODO: probably change directory
-git remote add production ssh://magnify@magnify.today:2212/home/magnify/Magnify
+#git remote add production ssh://magnify@magnify.today:2212/var/git/magnify
