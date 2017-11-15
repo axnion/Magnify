@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 import Login from '../components/Login.js';
-import {mockTryLogin} from '../actions/auth.js';
+import { login } from '../actions/auth.js';
 
 const mapDispatchToProps = dispatch => {
   return {
     sendForm: data => {
-      dispatch(mockTryLogin(data));
+      dispatch(login(data));
     }
   }
 }

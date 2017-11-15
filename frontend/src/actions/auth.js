@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
-const endpoint = '/auth';
+const endpoint = '/account/login';
 
 function tryLogin() {
   return { type: types.LOG_IN };
@@ -28,6 +28,7 @@ export function login(data) {
 
     return apiRequest('post', data, endpoint)
       .then((response) => {
+        console.log(response.data);
         dispatch(loginSuccess(response.data));
       })
       .catch((response) => {

@@ -5,6 +5,7 @@ export default (state = {
   error: null,
   token: null,
   username: null,
+  isAdmin: false,
 }, action) => {
   switch (action.type) {
     case types.LOG_IN:
@@ -19,8 +20,9 @@ export default (state = {
         ...state,
         isWaiting: false,
         error: null,
-        token: action.payload.payload,
-        username: action.payload.username,
+        token: action.payload.accessToken,
+        username: action.payload.user.username,
+        isAdmin: action.payload.user.admin,
       };
     case types.LOG_IN_ERROR:
       return {
@@ -29,6 +31,7 @@ export default (state = {
         error: action.payload,
         token: null,
         username: null,
+        isAdmin: false,
       };
     default:
       return state;
