@@ -22,11 +22,11 @@ function createAccountError(payload) {
   }
 }
 
-export function createAccount(data) {
+export function createAccount(data, token) {
   return (dispatch) => {
     dispatch(beginCreateAccount());
 
-    return apiRequest('post', data, endpoint)
+    return apiRequest('post', data, endpoint, token)
       .then((response) => {
         dispatch(createAccountSuccess(response.data));
       })

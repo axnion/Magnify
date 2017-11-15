@@ -19,13 +19,12 @@ class AddRepForm extends React.Component {
     event.preventDefault();
 
     const data = {
-      admin: "placeholder",
-      company: "placeholder",
       username: this.state.name,
       password: this.state.password,
+      admin: false,
     }
 
-    this.sendForm(data);
+    this.sendForm(data, this.props.token);
     this.setState ({hasSubmitted: true});
     this.setState({name: '', password: ''});
   }
