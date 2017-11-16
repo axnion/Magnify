@@ -1,0 +1,17 @@
+[Unit]
+Description=Magnify API server
+Requires=After=mongodb.service
+
+[Service]
+ExecStart=/usr/local/bin/node /srv/magnify-api/index.js
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs-magnify
+User=magnify
+Group=magnify
+Environment=NODE_ENV=production JWT_SECRET=keyboardcat
+
+[Install]
+WantedBy=multi-user.target

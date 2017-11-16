@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Location: /var/git/magnify/hooks/post-receive
+# This script is run on the production server when the repo has been pushed
+# to production. It checks out the repo files to a temporary directory where
+# the frontend is built.
+
+# Set production mode
+NODE_ENV=production
+
+# Location of git repo on server
+GIT_REPO_DIR=/var/git/magnify
+
+# Temporary directories for git checkout and building
+TMP_BUILD_DIR=/tmp/magnify
+TMP_FRONTEND_DIR=$TMP_BUILD_DIR/frontend
+TMP_BACKEND_DIR=$TMP_BUILD_DIR/backend
+
+# Install directories for frontend and backend
+INSTALL_FRONTEND_DIR=/var/www/magnify.today
+INSTALL_BACKEND_DIR=/srv/magnify-api
+
+# Checkout git files to temporary directory
+mkdir -p $TMP_BUILD_DIR
+git --work-tree=$TMP_BUILD_DIR --git-dir=$GIT_REPO_DIR checkout -f
+
+# Build and copy frontend files to web server directory
+echo "*** Building frontend ***"
+cd $TMP_FRONTEND_DIR
+yarn && yarn build
+cp -R $TMP_FRONTEND_DIR/build/* $INSTALL_FRONTEND_DIR
+
+# Build and restart backend
+echo "*** Building backend ***"
+cp -R $TMP_BACKEND_DIR/* $INSTALL_BACKEND_DIR
+cd $INSTALL_BACKEND_DIR
+yarn
+sudo systemctl restart magnify
