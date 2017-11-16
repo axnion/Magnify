@@ -32,6 +32,21 @@ Options:
   -h, --help  output usage information
 ```
 
+## Presentation!!!!
+```shell
+# Show there is no accounts or companies registered. Or use mongo to show this
+$ node app.js account --list
+$ node app.js company --list
+
+# Add both company AwesomeCorp and their administration account admin
+$ node app.js account -C -c AwesomeCorp -u admin -p mypassword -a
+
+# Show that admin and company has been added.
+$ node app.js account --list
+$ node app.js company --list
+
+```
+
 ## Example usage
 ```shell
 # Create company admin for AwesomeCorp. If company does not already exist a new one is created.
