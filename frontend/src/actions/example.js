@@ -1,3 +1,5 @@
+/* eslint import/prefer-default-export: 0 */
+
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
@@ -8,17 +10,17 @@ function beginGetExamples() {
 }
 
 function getExamplesSuccess(payload) {
-	return { 
-		type: types.GET_EXAMPLES_SUCCESS,
-		payload,
-	}
+  return {
+    type: types.GET_EXAMPLES_SUCCESS,
+    payload,
+  };
 }
 
 function getExamplesError(payload) {
   return {
     type: types.GET_EXAMPLES_ERROR,
     payload,
-  }
+  };
 }
 
 export function getExamples() {

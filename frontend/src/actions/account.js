@@ -9,17 +9,17 @@ function beginCreateAccount() {
 }
 
 function createAccountSuccess(payload) {
-  return { 
+  return {
     type: types.CREATE_ACCOUNT_SUCCESS,
     payload,
-  }
+  };
 }
 
 function createAccountError(payload) {
   return {
     type: types.CREATE_ACCOUNT_ERROR,
     payload,
-  }
+  };
 }
 
 export function createAccount(data, token) {
@@ -40,26 +40,32 @@ export function mockCreateAccount(data) {
   return (dispatch) => {
     dispatch(beginCreateAccount());
 
-    return new Promise((resolve, reject) => {
-      return setTimeout(() => {
-        const {username, password, admin, company} = data;
+    return new Promise((resolve, reject) => (setTimeout(() => {
+      const {
+        username,
+        password,
+        admin,
+        company,
+      } = data;
 
-        if(!username || !password || !admin || !company) {
-          return reject('Please enter all required data');
-        }
+      if (!username || !password || !admin || !company) {
+        return reject(new Error('Please enter all required data'));
+      }
 
-        data._id = crypto.randomBytes(16).toString('hex');
+      const account = data;
 
-        return resolve(data);
-      }, 2000);
-    })
-    .then((response) => {
-      console.log(response);
-      dispatch(createAccountSuccess(response));
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch(createAccountError(error));
-    });
+      // eslint-disable-next-line no-underscore-dangle
+      account._id = crypto.randomBytes(16).toString('hex');
+
+      return resolve(account);
+    }, 2000))
+      .then((response) => {
+        // console.log(response);
+        dispatch(createAccountSuccess(response));
+      })
+      .catch((error) => {
+        // console.log(error);
+        dispatch(createAccountError(error));
+      }));
   };
 }

@@ -9,7 +9,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   isWaiting: state.account.isWaiting,
   error: state.account.error,
   token: state.auth.token,

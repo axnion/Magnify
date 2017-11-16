@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class AddRepForm extends React.Component {
   constructor(props) {
@@ -29,16 +30,18 @@ class AddRepForm extends React.Component {
     this.setState({ name: '', password: '' });
   }
 
-  printSubmitMessage(error, hasSubmitted, isWaiting) {
-    if (error && !isWaiting && hasSubmitted) {
+  printSubmitMessage() {
+    if (this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
       return (
-        <p>Could not add new representative. {error} </p>
+        <p>Could not add new representative. {this.props.error} </p>
       );
-    } else if (!error && !isWaiting && hasSubmitted) {
+    } else if (!this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
       return (
         <p>representative added!</p>
       );
     }
+
+    return undefined;
   }
 
   render() {
@@ -47,33 +50,48 @@ class AddRepForm extends React.Component {
         <h1>Add representative to company</h1>
         <fieldset disabled={this.props.isWaiting}>
           <div>
-            <label htmlFor="name">Username:</label>
-            <input
-              name="name"
-              type="text"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
+            <label htmlFor="name">
+              Username:
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </label>
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
+            <label htmlFor="password">
+              Password:
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </label>
           </div>
           <input type="submit" value="Add" />
-          {this.printSubmitMessage(
-            this.props.error,
-            this.state.hasSubmitted,
-            this.props.isWaiting,
-)}
+          {this.printSubmitMessage()}
         </fieldset>
       </form>
     );
   }
 }
+
+AddRepForm.propTypes = {
+  error: PropTypes.string,
+  isWaiting: PropTypes.bool,
+  token: PropTypes.string,
+  sendForm: PropTypes.func.isRequired,
+};
+
+AddRepForm.defaultProps = {
+  error: null,
+  isWaiting: false,
+  token: null,
+};
 
 export default AddRepForm;

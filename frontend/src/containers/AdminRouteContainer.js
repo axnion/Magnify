@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
-import AdminRoute from '../components/AdminRoute.js';
+import AdminRoute from '../components/AdminRoute';
 
 const mapStateToProps = (state, ownProps) => ({
   isWaiting: state.account.isWaiting,
-  user: state.auth.username,
+  username: state.auth.username,
   isAdmin: state.auth.isAdmin,
   location: ownProps.path,
   routeProps: {

@@ -7,9 +7,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<Provider store={store}>
-  <Router>
-    <App />
-  </Router>
-</Provider>, document.getElementById('root'));
+// eslint-disable-next-line function-paren-newline
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();

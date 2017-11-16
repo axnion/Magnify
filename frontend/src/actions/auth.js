@@ -9,17 +9,17 @@ function tryLogin() {
 }
 
 function loginSuccess(payload) {
-  return { 
+  return {
     type: types.LOG_IN_SUCCESS,
     payload,
-  }
+  };
 }
 
 function loginError(payload) {
   return {
     type: types.LOG_IN_ERROR,
     payload,
-  }
+  };
 }
 
 export function login(data) {
@@ -28,7 +28,7 @@ export function login(data) {
 
     return apiRequest('post', data, endpoint)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(loginSuccess(response.data));
       })
       .catch((response) => {
@@ -41,27 +41,31 @@ export function mockTryLogin(data) {
   return (dispatch) => {
     dispatch(tryLogin());
 
-    return new Promise((resolve, reject) => {
-      return setTimeout(() => {
-        const {username, password} = data;
+    return new Promise((resolve, reject) => (setTimeout(() => {
+      const {
+        username,
+        password,
+      } = data;
 
-        if(!username || !password) {
-          return reject('Please enter all required data');
-        }
+      if (!username || !password) {
+        return reject(new Error('Please enter all required data'));
+      }
 
-        data._id = crypto.randomBytes(16).toString('hex');
-        data.token = "test token"
+      const account = data;
 
-        return resolve(data);
-      }, 2000);
-    })
-    .then((response) => {
-      console.log(response);
-      dispatch(loginSuccess(response));
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch(loginError(error));
-    });
+      // eslint-disable-next-line no-underscore-dangle
+      account._id = crypto.randomBytes(16).toString('hex');
+      account.token = 'test token';
+
+      return resolve(account);
+    }, 2000))
+      .then((response) => {
+        // console.log(response);
+        dispatch(loginSuccess(response));
+      })
+      .catch((error) => {
+        // console.log(error);
+        dispatch(loginError(error));
+      }));
   };
 }

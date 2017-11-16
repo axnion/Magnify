@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,28 +27,11 @@ class Login extends React.Component {
     this.setState({ hasSubmitted: true });
     this.setState({ name: '', password: '' });
 
-    console.log(this.props.sendForm);
-
-    this.props.sendForm(data).then((response) => {
+    this.props.sendForm(data).then(() => {
       if (!this.props.error) {
         this.props.history.push('/addRep');
       }
     });
-  }
-
-  printSubmitMessage(error, hasSubmitted, isWaiting) {
-    if (error && !isWaiting && hasSubmitted) {
-      return (
-        <p>Could not log in. {error} </p>
-      );
-    } else if (!error && !isWaiting && hasSubmitted) {
-      return (
-        <Redirect to={{
-          pathname: '/addRep',
-        }}
-        />
-      );
-    }
   }
 
   render() {
@@ -63,22 +46,26 @@ class Login extends React.Component {
         }
         <fieldset disabled={this.props.isWaiting}>
           <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              name="username"
-              type="text"
-              value={this.state.name}
-              onChange={this.handleChange} 
-            />
+            <label htmlFor="username">
+              Username:
+              <input
+                name="username"
+                type="text"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </label>
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange} 
-            />
+            <label htmlFor="password">
+              Password:
+              <input
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </label>
           </div>
           <input type="submit" value="Login" />
           { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ?
@@ -88,5 +75,25 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  error: PropTypes.string,
+  isWaiting: PropTypes.bool,
+  sendForm: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    message: PropTypes.string,
+  }),
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+Login.defaultProps = {
+  error: null,
+  isWaiting: false,
+  location: {
+    message: null,
+  },
+};
 
 export default Login;

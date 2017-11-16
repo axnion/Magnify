@@ -1,3 +1,5 @@
+/* eslint import/prefer-default-export: 0 */
+
 import axios from 'axios';
 import config from '../config';
 

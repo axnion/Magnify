@@ -9,17 +9,17 @@ function beginGetCompanies() {
 }
 
 function getCompaniesSuccess(payload) {
-  return { 
+  return {
     type: types.GET_COMPANIES_SUCCESS,
     payload,
-  }
+  };
 }
 
 function getCompaniesError(payload) {
   return {
     type: types.GET_COMPANIES_ERROR,
     payload,
-  }
+  };
 }
 
 function beginCreateCompany() {
@@ -27,17 +27,17 @@ function beginCreateCompany() {
 }
 
 function createCompanySuccess(payload) {
-  return { 
+  return {
     type: types.CREATE_COMPANY_SUCCESS,
     payload,
-  }
+  };
 }
 
 function createCompanyError(payload) {
   return {
     type: types.CREATE_COMPANY_ERROR,
     payload,
-  }
+  };
 }
 
 export function getCompanies() {
@@ -72,24 +72,26 @@ export function mockCreateCompany(data) {
   return (dispatch) => {
     dispatch(beginCreateCompany());
 
-    return new Promise((resolve, reject) => {
-      return setTimeout(() => {
-        if(data.name === undefined) {
-          return reject('Please enter all required data');
-        }
+    return new Promise((resolve, reject) => (setTimeout(() => {
+      if (data.name === undefined) {
+        return reject(new Error('Please enter all required data'));
+      }
 
-        data._id = crypto.randomBytes(16).toString('hex');
+      const company = data;
 
-        return resolve(data);
-      }, 500);
-    })
-    .then((response) => {
-      console.log(response);
-      dispatch(createCompanySuccess(response));
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch(createCompanyError(error));
-    });
+      // eslint-disable-next-line no-underscore-dangle
+      company._id = crypto.randomBytes(16).toString('hex');
+
+      return resolve(company);
+    }, 500)
+    ))
+      .then((response) => {
+        // console.log(response);
+        dispatch(createCompanySuccess(response));
+      })
+      .catch((error) => {
+        // console.log(error);
+        dispatch(createCompanyError(error));
+      });
   };
 }

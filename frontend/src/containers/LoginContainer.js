@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import Login from '../components/Login.js';
-import { login } from '../actions/auth.js';
+import Login from '../components/Login';
+import { login } from '../actions/auth';
 
 const mapDispatchToProps = dispatch => ({
   sendForm: data => dispatch(login(data)),

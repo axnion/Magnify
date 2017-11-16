@@ -7,8 +7,8 @@ import './App.css';
 import topBanner from './topbanner.jpg';
 import leftside from './leftside.jpg';
 import AdminRoute from './containers/AdminRouteContainer';
-import AddRepFormContainer from './containers/AddRepFormContainer.js';
-import Login from './containers/LoginContainer.js';
+import AddRepFormContainer from './containers/AddRepFormContainer';
+import Login from './containers/LoginContainer';
 
 // Put this here to add background image, all other css is in css file
 const SideBar = styled('div')`
