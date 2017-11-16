@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 import AddRepForm from '../components/AddRepForm.js';
-import {mockCreateAccount} from '../actions/account.js';
+import { createAccount } from '../actions/account.js';
 
 const mapDispatchToProps = dispatch => {
   return {
-    sendForm: data => {
-      dispatch(mockCreateAccount(data));
+    sendForm: (data, token) => {
+      dispatch(createAccount(data, token));
     }
   }
 }
@@ -15,6 +15,7 @@ const mapStateToProps = state => {
   return {
     isWaiting: state.account.isWaiting,
     error: state.account.error,
+    token: state.auth.token,
   }
 }
   

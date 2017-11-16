@@ -20,8 +20,7 @@ class AccountController extends Controller {
     Body:
       { "username": "user", "password": "pass", "admin": "false"}
 
-    NOTE: The JWT Token is retrieved from the login route, /accounts/login. The company must be in ObjectID format and
-    it must be an ObjectID of a company that exists (will throw an error otherwise).
+    NOTE: The JWT Token is retrieved from the login route, /accounts/login.
   */
 
   createAccount(req, res, next) {
