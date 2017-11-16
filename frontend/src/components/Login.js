@@ -47,24 +47,24 @@ class Login extends React.Component {
         <fieldset disabled={this.props.isWaiting}>
           <div>
             <label htmlFor="username">Username:</label>
-            <input 
-              name="username" 
-              type="text" 
-              value={this.state.name} 
+            <input
+              name="username"
+              type="text"
+              value={this.state.name}
               onChange={this.handleChange}/>
           </div>
           <div>
             <label htmlFor="password">Password:</label>
-            <input 
-              name="password" 
+            <input
+              name="password"
               type="text"
               value={this.state.password}
               onChange={this.handleChange}/>
           </div>
-          <input type="submit" value="Add" />
+          <input type="submit" value="Login" />
           {this.printSubmitMessage(
-            this.props.error, 
-            this.state.hasSubmitted, 
+            this.props.error,
+            this.state.hasSubmitted,
             this.props.isWaiting)}
         </fieldset>
       </form>

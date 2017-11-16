@@ -47,25 +47,25 @@ class AddRepForm extends React.Component {
         <h1>Add representative to company</h1>
         <fieldset disabled={this.props.isWaiting}>
           <div>
-            <label htmlFor="name">Name:</label>
-            <input 
-              name="name" 
-              type="text" 
-              value={this.state.name} 
+            <label htmlFor="name">Username:</label>
+            <input
+              name="name"
+              type="text"
+              value={this.state.name}
               onChange={this.handleChange}/>
           </div>
           <div>
             <label htmlFor="password">Password:</label>
-            <input 
-              name="password" 
+            <input
+              name="password"
               type="text"
               value={this.state.password}
               onChange={this.handleChange}/>
           </div>
           <input type="submit" value="Add" />
           {this.printSubmitMessage(
-            this.props.error, 
-            this.state.hasSubmitted, 
+            this.props.error,
+            this.state.hasSubmitted,
             this.props.isWaiting)}
         </fieldset>
       </form>
