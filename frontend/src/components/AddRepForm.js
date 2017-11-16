@@ -3,8 +3,8 @@ import React from 'react';
 class AddRepForm extends React.Component {
   constructor(props) {
     super(props);
-     //hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = {name: '', password: '', hasSubmitted: false};
+    // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
+    this.state = { name: '', password: '', hasSubmitted: false };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -12,7 +12,7 @@ class AddRepForm extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -22,26 +22,26 @@ class AddRepForm extends React.Component {
       username: this.state.name,
       password: this.state.password,
       admin: false,
-    }
+    };
 
     this.sendForm(data, this.props.token);
-    this.setState ({hasSubmitted: true});
-    this.setState({name: '', password: ''});
+    this.setState({ hasSubmitted: true });
+    this.setState({ name: '', password: '' });
   }
 
   printSubmitMessage(error, hasSubmitted, isWaiting) {
     if (error && !isWaiting && hasSubmitted) {
       return (
         <p>Could not add new representative. {error} </p>
-      )
+      );
     } else if (!error && !isWaiting && hasSubmitted) {
       return (
         <p>representative added!</p>
-      )
+      );
     }
   }
 
-  render () {
+  render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>Add representative to company</h1>
@@ -52,7 +52,8 @@ class AddRepForm extends React.Component {
               name="name"
               type="text"
               value={this.state.name}
-              onChange={this.handleChange}/>
+              onChange={this.handleChange}
+            />
           </div>
           <div>
             <label htmlFor="password">Password:</label>
@@ -60,13 +61,15 @@ class AddRepForm extends React.Component {
               name="password"
               type="password"
               value={this.state.password}
-              onChange={this.handleChange}/>
+              onChange={this.handleChange}
+            />
           </div>
           <input type="submit" value="Add" />
           {this.printSubmitMessage(
             this.props.error,
             this.state.hasSubmitted,
-            this.props.isWaiting)}
+            this.props.isWaiting,
+)}
         </fieldset>
       </form>
     );

@@ -4,20 +4,18 @@ import Login from '../components/Login.js';
 import { login } from '../actions/auth.js';
 
 const mapDispatchToProps = dispatch => ({
-  sendForm: (data) => dispatch(login(data)),
+  sendForm: data => dispatch(login(data)),
 });
 
-const mapStateToProps = state => {
-  return {
-    isWaiting: state.auth.isWaiting,
-    error: state.auth.error,
-    token: state.auth.token,
-  }
-}
-  
+const mapStateToProps = state => ({
+  isWaiting: state.auth.isWaiting,
+  error: state.auth.error,
+  token: state.auth.token,
+});
+
 const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Login)
+)(Login);
 
 export default LoginContainer;

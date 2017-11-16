@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-     //hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = {username: '', password: '', hasSubmitted: false};
+    // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
+    this.state = { username: '', password: '', hasSubmitted: false };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -13,7 +13,7 @@ class Login extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -22,10 +22,10 @@ class Login extends React.Component {
     const data = {
       username: this.state.username,
       password: this.state.password,
-    }
+    };
 
-    this.setState ({hasSubmitted: true});
-    this.setState({name: '', password: ''});
+    this.setState({ hasSubmitted: true });
+    this.setState({ name: '', password: '' });
 
     console.log(this.props.sendForm);
 
@@ -33,25 +33,25 @@ class Login extends React.Component {
       if (!this.props.error) {
         this.props.history.push('/addRep');
       }
-    }); 
+    });
   }
 
   printSubmitMessage(error, hasSubmitted, isWaiting) {
     if (error && !isWaiting && hasSubmitted) {
       return (
         <p>Could not log in. {error} </p>
-      )
+      );
     } else if (!error && !isWaiting && hasSubmitted) {
       return (
         <Redirect to={{
           pathname: '/addRep',
         }}
         />
-      )
+      );
     }
   }
 
-  render () {
+  render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>Login</h1>
@@ -68,7 +68,8 @@ class Login extends React.Component {
               name="username"
               type="text"
               value={this.state.name}
-              onChange={this.handleChange}/>
+              onChange={this.handleChange} 
+            />
           </div>
           <div>
             <label htmlFor="password">Password:</label>
@@ -76,11 +77,12 @@ class Login extends React.Component {
               name="password"
               type="password"
               value={this.state.password}
-              onChange={this.handleChange}/>
+              onChange={this.handleChange} 
+            />
           </div>
           <input type="submit" value="Login" />
-          { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ? 
-              <p> Could not log in. {this.props.error} </p> : undefined }
+          { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ?
+            <p> Could not log in. {this.props.error} </p> : undefined }
         </fieldset>
       </form>
     );
