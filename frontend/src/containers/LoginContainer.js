@@ -3,13 +3,9 @@ import { connect } from 'react-redux';
 import Login from '../components/Login.js';
 import { login } from '../actions/auth.js';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    sendForm: data => {
-      dispatch(login(data));
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  sendForm: (data) => dispatch(login(data)),
+});
 
 const mapStateToProps = state => {
   return {
@@ -21,7 +17,7 @@ const mapStateToProps = state => {
   
 const LoginContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Login)
 
 export default LoginContainer;

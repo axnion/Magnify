@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,9 +24,16 @@ class Login extends React.Component {
       password: this.state.password,
     }
 
-    this.sendForm(data);
     this.setState ({hasSubmitted: true});
     this.setState({name: '', password: ''});
+
+    console.log(this.props.sendForm);
+
+    this.props.sendForm(data).then((response) => {
+      if (!this.props.error) {
+        this.props.history.push('/addRep');
+      }
+    }); 
   }
 
   printSubmitMessage(error, hasSubmitted, isWaiting) {
@@ -35,7 +43,10 @@ class Login extends React.Component {
       )
     } else if (!error && !isWaiting && hasSubmitted) {
       return (
-        <p>Logged in!</p>
+        <Redirect to={{
+          pathname: '/addRep',
+        }}
+        />
       )
     }
   }
@@ -44,6 +55,12 @@ class Login extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>Login</h1>
+        {
+          this.props.location.message ?
+            <h3>
+              { this.props.location.message }
+            </h3> : undefined
+        }
         <fieldset disabled={this.props.isWaiting}>
           <div>
             <label htmlFor="username">Username:</label>
@@ -62,10 +79,8 @@ class Login extends React.Component {
               onChange={this.handleChange}/>
           </div>
           <input type="submit" value="Add" />
-          {this.printSubmitMessage(
-            this.props.error, 
-            this.state.hasSubmitted, 
-            this.props.isWaiting)}
+          { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ? 
+              <p> Could not log in. {this.props.error} </p> : undefined }
         </fieldset>
       </form>
     );

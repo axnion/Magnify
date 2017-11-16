@@ -11,12 +11,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     isWaiting: state.account.isWaiting,
     error: state.account.error,
     token: state.auth.token,
-  }
+  };
 }
   
 const AddRepFormContainer = connect(
