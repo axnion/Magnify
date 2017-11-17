@@ -32,7 +32,7 @@ class AccountController extends Controller {
       if (!user || user.admin === false) return res.status(401).json({ message: 'Not authorized' });
 
       return AccountFacade.createAccount(req.body, user.company)
-        .then(resp => res.status(201).json({username: resp.username}))
+        .then(resp => res.status(201).json({ username: resp.username }))
         .catch(err => next(err));
     })(req, res, next);
   }
