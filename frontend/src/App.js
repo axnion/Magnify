@@ -9,6 +9,7 @@ import leftside from './leftside.jpg';
 import AdminRoute from './containers/AdminRouteContainer';
 import AddRepFormContainer from './containers/AddRepFormContainer';
 import Login from './containers/LoginContainer';
+import Profile from './containers/ProfileContainer';
 
 // Put this here to add background image, all other css is in css file
 const SideBar = styled('div')`
@@ -28,10 +29,12 @@ export default () => (
     <SideBar>
       <Link to="/login"><button className="sidebar-btn">Log in</button></Link><br />
       <Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link>
+      <Link to="/profile"><button className="sidebar-btn">Profile</button></Link>
     </SideBar>
     <div className="App-content">
       <AdminRoute path="/addRep"><AddRepFormContainer /></AdminRoute>
       <Route path="/login" component={Login} />
+      <Route path="/profile" component={Profile} />
     </div>
   </div>
 );
