@@ -22,14 +22,20 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(morgan('tiny'));
+
+// Don't log in tests to avoid cluttering
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('tiny'));
+}
 
 configurePassport(app, passport);
 
 app.use('/', routes);
 
-if(!module.parent){ app.listen(config.server.port, () => {
-  console.log(`Magic happens on port ${config.server.port}`);
-});}
+if (!module.parent) {
+  app.listen(config.server.port, () => {
+    console.log(`Magic happens on port ${config.server.port}`);
+  });
+}
 
 module.exports = app;

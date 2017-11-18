@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -L index.js",
     "start": "node index.js",
-    "test": "JWT_SECRET=keyboardcat jest"
+    "test": "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest --forceExit"
   },
   "engines": {
     "node": ">=6"

@@ -1,14 +1,31 @@
 const request = require("supertest");
 const server = require("../index");
 const Account = require("../model/account/schema");
+const Company = require('../model/company/schema');
+const AccountFacade = require('../model/account/facade');
+const CompanyFacade = require('../model/company/facade');
 
-/**
- * As of now, for this test to run, an admin user account needs to exist. 
- * This can be created by entering the tools directory and running 
- * node app.js account -C -c Awesome -u admin -p pass -a 
- * 
- * Note that there is no functionality for deleting users in the system (that I know of).
- */
+// NOTE: mongodb must be running (it already is if you're developing on Vagrant)
+
+// Creates a single admin user to test the account route. Runs once before all the tests.
+beforeAll(() => (
+  CompanyFacade.addCompany({ name: 'TestCompany' })
+    .then(company => (AccountFacade.createAccount({ username: 'admin', password: 'pass', admin: true }, company.id)))
+  )
+);
+
+// Removes all accounts and companies in the test database. Runs once after all the tests.
+afterAll((done) => {
+  Account.remove({}, (err) => {
+    if (err) done(err);
+
+    Company.remove({}, (err) => {
+      if (err) done(err);
+
+      done();
+    });
+  });
+});
 
 describe("Test /account route", () => {
   test("login using correct credentials", done => {
