@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -L index.js",
     "start": "node index.js",
-    "test": "mocha --timeout 10000 --reporter min --watch"
+    "test": "JWT_SECRET=keyboardcat jest"
   },
   "engines": {
     "node": ">=6"
@@ -35,8 +35,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
+    "jest": "^21.2.1",
     "mocha": "^4.0.1",
     "nodemon": "^1.11.0",
+    "superagent": "^3.8.1",
     "supertest": "^3.0.0"
   }
 }
