@@ -1,25 +1,28 @@
 const request = require("supertest");
-const server = require("../index");
-const Account = require("../model/account/schema");
-const Company = require('../model/company/schema');
-const AccountFacade = require('../model/account/facade');
-const CompanyFacade = require('../model/company/facade');
+const server = require("../../index");
+const Account = require("../../model/account/schema");
+const Company = require("../../model/company/schema");
+const AccountFacade = require("../../model/account/facade");
+const CompanyFacade = require("../../model/company/facade");
 
 // NOTE: mongodb must be running (it already is if you're developing on Vagrant)
 
 // Creates a single admin user to test the account route. Runs once before all the tests.
-beforeAll(() => (
-  CompanyFacade.addCompany({ name: 'TestCompany' })
-    .then(company => (AccountFacade.createAccount({ username: 'admin', password: 'pass', admin: true }, company.id)))
+beforeAll(() =>
+  CompanyFacade.addCompany({ name: "TestCompany" }).then(company =>
+    AccountFacade.createAccount(
+      { username: "admin", password: "pass", admin: true },
+      company.id
+    )
   )
 );
 
 // Removes all accounts and companies in the test database. Runs once after all the tests.
-afterAll((done) => {
-  Account.remove({}, (err) => {
+afterAll(done => {
+  Account.remove({}, err => {
     if (err) done(err);
 
-    Company.remove({}, (err) => {
+    Company.remove({}, err => {
       if (err) done(err);
 
       done();
