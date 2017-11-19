@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
 
-import AddRepForm from '../components/Profile';
+import Profile from '../components/Profile';
 
 const mapDispatchToProps = () => ({
 });
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+  username: state.auth.username,
+  isAdmin: state.auth.isAdmin,
 });
 
-const AddRepFormContainer = connect(
+const ProfileContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddRepForm);
+)(Profile);
 
-export default AddRepFormContainer;
+export default ProfileContainer;

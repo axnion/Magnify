@@ -25,11 +25,11 @@ class Login extends React.Component {
     };
 
     this.setState({ hasSubmitted: true });
-    this.setState({ name: '', password: '' });
+    this.setState({ username: '', password: '' });
 
     this.props.sendForm(data).then(() => {
       if (!this.props.error) {
-        this.props.history.push('/addRep');
+        this.props.history.push('/');
       }
     });
   }
@@ -51,7 +51,7 @@ class Login extends React.Component {
               <input
                 name="username"
                 type="text"
-                value={this.state.name}
+                value={this.state.username}
                 onChange={this.handleChange}
               />
             </label>

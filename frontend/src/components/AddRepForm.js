@@ -5,7 +5,7 @@ class AddRepForm extends React.Component {
   constructor(props) {
     super(props);
     // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { name: '', password: '', hasSubmitted: false };
+    this.state = { username: '', password: '', hasSubmitted: false };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -20,14 +20,14 @@ class AddRepForm extends React.Component {
     event.preventDefault();
 
     const data = {
-      username: this.state.name,
+      username: this.state.username,
       password: this.state.password,
       admin: false,
     };
 
     this.sendForm(data, this.props.token);
     this.setState({ hasSubmitted: true });
-    this.setState({ name: '', password: '' });
+    this.setState({ username: '', password: '' });
   }
 
   printSubmitMessage() {
@@ -50,13 +50,13 @@ class AddRepForm extends React.Component {
         <h1>Add representative to company</h1>
         <fieldset disabled={this.props.isWaiting}>
           <div>
-            <label htmlFor="name">
+            <label htmlFor="username">
               Username:
               <input
-                id="name"
-                name="name"
+                id="username"
+                name="username"
                 type="text"
-                value={this.state.name}
+                value={this.state.username}
                 onChange={this.handleChange}
               />
             </label>

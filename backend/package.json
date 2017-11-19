@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -L index.js",
+    "dev": "JWT_SECRET=keyboardcat nodemon -L index.js",
     "start": "node index.js",
     "test":
-      "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest --forceExit",
+      "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest --verbose --forceExit",
     "integration-test":
       "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest test/integration-tests --coverage --forceExit --verbose",
     "unit-test": "jest test/unit-tests --coverage --forceExit"
