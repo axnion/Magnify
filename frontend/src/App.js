@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom';
 import './App.css';
 import topBanner from './topbanner.jpg';
 import AdminRoute from './containers/AdminRouteContainer';
+import LoggedInRoute from './containers/LoggedInRouteContainer';
 import AddRepFormContainer from './containers/AddRepFormContainer';
 import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
@@ -18,7 +19,7 @@ export default () => (
     <div className="App-content">
       <AdminRoute path="/addRep"><AddRepFormContainer /></AdminRoute>
       <Route path="/login" component={Login} />
-      <Route path="/profile" component={Profile} />
+      <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
     </div>
   </div>
 );
