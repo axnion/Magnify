@@ -19,7 +19,7 @@ const AdminRoute = ({
         <Redirect to={{
           pathname: '/login',
           from: location,
-          message: 'Administrators only. Please log in.',
+          message: 'Administrators only. Please log in as an administrator.',
         }}
         />
       )

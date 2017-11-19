@@ -29,7 +29,7 @@ class Login extends React.Component {
 
     this.props.sendForm(data).then(() => {
       if (!this.props.error) {
-        this.props.history.push('/addRep');
+        this.props.history.push('/');
       }
     });
   }

@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   username: state.auth.username,
+  isAdmin: state.auth.isAdmin,
 });
 
 const SideBarContainer = connect(

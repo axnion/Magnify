@@ -18,13 +18,15 @@ const SideBarDivider = styled('div')`
   text-align: center;
 `;
 
-const SideBar = ({ username, logout }) => (
+const SideBar = ({ username, logout, isAdmin }) => (
   <SideBarDivider>
     {
       username === null ? <SideBarItem><Link to="/login"><button className="sidebar-btn">Log in</button></Link></SideBarItem> :
       <SideBarItem><button className="sidebar-btn" onClick={() => logout()}>Log out</button></SideBarItem>
     }
-    <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem>
+    {
+      isAdmin ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
+    }
     <SideBarItem><Link to="/profile"><button className="sidebar-btn">Profile</button></Link></SideBarItem>
   </SideBarDivider>
 );
@@ -32,10 +34,12 @@ const SideBar = ({ username, logout }) => (
 SideBar.propTypes = {
   username: PropTypes.string,
   logout: PropTypes.func.isRequired,
+  isAdmin: PropTypes.bool,
 };
 
 SideBar.defaultProps = {
   username: null,
+  isAdmin: false,
 };
 
 export default SideBar;
