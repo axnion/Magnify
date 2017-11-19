@@ -37,4 +37,17 @@ describe("Creating consumer", () => {
         done();
       });
   });
+
+  test("Login existing user", done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt
+      .post("/consumer/login")
+      .set("Content-Type", "application/x-www-form-urlencoded")
+      .send({ username: "AwesomeUser", password: "pass" })
+      .end((err, resp) => {
+        expect(resp.statusCode).toEqual(200);
+        done();
+      });
+  });
 });
