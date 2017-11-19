@@ -24,4 +24,17 @@ describe("Creating consumer", () => {
         done();
       });
   });
+
+  test("fail to create new consumer when passing fauly params", done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt
+      .post("/consumer")
+      .set("Content-Type", "application/json")
+      .send({ username: "Foo" })
+      .end((err, resp) => {
+        expect(resp.statusCode).toEqual(500);
+        done();
+      });
+  });
 });
