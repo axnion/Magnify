@@ -27,8 +27,8 @@ class ConsumerController extends Controller {
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.admin === false)
-        return res.status(401).json({ message: "Not authorized" });
+      //if (!user || user.admin === false)
+      //  return res.status(401).json({ message: "Not authorized" });
 
       return ConsumerFacade.createAccount(req.body, user.company)
         .then(resp => res.status(201).json({ username: resp.username }))
