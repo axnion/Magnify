@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 
 import './App.css';
 import topBanner from './topbanner.jpg';
+import Index from './containers/IndexContainer';
 import AdminRoute from './containers/AdminRouteContainer';
 import LoggedInRoute from './containers/LoggedInRouteContainer';
 import AddRepFormContainer from './containers/AddRepFormContainer';
@@ -17,6 +18,7 @@ export default () => (
     </header>
     <SideBar />
     <div className="App-content">
+      <Route path="/" exact component={Index} />
       <AdminRoute path="/addRep"><AddRepFormContainer /></AdminRoute>
       <Route path="/login" component={Login} />
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
