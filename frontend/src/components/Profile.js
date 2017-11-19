@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-class AddRepForm extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { };
@@ -9,11 +10,20 @@ class AddRepForm extends React.Component {
   render() {
     return (
       <div>
-        <h1>Todo:</h1>
-        <p>Fetch logged in profile</p>
+        <h1>Username: {this.props.username}</h1>
+        <h3>Type of user: { this.props.isAdmin ? 'Admin' : 'User' }</h3>
       </div>
     );
   }
 }
 
-export default AddRepForm;
+Profile.propTypes = {
+  username: PropTypes.string,
+  isAdmin: PropTypes.bool,
+};
+
+Profile.defaultProps = {
+  username: null,
+  isAdmin: false,
+};
+export default Profile;

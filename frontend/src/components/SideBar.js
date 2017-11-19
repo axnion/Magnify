@@ -21,13 +21,15 @@ const SideBarDivider = styled('div')`
 const SideBar = ({ username, logout, isAdmin }) => (
   <SideBarDivider>
     {
+      username === null ? undefined : <SideBarItem><Link to="/profile"><button className="sidebar-btn">Profile</button></Link></SideBarItem>
+    }
+    {
       username === null ? <SideBarItem><Link to="/login"><button className="sidebar-btn">Log in</button></Link></SideBarItem> :
       <SideBarItem><button className="sidebar-btn" onClick={() => logout()}>Log out</button></SideBarItem>
     }
     {
       isAdmin ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
     }
-    <SideBarItem><Link to="/profile"><button className="sidebar-btn">Profile</button></Link></SideBarItem>
   </SideBarDivider>
 );
 
