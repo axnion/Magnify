@@ -9,7 +9,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="profile">
         <h1>Username: {this.props.username}</h1>
         <h3>Type of user: { this.props.isAdmin ? 'Admin' : 'User' }</h3>
       </div>
