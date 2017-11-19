@@ -33,6 +33,15 @@ export default (state = {
         username: null,
         isAdmin: false,
       };
+    case types.LOG_OUT:
+      return {
+        ...state,
+        isWaiting: false,
+        error: null,
+        token: null,
+        username: null,
+        isAdmin: false,
+      };
     default:
       return state;
   }

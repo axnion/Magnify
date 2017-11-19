@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import example from './example';
 import company from './company';
 import account from './account';
@@ -9,4 +10,5 @@ export default combineReducers({
   company,
   account,
   auth,
+  routing: routerReducer,
 });

@@ -1,6 +1,8 @@
 import crypto from 'crypto';
+import { push } from 'react-router-redux';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
+
 
 const endpoint = '/account/login';
 
@@ -19,6 +21,19 @@ function loginError(payload) {
   return {
     type: types.LOG_IN_ERROR,
     payload,
+  };
+}
+
+export function doLogout() {
+  return {
+    type: types.LOG_OUT,
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    dispatch(doLogout());
+    dispatch(push('/'));
   };
 }
 
