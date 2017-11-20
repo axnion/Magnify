@@ -11,10 +11,7 @@ describe("Accounts", () => {
   beforeEach(done => {
     CR.remove({}, err => {
     });
-	//Adds two companies to database to make it able to add accounts 
-	companyFacade.addCompany({ name: "Company1" });
-	companyFacade.addCompany({ name: "Company2" });
-	
+		
   });
 
   describe("/GET", () => {

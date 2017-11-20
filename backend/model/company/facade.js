@@ -2,16 +2,16 @@ const Facade = require('../../lib/facade');
 const companySchema = require('./schema');
 
 class CompanyFacade extends Facade {
-  getCompanyByName(name){
-		return this.findOne({name:name});
-	}
+  getCompanyByName(name) {
+    return this.findOne({ name });
+  }
 
-  getCompanyById(id){
-		return this.findById(id);
-	}
+  getCompanyById(id) {
+    return this.findById(id);
+  }
 
   addCompany(company) {
-    return this.create(company)
+    return this.create(company);
   }
 }
 

@@ -6,9 +6,9 @@ const companySchema = new Schema({
   name: { type: String, required: true, unique: true }
 });
 
-var company;
+let company;
 
-//Used for testing to make sure model is not already in database
+// Used for testing to make sure model is not already in database
 try {
   company = mongoose.model('Company');
 } catch (error) {

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const config = require('../config.js');
 const account = require('./account');
 const company = require('./company');
+const category = require('./category');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url, { useMongoClient: true });
@@ -56,5 +57,20 @@ commander
         company.list();
       }
     });
+
+// Category Subcommand
+commander
+    .command('category')
+    .option('-L, --list', 'Lists all categories')
+    .option('-C, --create', 'Creates a category')
+    .option('-n, --name', 'Specify name')
+    .option('-d, --description', 'Specify a description (optional)')
+    .option('-p, --parent', 'Specify parent or is set to null if not specified')
+    .action((flags) => {
+      if (flags.list) {
+        category.list();
+      }
+    });
+
 
 commander.parse(process.argv);
