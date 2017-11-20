@@ -22,7 +22,7 @@ class AddRepForm extends React.Component {
     const data = {
       username: this.state.username,
       password: this.state.password,
-      admin: false,
+      role: 'companyRep',
     };
 
     this.sendForm(data, this.props.token);
