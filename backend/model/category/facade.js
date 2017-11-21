@@ -3,13 +3,21 @@ const categorySchema = require('./schema');
 
 class CategoryFacade extends Facade {
 
-  createCategory(name, parent, isMainCategory)    {
-    const schema = new this.Schema({
+  createCategory(name, parent)    {
+    if (parent) {
+      const schema = new this.Schema({
         name,
-        mainCategory: isMainCategory,
+        mainCategory: false,
         parent
       });
-    return schema.save();
+      return schema.save();
+    } else {
+      const schema = new this.Schema({
+        name,
+        mainCategory: true
+      });
+      return schema.save();
+    }
   }
 
 }

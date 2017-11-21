@@ -28,19 +28,15 @@ commander
       }      else if (flags.create) {
         if (!flags.username) {
           console.log('Please specify username');
-        }
-        if (!flags.password) {
+        }    else if (!flags.password) {
           console.log('Please specify a password');
-        }
-        if (!flags.company) {
+        }    else if (!flags.company) {
           console.log('Please specify a company');
-        }
-        if (!flags.role) {
+        }    else if (!flags.role) {
           console.log('Please specify a role');
+        } else {
+          account.createAccount(flags.username, flags.password, flags.company, flags.role);
         }
-
-        account.createAccount(flags.username, flags.password, flags.company, flags.role);
-
       } else {
         console.log('No valid action found');
         mongoose.connection.close();
@@ -61,20 +57,24 @@ commander
 // Category Subcommand
 commander
 .command('category')
+.description('Actions dealing with categories')
 .option('-L, --list', 'Lists all categories')
 .option('-C, --create', 'Creates a category')
-.option('-n, --name', 'Specify name')
-.option('-p, --parent', 'Specify parent or is set to root if not specified')
+.option('-n, --categoryname [name]', 'Specify category name')
+.option('-p, --categoryparent [name]', 'Specify parent or is set to root if not specified')
 .action((flags) => {
   if (flags.list) {
     category.list();
-  } else if (flags.create) {
-    if (!flags.name) {
+  }     else if (flags.create) {
+    if (!flags.categoryname) {
       console.log('Please specify a category name');
+    } else if (!flags.categoryparent) {
+      console.log('No parent specified, set as main category');
+      category.createCategory(flags.categoryname, flags.categoryparent);
     }
-    category.createCategory(flags.name, flags.parent);
   } else {
     console.log('No valid action found');
+    mongoose.connection.close();
   }
 });
 
