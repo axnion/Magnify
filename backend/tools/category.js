@@ -3,23 +3,18 @@ const mongoose = require('mongoose');
 const categoryFacade = require('../model/category/facade');
 
 exports.createCategory = function(name, parent) {
-
-  if (parent)    {
-    console.log(parent);
-    // Check if parent in database
-    categoryFacade.findOne({ name: parent })
-    .then((result) => {
-      console.log(JSON.stringify(result, null, 4));
-            
-      return new Promise((resolve, reject) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(`No category matching parent "${parent}" was found to add as parent`);
-        }
-      });
+  // Check if parent in database
+  categoryFacade.findOne({ name: parent })
+    .then(results => new Promise((resolve, reject) => {
+      console.log(parent);
+      if (results) {
+        resolve(results);
+      } else {
+        reject(`No category matching parent "${parent}" was found to add as parent`);
+      }
     })
-    .then(result => categoryFacade.createCategory(name, result))
+    )
+    .then(results => categoryFacade.createCategory(name, results))
     .then((category) => {
       console.log('Category created: ');
       console.log(JSON.stringify(category, null, 4));
@@ -30,14 +25,17 @@ exports.createCategory = function(name, parent) {
     .finally(() => {
       mongoose.connection.close();
     });
+};
 
-  } else {
-    categoryFacade.createCategory(name, parent).finally(() => {
+
+exports.createMainCategory = function(name) {
+  categoryFacade.createCategory(name, null)
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
       mongoose.connection.close();
     });
-  }
-
-
 };
 
 exports.list = function() {
