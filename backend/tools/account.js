@@ -50,3 +50,16 @@ exports.list = function() {
     mongoose.connection.close();
   });
 };
+
+/**
+* Function to delete the accounts collection. Destroying all data of accounts
+* in the database.
+*/
+exports.list = function() {
+  return new Promise((resolve, reject) => {
+    mongoose.connection.db.dropCollection('accounts', (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+};
