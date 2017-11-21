@@ -30,6 +30,9 @@ const SideBar = ({ username, logout, isAdmin }) => (
       username === null ? <SideBarItem><Link to="/login"><button className="sidebar-btn">Log in</button></Link></SideBarItem> :
       <SideBarItem><button className="sidebar-btn" onClick={() => logout()}>Log out</button></SideBarItem>
     }
+    {
+      username === null ? <SideBarItem><Link to="/register"><button className="sidebar-btn">Create an account</button></Link></SideBarItem> : undefined
+    }
   </SideBarDivider>
 );
 

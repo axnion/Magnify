@@ -7,6 +7,7 @@ import Index from './containers/IndexContainer';
 import AdminRoute from './containers/AdminRouteContainer';
 import LoggedInRoute from './containers/LoggedInRouteContainer';
 import AddRepFormContainer from './containers/AddRepFormContainer';
+import Register from './containers/RegisterContainer';
 import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
 import SideBar from './containers/SideBarContainer';
@@ -21,6 +22,7 @@ export default () => (
       <Route path="/" exact component={Index} />
       <AdminRoute path="/addRep"><AddRepFormContainer /></AdminRoute>
       <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
     </div>
   </div>
