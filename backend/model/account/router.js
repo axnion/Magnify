@@ -13,7 +13,7 @@ router
 // .get((...args) => controller.findById(...args))
 // .delete((...args) => controller.remove(...args));
 router
-  .route("/create/consumer")
+  .route("/consumer")
   .post((...args) => consumerController.createAccount(...args));
 router.route("/login").post((...args) => controller.login(...args));
 
