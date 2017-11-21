@@ -5,7 +5,9 @@ class ConsumerFacade extends Facade {
   createAccount(body, company) {
     const schema = new this.Schema({
       username: body.username,
-      password: body.password
+      password: body.password,
+      role: body.role,
+      company
     });
     return schema.save();
   }
