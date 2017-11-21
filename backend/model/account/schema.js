@@ -7,7 +7,7 @@ const Company = require('../company/schema');
 const accountSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  company: { type: mongoose.Schema.ObjectId, ref: 'Company', required: true },
+  company: { type: mongoose.Schema.ObjectId, ref: 'Company' },
   role: { type: String, required: true, enum: ['companyAdmin', 'companyRep', 'consumer'] }
 });
 
