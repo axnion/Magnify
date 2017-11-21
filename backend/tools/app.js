@@ -36,7 +36,7 @@ commander
         } else if (!flags.role) {
           console.log('Please specify a role');
         } else {
-          account.createAccount(flags.username, flags.password, flags.company, flags.role);
+          account.create(flags.username, flags.password, flags.company, flags.role);
         }
       } else if (flags.drop) {
         account.drop(mongoose.connection);
@@ -50,10 +50,18 @@ commander
 commander
     .command('company')
     .option('-L, --list', 'Lists all companies')
+    .option('-C, --create', 'Creates a company')
+    .option('-n, --companyname [name]', 'Specify company name')
     .description('Actions dealing with companies')
     .action((flags) => {
       if (flags.list) {
         company.list();
+      } else if (flags.create) {
+        if (!flags.companyname) {
+          console.log('Please specify a company');
+        } else {
+          company.create(flags.companyname);
+        }
       }
     });
 

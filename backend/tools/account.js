@@ -5,22 +5,15 @@ const Promise       = require('bluebird');
 /**
 * Create new account.
 */
-exports.createAccount = function(username, password, company, role) {
+exports.create = function(username, password, company, role) {
   companyFacade.findOne({ name: company })
-  .then((results) => {
-    if (!results && role === 'companyAdmin') {
-      console.log(`Company ${company} does not exist... creating it now`);
-      return companyFacade.create({ name: company });
+  .then(results => new Promise((resolve, reject) => {
+    if (results) {
+      resolve(results);
+    } else {
+      reject(`No company matchin "${company}" was found to add this user to`);
     }
-    return new Promise((resolve, reject) => {
-      if (results) {
-        resolve(results);
-      } else {
-        reject(`No company matchin "${company}" was found to add this user to`);
-      }
-    });
-
-  })
+  }))
   .then(company => accountFacade.create({
     username,
     password,
