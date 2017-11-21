@@ -60,17 +60,22 @@ commander
 
 // Category Subcommand
 commander
-    .command('category')
-    .option('-L, --list', 'Lists all categories')
-    .option('-C, --create', 'Creates a category')
-    .option('-n, --name', 'Specify name')
-    .option('-d, --description', 'Specify a description (optional)')
-    .option('-p, --parent', 'Specify parent or is set to null if not specified')
-    .action((flags) => {
-      if (flags.list) {
-        category.list();
-      }
-    });
-
+.command('category')
+.option('-L, --list', 'Lists all categories')
+.option('-C, --create', 'Creates a category')
+.option('-n, --name', 'Specify name')
+.option('-p, --parent', 'Specify parent or is set to root if not specified')
+.action((flags) => {
+  if (flags.list) {
+    category.list();
+  } else if (flags.create) {
+    if (!flags.name) {
+      console.log('Please specify a category name');
+    }
+    category.createCategory(flags.name, flags.parent);
+  } else {
+    console.log('No valid action found');
+  }
+});
 
 commander.parse(process.argv);
