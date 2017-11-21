@@ -7,19 +7,22 @@ const Promise       = require('bluebird');
 */
 exports.create = function(username, password, company, role) {
   companyFacade.findOne({ name: company })
-  .then(results => new Promise((resolve, reject) => {
-    if (results) {
-      resolve(results);
+  .then((results) => {
+    if (!results) {
+      return accountFacade.create({
+        username,
+        password,
+        role
+      })
     } else {
-      reject(`No company matchin "${company}" was found to add this user to`);
+      return accountFacade.create({
+        username,
+        password,
+        company: results.id,
+        role
+      })
     }
-  }))
-  .then(company => accountFacade.create({
-    username,
-    password,
-    company: company.id,
-    role
-  }))
+  })
   .then((account) => {
     console.log('Created Account: ');
     console.log(JSON.stringify(account, null, 4));

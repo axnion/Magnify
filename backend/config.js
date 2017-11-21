@@ -8,6 +8,7 @@ const config = {
     saltFactor: 10
   },
   jwtExpiry: '1h',
+  // TODO: Change to accountRole
   userRole: {
     companyAdmin: 'companyAdmin',
     companyRep: 'companyRep',

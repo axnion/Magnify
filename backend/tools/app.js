@@ -87,6 +87,8 @@ commander
       console.log('Please specify a category name');
     } else if (!flags.categoryparent) {
       console.log('No parent specified, set as main category');
+      category.createMainCategory(flags.categoryname);
+    } else {
       category.createCategory(flags.categoryname, flags.categoryparent);
     }
   } else {
