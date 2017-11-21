@@ -9,31 +9,11 @@ class ConsumerController extends Controller {
   res: 201 successful
   */
 
-  /*
-    The request must be structured in this format:
-
-    Headers:
-      Content-Type: application/json
-      Authentication: Bearer ${jwtToken}
-
-    Body:
-      { "username": "user", "password": "pass", "admin": "false"}
-
-    NOTE: The JWT Token is retrieved from the login route, /accounts/login.
-  */
-
   createAccount(req, res, next) {
-    // Check authorization
-    passport.authenticate("jwt", { session: false }, (err, user, info) => {
-      if (err) return res.status(500).json({ message: info });
-
-      //if (!user || user.admin === false)
-      //  return res.status(401).json({ message: "Not authorized" });
-
-      return ConsumerFacade.createAccount(req.body, user.company)
-        .then(resp => res.status(201).json({ username: resp.username }))
-        .catch(err => next(err));
-    })(req, res, next);
+    // TODO: validate input - here or in facade?
+    return ConsumerFacade.createConsumerAccount(req.body, null)
+      .then(resp => res.status(201).json({ username: resp.username }))
+      .catch(err => next(err));
   }
 
   /*
