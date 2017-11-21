@@ -4,15 +4,13 @@ const categoryFacade = require('../model/category/facade');
 
 exports.createCategory = function(name, parent) {
 
-  console.log(JSON.stringify(categoryFacade.findOne({ name: 'Datorer' }), null, 4));
   if (parent)    {
     console.log(parent);
     // Check if parent in database
     categoryFacade.findOne({ name: parent })
     .then((result) => {
       console.log(JSON.stringify(result, null, 4));
-      
-      
+            
       return new Promise((resolve, reject) => {
         if (result) {
           resolve(result);

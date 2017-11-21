@@ -2,6 +2,7 @@ const passport = require('passport');
 const Controller = require('../../lib/controller');
 const AccountFacade = require('./facade');
 const generateJWTToken = require('../helpers').generateJWTToken;
+const config = require('../../config');
 
 class AccountController extends Controller {
 
@@ -13,7 +14,7 @@ class AccountController extends Controller {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.admin === false) return res.status(401).json({ message: 'Not authorized' });
+      if (!user || user.role !== config.userRole.companyAdmin) return res.status(401).json({ message: 'Not authorized' });
 
       return AccountFacade.createAccount(req.body, user.company)
       .then(resp => res.status(201).json({ username: resp.username }))
