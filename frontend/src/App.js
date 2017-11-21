@@ -15,7 +15,7 @@ import SideBar from './containers/SideBarContainer';
 export default () => (
   <div className="App">
     <header className="App-header">
-      <Link href="/" to="/"><img src={topBanner} className="App-top-banner" alt="Top banner" /></Link>
+      <Link to="/"><img src={topBanner} className="App-top-banner" alt="Top banner" /></Link>
     </header>
     <SideBar />
     <div className="App-content">
