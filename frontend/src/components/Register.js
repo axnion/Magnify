@@ -73,7 +73,7 @@ class CreateAccount extends React.Component {
               />
             </label>
           </div>
-          <input type="submit" value="Add" />
+          <input type="submit" value="Create" />
           {this.printSubmitMessage()}
         </fieldset>
       </form>
