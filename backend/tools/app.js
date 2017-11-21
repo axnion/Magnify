@@ -52,6 +52,7 @@ commander
     .option('-L, --list', 'Lists all companies')
     .option('-C, --create', 'Creates a company')
     .option('-n, --companyname [name]', 'Specify company name')
+    .option('--drop', 'Drops account collection, deleting all data')
     .description('Actions dealing with companies')
     .action((flags) => {
       if (flags.list) {
@@ -62,6 +63,11 @@ commander
         } else {
           company.create(flags.companyname);
         }
+      } else if (flags.drop) {
+        company.drop(mongoose.connection);
+      } else {
+        console.log('No valid action found');
+        mongoose.connection.close();
       }
     });
 
