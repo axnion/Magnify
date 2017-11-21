@@ -10,10 +10,9 @@ class ConsumerController extends Controller {
   */
 
   createAccount(req, res, next) {
-    // TODO: validate input - here or in facade?
     return ConsumerFacade.createAccount(req.body, null)
       .then(resp => res.status(201).json({ username: resp.username }))
-      .catch(err => next(err));
+      .catch(err => res.status(500).json({ message: err.message }));
   }
 
   /*
