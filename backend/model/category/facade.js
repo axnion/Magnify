@@ -23,23 +23,3 @@ class CategoryFacade extends Facade {
 }
 
 module.exports = new CategoryFacade(categorySchema);
-
-
-/*
-
-class AccountFacade extends Facade {
-  createAccount(body, company) {
-
-    const schema = new this.Schema({
-      username: body.username,
-      password: body.password,
-      admin: body.admin,
-      company
-    });
-    return schema.save();
-  }
-
-}
-
-module.exports = new AccountFacade(AccountSchema);
- */

@@ -4,25 +4,40 @@ const categoryFacade = require('../model/category/facade');
 
 exports.createCategory = function(name, parent) {
 
-
-  categoryFacade.findOne({name: parent}).then((result) => {
-    return new Promise((resolve, reject) => {
-        if(results) {
-
+  console.log(JSON.stringify(categoryFacade.findOne({ name: 'Datorer' }), null, 4));
+  if (parent)    {
+    console.log(parent);
+    // Check if parent in database
+    categoryFacade.findOne({ name: parent })
+    .then((result) => {
+      console.log(JSON.stringify(result, null, 4));
+      
+      
+      return new Promise((resolve, reject) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(`No category matching parent "${parent}" was found to add as parent`);
         }
-        
-    })    
-    categoryFacade.createCategory(name, result).finally(() => {
-    mongoose.connection.close();
-  });
-    // 1 Find parent in database
-        // 2 if not exist return and print error
-        // 3 if is null, set parent to root
-        // 4 if exist set as parent
-    // 5 Create category
-    // 6 Print msg of creation and name on screen
-    // 7 catch errors
-    // 8 finally - close database
+      });
+    })
+    .then(result => categoryFacade.createCategory(name, result))
+    .then((category) => {
+      console.log('Category created: ');
+      console.log(JSON.stringify(category, null, 4));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      mongoose.connection.close();
+    });
+
+  } else {
+    categoryFacade.createCategory(name, parent).finally(() => {
+      mongoose.connection.close();
+    });
+  }
 
 
 };
@@ -43,14 +58,3 @@ exports.list = function() {
                 // repeat 3 and 4 untill no children
         // 5 finally - close database
 };
-
-/*
-accountFacade.find()
-  .then((results) => {
-    results.forEach((account) => {
-      console.log(JSON.stringify(account, null, 4));
-    });
-  })
-  .finally(() => {
-    mongoose.connection.close();
-  });*/
