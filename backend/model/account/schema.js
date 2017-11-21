@@ -11,7 +11,7 @@ const accountSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Company',
     required() {
-      return this.role === 'companyAdmin' || this.role === 'companyRep';
+      return this.role === config.userRole.companyAdmin || this.role === config.userRole.companyRep;
     }
   },
   role: {
@@ -48,7 +48,7 @@ accountSchema.pre('save', function(next) {
   const account = this;
 
   // Skip if company has not changed
-  if (!account.isModified('company')) return next();
+  if (!account.company || !account.isModified('company')) return next();
 
   Company.findOne({ _id: account.company }, (err, company) => {
     if (err) return next(err);

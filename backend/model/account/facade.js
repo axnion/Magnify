@@ -7,7 +7,7 @@ class AccountFacade extends Facade {
     const schema = new this.Schema({
       username: body.username,
       password: body.password,
-      admin: body.admin,
+      role: body.role,
       company
     });
     return schema.save();
