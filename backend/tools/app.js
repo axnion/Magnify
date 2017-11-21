@@ -20,7 +20,7 @@ commander
     .option('-C, --create', 'Creates an account')
     .option('-u, --username [username]', 'Specify username')
     .option('-p, --password [password]', 'Specify password')
-    .option('-a, --admin', 'Specifies the new user as a company admin')
+    .option('-r, --role', 'Specifies the role of the user')
     .option('-c, --company [name]', 'Specify company name')
     .action((flags) => {
       if (flags.list) {
@@ -35,11 +35,11 @@ commander
         if (!flags.company) {
           console.log('Please specify a company');
         }
-        if (!flags.admin) {
-          flags.admin = false;
+        if (!flags.role) {
+          console.log('Please specify a role');
         }
 
-        account.createAccount(flags.username, flags.password, flags.company, flags.admin);
+        account.createAccount(flags.username, flags.password, flags.company, flags.role);
 
       } else {
         console.log('No valid action found');

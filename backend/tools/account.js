@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 /**
 * Create new account.
 */
-exports.createAccount = function(username, password, company, admin) {
+exports.createAccount = function(username, password, company, role) {
   companyFacade.findOne({ name: company })
   .then((results) => {
-    if (!results && admin) {
+    if (!results && role === 'companyAdmin') {
       console.log(`Company ${company} does not exist... creating it now`);
       return companyFacade.create({ name: company });
     }
@@ -24,8 +24,8 @@ exports.createAccount = function(username, password, company, admin) {
   .then(company => accountFacade.create({
     username,
     password,
-    admin,
-    company: company.id
+    company: company.id,
+    role
   }))
   .then((account) => {
     console.log('Created Account: ');
