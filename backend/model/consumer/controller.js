@@ -12,7 +12,7 @@ class ConsumerController extends Controller {
   createAccount(req, res, next) {
     return ConsumerFacade.createAccount(req.body, null)
       .then(resp => res.status(201).json({ username: resp.username }))
-      .catch(err => res.status(500).json({ message: err.message }));
+      .catch(err => res.status(500).json({ error: err.MongoError })); //
   }
 
   /*
