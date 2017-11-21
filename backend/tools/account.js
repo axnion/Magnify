@@ -1,7 +1,7 @@
 const companyFacade = require('../model/company/facade');
 const accountFacade = require('../model/account/facade');
-const mongoose = require('mongoose');
-
+const mongoose      = require('mongoose');
+const Promise       = require('bluebird');
 /**
 * Create new account.
 */
@@ -55,11 +55,17 @@ exports.list = function() {
 * Function to delete the accounts collection. Destroying all data of accounts
 * in the database.
 */
-exports.list = function() {
-  return new Promise((resolve, reject) => {
-    mongoose.connection.db.dropCollection('accounts', (err, result) => {
+exports.drop = function(connection) {
+  const promise = new Promise((resolve, reject) => {
+    connection.dropCollection('accounts', (err, result) => {
       if (err) reject(err);
       else resolve(result);
     });
   });
+
+  promise.finally(() => {
+    mongoose.connection.close();
+  });
+
+  return promise;
 };

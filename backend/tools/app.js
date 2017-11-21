@@ -20,23 +20,26 @@ commander
     .option('-C, --create', 'Creates an account')
     .option('-u, --username [username]', 'Specify username')
     .option('-p, --password [password]', 'Specify password')
-    .option('-r, --role', 'Specifies the role of the user')
+    .option('-r, --role [role]', 'Specifies the role of the user')
     .option('-c, --company [name]', 'Specify company name')
+    .option('--drop', 'Drops account collection, deleting all data')
     .action((flags) => {
       if (flags.list) {
         account.list();
-      }      else if (flags.create) {
+      } else if (flags.create) {
         if (!flags.username) {
           console.log('Please specify username');
-        }    else if (!flags.password) {
+        } else if (!flags.password) {
           console.log('Please specify a password');
-        }    else if (!flags.company) {
+        } else if (!flags.company && !flags.role === 'consumer') {
           console.log('Please specify a company');
-        }    else if (!flags.role) {
+        } else if (!flags.role) {
           console.log('Please specify a role');
         } else {
           account.createAccount(flags.username, flags.password, flags.company, flags.role);
         }
+      } else if (flags.drop) {
+        account.drop(mongoose.connection);
       } else {
         console.log('No valid action found');
         mongoose.connection.close();
