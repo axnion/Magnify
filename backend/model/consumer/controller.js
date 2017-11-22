@@ -10,7 +10,7 @@ class ConsumerController extends Controller {
   */
 
   createAccount(req, res, next) {
-    return ConsumerFacade.createAccount(req.body, null)
+    return ConsumerFacade.createAccount(req.body)
       .then(resp => res.status(201).json({ username: resp.username }))
       .catch(err => res.status(500).json({ error: err.MongoError })); //
   }
@@ -43,7 +43,8 @@ class ConsumerController extends Controller {
   login(req, res, next) {
     passport.authenticate("local", { session: false }, (err, user, info) => {
       if (err) return next(err);
-
+      console.log("Logging user:", user);
+      console.log("Logging info: ", info);
       if (!user) {
         return res.status(401).json({ message: info.message });
       }

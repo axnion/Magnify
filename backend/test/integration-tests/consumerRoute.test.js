@@ -2,6 +2,14 @@ const request = require("supertest");
 const server = require("../../index");
 const Consumer = require("../../model/consumer/schema");
 const ConsumerFacade = require("../../model/consumer/facade");
+const AccountFacade = require("../../model/account/facade");
+beforeAll(() => {
+  ConsumerFacade.createAccount({
+    username: "tester",
+    password: "123secure",
+    role: "consumer"
+  });
+});
 
 // Remove consumers created by running tests
 afterAll(done => {
@@ -12,20 +20,42 @@ afterAll(done => {
 });
 
 describe("Creating consumer", () => {
-  test("create a new consumer", done => {
+  test("create consumer with minimal set of credentials", done => {
     const authAttempt = request.agent(server);
-
     authAttempt
       .post("/account/consumer")
       .set("Content-Type", "application/json")
-      .send({ username: "AwesomeUser", password: "pass", role: "consumer" })
+      .send({
+        username: "Minimal",
+        password: "123",
+        role: "consumer"
+      })
       .end((err, resp) => {
         expect(resp.statusCode).toEqual(201);
         done();
       });
   });
 
-  test("fail to create new consumer when passing fauly params", done => {
+  test("create consumer using all schema properties", done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt
+      .post("/account/consumer")
+      .set("Content-Type", "application/json")
+      .send({
+        username: "AwesomeUser",
+        password: "pass",
+        role: "consumer",
+        admin: false,
+        company: null
+      })
+      .end((err, resp) => {
+        expect(resp.statusCode).toEqual(201);
+        done();
+      });
+  });
+
+  test("Fail to create new consumer when only passing username", done => {
     const authAttempt = request.agent(server);
 
     authAttempt
@@ -38,13 +68,30 @@ describe("Creating consumer", () => {
       });
   });
 
+  test("Fail to create consumer when NOT posting role", done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt
+      .post("/account/consumer")
+      .set("Content-Type", "application/json")
+      .send({ username: "Dodo", password: "didi" })
+      .end((err, resp) => {
+        expect(resp.statusCode).toEqual(500);
+        done();
+      });
+  });
+
   test("Login existing user", done => {
     const authAttempt = request.agent(server);
 
     authAttempt
       .post("/account/login")
       .set("Content-Type", "application/x-www-form-urlencoded")
-      .send({ username: "AwesomeUser", password: "pass" })
+      .send({
+        username: "tester",
+        password: "123secure",
+        role: "consumer"
+      })
       .end((err, resp) => {
         expect(resp.statusCode).toEqual(200);
         done();
@@ -57,17 +104,26 @@ describe("Creating consumer", () => {
     return authAttempt
       .post("/account/consumer")
       .set("Content-Type", "application/json")
-      .send({ username: "AwesomeUser2", password: "pass", role: "consumer" })
+      .send({
+        username: "AwesomeUser2",
+        password: "pass",
+        role: "consumer",
+        admin: false
+      })
       .then(resp => {
         authAttempt
           .post("/account/login")
           .set("Content-Type", "application/x-www-form-urlencoded")
-          .send({ username: "AwesomeUser2", password: "pass" })
+          .send({
+            username: "AwesomeUser2",
+            password: "pass",
+            role: "consumer",
+            admin: false
+          })
           .end((err, response) => {
             if (err) {
-              console.log(err);
+              console.log("An error ocurred");
             }
-
             expect(response.statusCode).toEqual(200);
             done();
           });
