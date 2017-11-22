@@ -1,10 +1,11 @@
 const request = require("supertest");
 const server = require("../../index");
-const Consumer = require("../../model/consumer/schema");
-const ConsumerFacade = require("../../model/consumer/facade");
+//const Consumer = require("../../model/consumer/schema");
+const Account = require("../../model/account/schema");
+//const ConsumerFacade = require("../../model/consumer/facade");
 const AccountFacade = require("../../model/account/facade");
 beforeAll(() => {
-  ConsumerFacade.createAccount({
+  AccountFacade.createAccount({
     username: "tester",
     password: "123secure",
     role: "consumer"
@@ -13,7 +14,7 @@ beforeAll(() => {
 
 // Remove consumers created by running tests
 afterAll(done => {
-  Consumer.remove({}, err => {
+  Account.remove({}, err => {
     if (err) done(err);
     done();
   });

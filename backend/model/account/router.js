@@ -1,27 +1,17 @@
 const controller = require("./controller");
-const consumerController = require("../consumer/controller");
-const companyRepController = require("../companyRep/controller");
+//const consumerController = require("../consumer/controller");
+//const companyRepController = require("../companyRep/controller");
 const Router = require("express").Router;
 const router = new Router();
 
-router
-  .route("/")
-  // .get((...args) => controller.find(...args))
-  .post((...args) => controller.createAccount(...args));
+router.route("/").post((...args) => controller.createAccount(...args));
 
-// router.route('/:id')
-// .put((...args) => controller.update(...args))
-// .get((...args) => controller.findById(...args))
-// .delete((...args) => controller.remove(...args));
 router
   .route("/consumer")
-  .post((...args) => consumerController.createAccount(...args));
-router
-  .route("/consumer/login")
-  .post((...args) => consumerController.login(...args));
+  .post((...args) => controller.createConsumerAccount(...args));
 router
   .route("/companyRep")
-  .post((...args) => companyRepController.createAccount(...args));
+  .post((...args) => controller.createAccount(...args));
 
 router.route("/login").post((...args) => controller.login(...args));
 
