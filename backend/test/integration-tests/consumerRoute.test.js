@@ -81,7 +81,8 @@ describe("Creating consumer", () => {
         done();
       });
   });
-
+});
+describe("Test login", () => {
   test("Login existing user", done => {
     const authAttempt = request.agent(server);
 
