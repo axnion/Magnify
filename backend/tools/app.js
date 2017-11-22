@@ -79,6 +79,7 @@ commander
 .option('-C, --create', 'Creates a category')
 .option('-n, --categoryname [name]', 'Specify category name')
 .option('-p, --categoryparent [name]', 'Specify parent or is set to root if not specified')
+.option('--drop', 'Drops category collection, deleting all data')
 .action((flags) => {
   if (flags.list) {
     category.list();
@@ -91,6 +92,8 @@ commander
     } else {
       category.createCategory(flags.categoryname, flags.categoryparent);
     }
+  } else if (flags.drop) {
+    category.drop(mongoose.connection);
   } else {
     console.log('No valid action found');
     mongoose.connection.close();
