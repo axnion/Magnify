@@ -12,12 +12,12 @@ const categorySchema = new Schema(
     }
   });
 
-categorySchema.pre('save', function(next) {
-  const account = this;
-
-  categoryFacade.find().then(() => {console.log("lol")})
-
-//   categoryFacade.find({ name: account.name, parent: account.parent })
+//categorySchema.pre('save', function(next) {
+//  const account = this;
+//
+//  categoryFacade.find().then(() => { console.log('lol'); });
+//
+//  categoryFacade.find({ name: account.name, parent: account.parent })
 //   .then((results) => {
 //     if (results) {
 //       console.log('SAME!');
@@ -25,7 +25,7 @@ categorySchema.pre('save', function(next) {
 //       console.log('NOT SAME!');
 //     }
 //   });
-});
+//});
 
 let category;
 try {
