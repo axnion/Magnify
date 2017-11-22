@@ -6,7 +6,7 @@ class ConsumerFacade extends Facade {
     const schema = new this.Schema({
       username: body.username,
       password: body.password,
-      role: body.role
+      role: 'consumer'
     });
     return schema.save();
   }
