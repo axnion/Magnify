@@ -37,6 +37,23 @@ describe("Creating consumer", () => {
       });
   });
 
+  test("Fail to create a duplicate consumer", done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt
+      .post("/account/consumer")
+      .set("Content-Type", "application/json")
+      .send({
+        username: "tester",
+        password: "123secure",
+        role: "consumer"
+      })
+      .end((err, resp) => {
+        expect(resp.statusCode).toEqual(500);
+        done();
+      });
+  });
+
   test("create consumer using all schema properties", done => {
     const authAttempt = request.agent(server);
 
