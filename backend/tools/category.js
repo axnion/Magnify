@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const categoryFacade = require('../model/category/facade');
 const Promise       = require('bluebird');
 const dataStructures = require('node-data-structures');
+const sprintf = require('sprintf-js').sprintf;
 
 exports.createCategory = function(name, parent) {
   categoryFacade.createCategory(name, parent)
@@ -19,13 +20,16 @@ exports.createCategory = function(name, parent) {
     });
 };
 
-exports.listTest = function() {
+//Please don't try to understand this function (you have better things to do with your life) /Henrik
+exports.list = function() {
   const catStack = new dataStructures.Stack();
   let layer = 0;
+  let nrOfChildren = [];
 
+  //Generic while promise function
   function promiseWhile(predicate, action) {
     function loop() {
-      if (!predicate) return;
+      if (!predicate()) return;
       return Promise.resolve(action()).then(loop);
     }
     return Promise.resolve().then(loop);
@@ -34,36 +38,35 @@ exports.listTest = function() {
   categoryFacade.findAllMainCategories()
     .then((mainCategories) => {
       return Promise.all(mainCategories.map((mainCategory) => {
-        console.log(JSON.stringify(mainCategory.name, null, 0));
         catStack.push(mainCategory);
+        return mainCategory;
       }));
     })
-  .then(promiseWhile(catStack.empty(), function() {
+  .then(() => promiseWhile(function() { return !catStack.isEmpty(); }, function() {
     let nextToProcess = catStack.pop();
-    layer += 2;
-    console.log(JSON.stringify(nextToProcess.name, null, layer));
+    let asString = nextToProcess.name;
+    let i;
+    for (i = 0; i < layer * 2; i += 1) {
+      asString = ' ' + asString;
+    }
+    console.log(asString);
     return categoryFacade.findAllChildrenOf(nextToProcess.name)
-    .then(allChildren => Promise.all(allChildren.map((child) => {
-      return catStack.push(child);
-    })));
-  }))
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    mongoose.connection.close();
-  });
-};
-
-
-exports.list = function() {
- 
-  categoryFacade.find()
-  .then((categories) => {
-    categories.forEach((category) => {
-      console.log(JSON.stringify(category.name, null, 2));
+    .then((allChildren) => {
+      nrOfChildren[layer] -= 1;
+      if (allChildren.length === 0 && layer > 0 && nrOfChildren[layer] === 0) {
+        layer -= 1;
+      } else if (allChildren.length !== 0) {
+        layer += 1;
+        nrOfChildren[layer] = allChildren.length;     
+      }
+      return Promise.all(allChildren.map((child) => {
+        catStack.push(child);
+        return child;
+      })).then(() => {
+        return Promise.resolve();
+      });
     });
-  })
+  }))
   .catch((err) => {
     console.log(err);
   })
