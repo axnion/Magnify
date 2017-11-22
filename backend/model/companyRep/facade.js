@@ -1,7 +1,7 @@
 const Facade = require("../../lib/facade");
-const ConsumerSchema = require("./schema");
+const CompanyRepSchema = require("./schema");
 
-class ConsumerFacade extends Facade {
+class CompanyRepFacade extends Facade {
   createAccount(body, company) {
     const schema = new this.Schema({
       username: body.username,
@@ -13,4 +13,4 @@ class ConsumerFacade extends Facade {
   }
 }
 
-module.exports = new ConsumerFacade(ConsumerSchema);
+module.exports = new CompanyRepFacade(CompanyRepSchema);

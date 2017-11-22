@@ -35,7 +35,7 @@ afterAll(done => {
   });
 });
 
-describe.skip("Test /account route", () => {
+describe("Test /account route", () => {
   test("login using correct credentials", done => {
     const authAttempt = request.agent(server);
 
