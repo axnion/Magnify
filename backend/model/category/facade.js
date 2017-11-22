@@ -47,7 +47,7 @@ class CategoryFacade extends Facade {
   /*
   Returns an array of all children to parent
   Arguments
-    parent: parent object
+    parent: parent name as string
   */
   findAllChildrenOf(parent) {
     return this.findOne({ name: parent }).then((result) => {

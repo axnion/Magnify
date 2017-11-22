@@ -19,23 +19,38 @@ exports.createCategory = function(name, parent) {
     });
 };
 
-exports.createMainCategory = function(name) {
-  categoryFacade.createCategory(name, null)
-    .catch((err) => {
-      console.log(err.message);
-    })
-    .finally(() => {
-      mongoose.connection.close();
+exports.listTest = function() {
+  const catStack = new dataStructures.Stack();
+  let layer = 0;
+
+  function promiseWhile(predicate, action) {
+    function loop() {
+      if (!predicate) return;
+      return Promise.resolve(action()).then(loop);
+    }
+    return Promise.resolve().then(loop);
+  }
+  
+  const addAllMainCategoriesToStackfunction = function () {
+    return categoryFacade.findAllMainCategories()
+    .then((mainCategories) => {
+      return Promise.all(mainCategories.map((mainCategory) => {
+        console.log(JSON.stringify(mainCategory.name, null, 0));
+        catStack.push(mainCategory);
+      }));
     });
-};
+  };
 
-exports.listRec = function() {
-
-
-  const recursive = recursiveCategoryPrint;
-  categoryFacade.findAllMainCategories()
-  .then(mainCategories => Promise.all(mainCategories.map((mainCategory) => recursive(mainCategory, 0)
-  )))
+  addAllMainCategoriesToStackfunction()
+  .then(promiseWhile(catStack.empty(), function() {
+    let nextToProcess = catStack.pop();
+    layer += 2;
+    console.log(JSON.stringify(nextToProcess.name, null, layer));
+    return categoryFacade.findAllChildrenOf(nextToProcess.name)
+    .then(allChildren => Promise.all(allChildren.map((child) => {
+      return catStack.push(child);
+    })));
+  }))
   .catch((err) => {
     console.log(err);
   })
@@ -43,6 +58,7 @@ exports.listRec = function() {
     mongoose.connection.close();
   });
 };
+
 
 exports.list = function() {
  
