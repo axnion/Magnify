@@ -31,17 +31,13 @@ exports.listTest = function() {
     return Promise.resolve().then(loop);
   }
   
-  const addAllMainCategoriesToStackfunction = function () {
-    return categoryFacade.findAllMainCategories()
+  categoryFacade.findAllMainCategories()
     .then((mainCategories) => {
       return Promise.all(mainCategories.map((mainCategory) => {
         console.log(JSON.stringify(mainCategory.name, null, 0));
         catStack.push(mainCategory);
       }));
-    });
-  };
-
-  addAllMainCategoriesToStackfunction()
+    })
   .then(promiseWhile(catStack.empty(), function() {
     let nextToProcess = catStack.pop();
     layer += 2;
@@ -62,7 +58,7 @@ exports.listTest = function() {
 
 exports.list = function() {
  
-  categoryFacade.findAllChildrenOf('vitvaror')
+  categoryFacade.find()
   .then((categories) => {
     categories.forEach((category) => {
       console.log(JSON.stringify(category.name, null, 2));
