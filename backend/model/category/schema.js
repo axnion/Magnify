@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const categoryFacade = require('../category/facade');
+const categoryFacade = require('./facade');
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema(
