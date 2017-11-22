@@ -32,6 +32,24 @@ Options:
   -h, --help  output usage information
 ```
 
+### Category
+```
+$ node app.js category --help
+
+Usage: category [options]
+
+Actions dealing with category
+
+Options:
+  -L, --list    Lists all companies
+  -h, --help    output usage information
+  -L, --list    Lists all categories
+  -C, --create  Creates a category
+  -n, --categoryname [name]   Specify category name
+  -p, --categoryparent [name] Specify parent or is set to root if not specified
+  --drop        Drops category collection, deleting all data
+```
+
 ## Presentation!!!!
 ```shell
 # Show there is no accounts or companies registered. Or use mongo to show this
