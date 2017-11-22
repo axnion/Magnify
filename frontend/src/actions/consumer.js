@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
-const endpoint = '/consumer';
+const endpoint = '/account/consumer';
 
 function beginCreateConsumer() {
   return { type: types.CREATE_CONSUMER };

@@ -22,10 +22,9 @@ class CreateAccount extends React.Component {
     const data = {
       username: this.state.username,
       password: this.state.password,
-      admin: false,
     };
 
-    this.sendForm(data, this.props.token);
+    this.sendForm(data);
     this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
   }
@@ -84,14 +83,12 @@ class CreateAccount extends React.Component {
 CreateAccount.propTypes = {
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
-  token: PropTypes.string,
   sendForm: PropTypes.func.isRequired,
 };
 
 CreateAccount.defaultProps = {
   error: null,
   isWaiting: false,
-  token: null,
 };
 
 export default CreateAccount;
