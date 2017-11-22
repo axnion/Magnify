@@ -10,8 +10,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  isWaiting: state.account.isWaiting,
-  error: state.account.error,
+  isWaiting: state.consumer.isWaiting,
+  error: state.consumer.error,
 });
 
 const RegisterContainer = connect(
