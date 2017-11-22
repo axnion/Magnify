@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "JWT_SECRET=keyboardcat nodemon -L index.js",
     "start": "node index.js",
-    "test":
-      "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest --verbose --forceExit",
-    "integration-tests":
-      "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest test/integration-tests  --forceExit --verbose",
+    "test": "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest --verbose --forceExit",
+    "integration-tests": "NODE_ENV=test JWT_SECRET=keyboardcat MONGO_DB_URI=mongodb://localhost/magnify-test jest test/integration-tests  --forceExit --verbose",
     "unit-test": "jest test/unit-tests --coverage --forceExit"
   },
   "engines": {
@@ -27,6 +25,7 @@
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.7.0",
     "morgan": "^1.7.0",
+    "node-data-structures": "^1.0.1",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0"

@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const categoryFacade = require('../model/category/facade');
 const Promise       = require('bluebird');
+const dataStructures = require('node-data-structures');
 
 exports.createCategory = function(name, parent) {
   categoryFacade.createCategory(name, parent)
@@ -27,26 +28,10 @@ exports.createMainCategory = function(name) {
       mongoose.connection.close();
     });
 };
-/*
-Private rekursive function for printing all categories in layer order
-*/
-const recursiveCategoryPrint = function(parent, layer) {
-  if (!parent) {
-    return (null);
-  } else {
 
-    console.log(JSON.stringify(parent.name, null, layer));
-    
-  return Promise.resolve().then(() => {
-    return categoryFacade.findAllChildrenOf(parent).then((children) => {
-      return Promise.all(children.map((child) => {
-        return recursiveCategoryPrint(child, layer + 2 );
-      }));
-    });
-  });
-}
-};
 exports.listRec = function() {
+
+
   const recursive = recursiveCategoryPrint;
   categoryFacade.findAllMainCategories()
   .then(mainCategories => Promise.all(mainCategories.map((mainCategory) => recursive(mainCategory, 0)
@@ -61,7 +46,7 @@ exports.listRec = function() {
 
 exports.list = function() {
  
-  categoryFacade.find()
+  categoryFacade.findAllChildrenOf('vitvaror')
   .then((categories) => {
     categories.forEach((category) => {
       console.log(JSON.stringify(category.name, null, 2));

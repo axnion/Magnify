@@ -50,9 +50,11 @@ class CategoryFacade extends Facade {
     parent: parent object
   */
   findAllChildrenOf(parent) {
-    return this.Schema
-    .find({ mainCategory: false, parent })
-    .exec();
+    return this.findOne({ name: parent }).then((result) => {
+      return this.Schema
+      .find({ mainCategory: false, parent: result })
+      .exec();
+    });
   }
 
 }
