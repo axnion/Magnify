@@ -7,11 +7,20 @@ class Profile extends React.Component {
     this.state = { };
   }
 
+  roleToString() {
+    if (this.props.role === 'companyAdmin') {
+      return 'Admin';
+    } else if (this.props.role === 'companyRep') {
+      return 'Company Representative';
+    }
+    return 'User';
+  }
+
   render() {
     return (
       <div className="profile">
         <h1>Username: {this.props.username}</h1>
-        <h3>Type of user: { this.props.isAdmin ? 'Admin' : 'User' }</h3>
+        <h3>Type of user: { this.roleToString()}</h3>
       </div>
     );
   }
@@ -19,11 +28,11 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   username: PropTypes.string,
-  isAdmin: PropTypes.bool,
+  role: PropTypes.string,
 };
 
 Profile.defaultProps = {
   username: null,
-  isAdmin: false,
+  role: null,
 };
 export default Profile;

@@ -5,7 +5,7 @@ import AdminRoute from '../components/AdminRoute';
 const mapStateToProps = (state, ownProps) => ({
   isWaiting: state.account.isWaiting,
   username: state.auth.username,
-  isAdmin: state.auth.isAdmin,
+  role: state.auth.role,
   location: ownProps.path,
   routeProps: {
     exact: ownProps.exact,

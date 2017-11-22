@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const AdminRoute = ({
   routeProps,
   username,
-  isAdmin,
+  role,
   children,
   isWaiting,
   location,
@@ -13,7 +13,7 @@ const AdminRoute = ({
   <Route
     {...routeProps}
     render={() => (
-      username !== null && isAdmin ? (
+      username !== null && role === 'companyAdmin' ? (
         <div>{children}</div>
       ) : !isWaiting && (
         <Redirect to={{
@@ -33,14 +33,14 @@ AdminRoute.propTypes = {
     path: PropTypes.string,
   }).isRequired,
   username: PropTypes.string,
-  isAdmin: PropTypes.bool,
+  role: PropTypes.string,
   children: PropTypes.node.isRequired,
   isWaiting: PropTypes.bool,
   location: PropTypes.string.isRequired,
 };
 
 AdminRoute.defaultProps = {
-  isAdmin: false,
+  role: null,
   isWaiting: false,
   username: null,
 };
