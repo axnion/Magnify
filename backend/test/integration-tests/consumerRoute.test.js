@@ -16,9 +16,9 @@ describe("Creating consumer", () => {
     const authAttempt = request.agent(server);
 
     authAttempt
-      .post("/consumer")
+      .post("/account/consumer")
       .set("Content-Type", "application/json")
-      .send({ username: "AwesomeUser", password: "pass" })
+      .send({ username: "AwesomeUser", password: "pass", role: "consumer" })
       .end((err, resp) => {
         expect(resp.statusCode).toEqual(201);
         done();
@@ -29,7 +29,7 @@ describe("Creating consumer", () => {
     const authAttempt = request.agent(server);
 
     authAttempt
-      .post("/consumer")
+      .post("/account/consumer")
       .set("Content-Type", "application/json")
       .send({ username: "Foo" })
       .end((err, resp) => {
@@ -42,12 +42,35 @@ describe("Creating consumer", () => {
     const authAttempt = request.agent(server);
 
     authAttempt
-      .post("/consumer/login")
+      .post("/account/login")
       .set("Content-Type", "application/x-www-form-urlencoded")
       .send({ username: "AwesomeUser", password: "pass" })
       .end((err, resp) => {
         expect(resp.statusCode).toEqual(200);
         done();
+      });
+  });
+
+  test("Login using promise version of test", done => {
+    const authAttempt = request.agent(server);
+
+    return authAttempt
+      .post("/account/consumer")
+      .set("Content-Type", "application/json")
+      .send({ username: "AwesomeUser2", password: "pass", role: "consumer" })
+      .then(resp => {
+        authAttempt
+          .post("/account/login")
+          .set("Content-Type", "application/x-www-form-urlencoded")
+          .send({ username: "AwesomeUser2", password: "pass" })
+          .end((err, response) => {
+            if (err) {
+              console.log(err);
+            }
+
+            expect(response.statusCode).toEqual(200);
+            done();
+          });
       });
   });
 });

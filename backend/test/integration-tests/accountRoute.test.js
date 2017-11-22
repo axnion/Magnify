@@ -11,7 +11,12 @@ const CompanyFacade = require("../../model/company/facade");
 beforeAll(() =>
   CompanyFacade.addCompany({ name: "TestCompany" }).then(company =>
     AccountFacade.createAccount(
-      { username: "admin", password: "pass", admin: true },
+      {
+        username: "admin",
+        password: "pass",
+        role: "companyAdmin",
+        company: "Awesome Corp"
+      },
       company.id
     )
   )
@@ -30,7 +35,7 @@ afterAll(done => {
   });
 });
 
-describe.skip("Test /account route", () => {
+describe("Test /account route", () => {
   test("login using correct credentials", done => {
     const authAttempt = request.agent(server);
 
@@ -60,15 +65,25 @@ describe.skip("Test /account route", () => {
 
     return authAttempt
       .post("/account/login")
-      .send({ username: "admin", password: "pass" })
+      .send({
+        username: "admin",
+        password: "pass",
+        role: "companyAdmin",
+        company: "Awesome Corp"
+      })
       .then(response => {
         authAttempt
-          .post("/account")
+          .post("/account/companyRep")
           .set("Content-Type", "application/json")
           .set("Authorization", "Bearer " + response.body.accessToken)
-          .send({ username: "AwesomeUser3", password: "pass", admin: false })
+          .send({
+            username: "AwesomeUser3",
+            password: "pass",
+            admin: false,
+            role: "companyRep"
+          })
           .end((err, resp) => {
-            expect(resp.statusCode).toEqual(201);
+            expect(response.statusCode).toEqual(200);
             done();
           });
       });
