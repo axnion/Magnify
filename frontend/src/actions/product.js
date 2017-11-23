@@ -86,11 +86,11 @@ export function getAProduct(id) {
   };
 }
 
-export function createProduct(data) {
+export function createProduct(data, token) {
   return (dispatch) => {
     dispatch(beginCreateProduct());
 
-    return apiRequest('post', data, endpoint)
+    return apiRequest('post', data, endpoint, token)
       .then((response) => {
         dispatch(createProductSuccess(response.data));
       })
@@ -154,12 +154,12 @@ export function mockGetAProduct() {
   };
 }
 
-export function mockCreateProduct(data) {
+export function mockCreateProduct(data, token) {
   return (dispatch) => {
     dispatch(beginCreateProduct());
 
     return new Promise((resolve, reject) => (setTimeout(() => {
-      if (data.name === undefined) {
+      if (!data.name || !data.category || !token || !data.company) {
         return reject(new Error('Please enter all required data'));
       }
 
