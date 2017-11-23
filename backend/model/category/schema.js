@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const categoryFacade = require('./facade');
 const Schema = mongoose.Schema;
+const _ = require('lodash')
 
 const categorySchema = new Schema(
   {
@@ -12,20 +13,16 @@ const categorySchema = new Schema(
     }
   });
 
-//categorySchema.pre('save', function(next) {
-//  const account = this;
-//
-//  categoryFacade.find().then(() => { console.log('lol'); });
-//
-//  categoryFacade.find({ name: account.name, parent: account.parent })
-//   .then((results) => {
-//     if (results) {
-//       console.log('SAME!');
-//     } else {
-//       console.log('NOT SAME!');
-//     }
-//   });
-//});
+categorySchema.pre('save', function(next) {
+  category.find({ name: this.name, parent: this.parent })
+  .then((results) => {
+    if (_.isEmpty(results)) {
+      next();
+    } else {
+      next(new Error(`Category ${this.name} already exists at this level`));
+    }
+  });
+});
 
 let category;
 try {
