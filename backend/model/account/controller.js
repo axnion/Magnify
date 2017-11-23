@@ -53,11 +53,7 @@ class AccountController extends Controller {
   createConsumerAccount(req, res, next) {
     return AccountFacade.createAccount(req.body)
       .then(resp => res.status(201).json({ username: resp.username }))
-      .catch(message =>
-        res.status(500).json({
-          message
-        })
-      ); //
+      .catch(message => res.status(500).json(message));
   }
 }
 
