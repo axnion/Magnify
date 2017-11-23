@@ -50,6 +50,7 @@ describe("Creating consumer", () => {
       })
       .end((err, resp) => {
         expect(resp.statusCode).toEqual(500);
+        expect(resp.error.text.code).toEqual(11000); // duplicate key error
         done();
       });
   });

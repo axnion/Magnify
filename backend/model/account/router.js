@@ -1,6 +1,4 @@
 const controller = require("./controller");
-//const consumerController = require("../consumer/controller");
-//const companyRepController = require("../companyRep/controller");
 const Router = require("express").Router;
 const router = new Router();
 
