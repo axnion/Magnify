@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const categoryFacade = require('../model/category/facade');
 const Promise       = require('bluebird');
 const dataStructures = require('node-data-structures');
-const sprintf = require('sprintf-js').sprintf;
 
 exports.createCategory = function(name, parent) {
   categoryFacade.createCategory(name, parent)
@@ -20,13 +19,13 @@ exports.createCategory = function(name, parent) {
     });
 };
 
-//Please don't try to understand this function (you have better things to do with your life) /Henrik
+// Please don't try to understand this function (you have better things to do with your life) /Henrik
 exports.list = function() {
   const catStack = new dataStructures.Stack();
   let layer = 0;
-  let nrOfChildren = [];
+  const nrOfChildren = [];
 
-  //Generic while promise function
+  // Generic while promise function
   function promiseWhile(predicate, action) {
     function loop() {
       if (!predicate()) return;
@@ -50,14 +49,16 @@ exports.list = function() {
       asString = ' ' + asString;
     }
     console.log(asString);
-    return categoryFacade.findAllChildrenOf(nextToProcess.name)
+    return categoryFacade.findAllChildrenOf(nextToProcess)
     .then((allChildren) => {
       nrOfChildren[layer] -= 1;
-      if (allChildren.length === 0 && layer > 0 && nrOfChildren[layer] === 0) {
-        layer -= 1;
+      if (allChildren.length === 0 && layer > 0) {
+        while (nrOfChildren[layer] === 0) {
+          layer -= 1;
+        }
       } else if (allChildren.length !== 0) {
         layer += 1;
-        nrOfChildren[layer] = allChildren.length;     
+        nrOfChildren[layer] = allChildren.length;
       }
       return Promise.all(allChildren.map((child) => {
         catStack.push(child);

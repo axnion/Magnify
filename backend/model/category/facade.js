@@ -47,14 +47,22 @@ class CategoryFacade extends Facade {
   /*
   Returns an array of all children to parent
   Arguments
-    parent: parent name as string
+    parent: parent as object
   */
   findAllChildrenOf(parent) {
-    return this.findOne({ name: parent }).then((result) => {
-      return this.Schema
-      .find({ mainCategory: false, parent: result })
+    return this.Schema
+      .find({ mainCategory: false, parent: parent._id })
       .exec();
-    });
+  }
+  /*
+  Returns an array of all children to parent
+  Arguments
+    parent: parents as id
+  */
+  findAllChildrenOfById(parentId) {
+    return this.Schema
+      .find({ mainCategory: false, parent: parentId })
+      .exec();
   }
 
 }
