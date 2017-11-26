@@ -6,7 +6,8 @@ import topBanner from './topbanner.jpg';
 import Index from './containers/IndexContainer';
 import AdminRoute from './containers/AdminRouteContainer';
 import LoggedInRoute from './containers/LoggedInRouteContainer';
-import AddRepFormContainer from './containers/AddRepFormContainer';
+import AddRepForm from './containers/AddRepFormContainer';
+import AddProduct from './containers/AddProductContainer';
 import Register from './containers/RegisterContainer';
 import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
@@ -20,10 +21,11 @@ export default () => (
     <SideBar />
     <div className="App-content">
       <Route path="/" exact component={Index} />
-      <AdminRoute path="/addRep"><AddRepFormContainer /></AdminRoute>
+      <AdminRoute path="/addRep"><AddRepForm /></AdminRoute>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
+      <LoggedInRoute path="/Product"><AddProduct /></LoggedInRoute>
     </div>
   </div>
 );
