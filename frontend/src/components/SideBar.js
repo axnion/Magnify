@@ -24,6 +24,9 @@ const SideBar = ({ username, logout, role }) => (
       username === null ? undefined : <SideBarItem><Link to="/profile"><button className="sidebar-btn">Profile</button></Link></SideBarItem>
     }
     {
+      username === null ? undefined : <SideBarItem><Link to="/product"><button className="sidebar-btn">Add product</button></Link></SideBarItem>
+    }
+    {
       role === 'companyAdmin' ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
     }
     {
