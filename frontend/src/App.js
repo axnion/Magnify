@@ -8,6 +8,7 @@ import AdminRoute from './containers/AdminRouteContainer';
 import LoggedInRoute from './containers/LoggedInRouteContainer';
 import AddRepForm from './containers/AddRepFormContainer';
 import AddProduct from './containers/AddProductContainer';
+import AddMaterial from './containers/AddMaterialContainer';
 import Register from './containers/RegisterContainer';
 import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
@@ -26,6 +27,7 @@ export default () => (
       <Route path="/register" component={Register} />
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
       <LoggedInRoute path="/Product"><AddProduct /></LoggedInRoute>
+      <Route path="/material" component={AddMaterial} />
     </div>
   </div>
 );
