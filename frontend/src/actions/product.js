@@ -163,12 +163,12 @@ export function mockCreateProduct(data, token) {
         return reject(new Error('Please enter all required data'));
       }
 
-      const company = data;
+      const product = data;
 
       // eslint-disable-next-line no-underscore-dangle
-      company._id = crypto.randomBytes(16).toString('hex');
+      product._id = crypto.randomBytes(16).toString('hex');
 
-      return resolve(company);
+      return resolve(product);
     }, 500)
     ))
       .then((response) => {
