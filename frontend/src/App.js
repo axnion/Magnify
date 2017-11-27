@@ -13,7 +13,7 @@ import Register from './containers/RegisterContainer';
 import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
 import SideBar from './containers/SideBarContainer';
-import Products from './containers/ProductsContainer';
+import ProductsList from './containers/ProductsListContainer';
 
 export default () => (
   <div className="App">
@@ -26,7 +26,7 @@ export default () => (
       <AdminRoute path="/addRep"><AddRepForm /></AdminRoute>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/products" component={Products}
+      <Route path="/products" component={ProductsList} />
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
       <LoggedInRoute path="/Product"><AddProduct /></LoggedInRoute>
       <Route path="/material" component={AddMaterial} />
