@@ -14,6 +14,7 @@ import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
 import SideBar from './containers/SideBarContainer';
 import ProductsList from './containers/ProductsListContainer';
+import ProductView from './containers/ProduktViewContainer';
 
 export default () => (
   <div className="App">
@@ -30,6 +31,7 @@ export default () => (
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
       <LoggedInRoute path="/Product"><AddProduct /></LoggedInRoute>
       <Route path="/material" component={AddMaterial} />
+      <Route path="/ProductView" component={ProductView} />
     </div>
   </div>
 );
