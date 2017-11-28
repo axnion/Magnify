@@ -4,7 +4,7 @@ const companyFacade = require('./facade');
 const config = require('../../config');
 
 class CompanyController extends Controller {
-  createProducts(req, res, next) {
+  getProducts(req, res, next) {
     // Check authorization
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
