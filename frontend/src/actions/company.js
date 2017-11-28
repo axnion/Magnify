@@ -54,6 +54,31 @@ export function getCompanies() {
   };
 }
 
+export function mockGetCompanies() {
+  return (dispatch) => {
+    dispatch(beginGetCompanies());
+
+    return new Promise(resolve => (setTimeout(() => {
+      const companies = ['TestCompany1', 'TestCompany2', 'TestCompany3'];
+
+      // eslint-disable-next-line no-underscore-dangle
+      companies._id = crypto.randomBytes(16).toString('hex');
+
+      return resolve(companies);
+    }, 500)
+    ))
+      .then((response) => {
+        // console.log(response);
+        dispatch(getCompaniesSuccess(response));
+      })
+      .catch((error) => {
+        // console.log(error);
+        dispatch(getCompaniesError(error));
+      });
+  };
+}
+
+
 export function createCompany(data) {
   return (dispatch) => {
     dispatch(beginCreateCompany());
