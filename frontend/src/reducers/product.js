@@ -4,8 +4,14 @@ export default (state = {
   isWaiting: false,
   products: [],
   error: null,
+  filterByCompany: 'All',
 }, action) => {
   switch (action.type) {
+    case types.FILTER_BY_COMPANY:
+      return {
+        ...state,
+        filterByCompany: action.filterByCompany,
+      };
     case types.GET_PRODUCTS:
       return {
         ...state,
