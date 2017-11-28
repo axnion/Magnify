@@ -1,6 +1,10 @@
 const Controller = require('../../lib/controller');
-const exampleFacade = require('./facade');
+const ProductFacade = require('./facade');
 
-class ExampleController extends Controller {}
+class ProductController extends Controller {
+  getProducts(req, res, next) {
+    return ProductFacade.find().then(resp => res.status(200).json(resp));
+  }
+}
 
-module.exports = new ExampleController(exampleFacade);
+module.exports = new ProductController(ProductFacade);

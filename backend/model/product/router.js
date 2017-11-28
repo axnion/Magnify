@@ -10,7 +10,8 @@ router
 router
   .route('/:id')
   .put((...args) => controller.update(...args))
-  .get((...args) => controller.findById(...args))
+  //.get((...args) => controller.findById(...args))
+  .get((...args) => controller.getProducts(...args))
   .delete((...args) => controller.remove(...args));
 
 module.exports = router;

@@ -1,6 +1,14 @@
 const Facade = require('../../lib/facade');
-const exampleSchema = require('./schema');
+const productSchema = require('./schema');
 
-class ExampleFacade extends Facade {}
+class ProductFacade extends Facade {
+  addProduct(body, companyId) {
+    const schema = new this.Schema({
+      name: body.name,
+      company: companyId
+    });
+    return schema.save();
+  }
+}
 
-module.exports = new ExampleFacade(exampleSchema);
+module.exports = new ProductFacade(productSchema);
