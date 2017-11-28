@@ -46,9 +46,9 @@ class AccountController extends Controller {
 
   /**
    * Creates a new consumer account
-   * @param {*} req 
-   * @param {*} res 
-   * @param {*} next 
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
    */
   createConsumerAccount(req, res, next) {
     return AccountFacade.createAccount(req.body)
