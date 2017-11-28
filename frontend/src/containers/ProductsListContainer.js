@@ -5,10 +5,13 @@ import PropTypes from 'prop-types';
 import { mockGetProducts } from '../actions/product';
 import Products from '../components/Products';
 
+import { mockGetCategories } from '../actions/category';
+
 class ProductsListContainer extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(mockGetProducts());
+    dispatch(mockGetCategories());
   }
 
   render() {

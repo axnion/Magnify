@@ -5,6 +5,7 @@ import company from './company';
 import account from './account';
 import consumer from './consumer';
 import product from './product';
+import category from './category';
 import auth from './auth';
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   auth,
   consumer,
   product,
+  category,
   routing: routerReducer,
 });
