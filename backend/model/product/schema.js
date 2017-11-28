@@ -11,21 +11,25 @@ const productSchema = new Schema({
   },
   category: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Category'
+    ref: 'Category',
+    required: true,
+    default: 'uncategorized'
   },
-  material: [{
-    url: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    title: {
-      type: String
-    },
-    description: {
-      type: String
+  material: [
+    {
+      url: {
+        type: String,
+        required: true,
+        unique: true
+      },
+      title: {
+        type: String
+      },
+      description: {
+        type: String
+      }
     }
-  }]
+  ]
 });
 
 productSchema.plugin(idValidator);
