@@ -7,6 +7,7 @@ import consumer from './consumer';
 import product from './product';
 import category from './category';
 import auth from './auth';
+import productView from './productView';
 
 export default combineReducers({
   example,
@@ -16,5 +17,6 @@ export default combineReducers({
   consumer,
   product,
   category,
+  productView,
   routing: routerReducer,
 });

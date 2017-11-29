@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
+import { setTimeout } from 'timers';
 
 const endpoint = '/products';
 
@@ -159,6 +160,7 @@ export function mockGetProducts() {
           name: 'TestName3',
           category: { _id: 'TestCat4id', name: 'TestCat4', parent: 'TestCat2id', mainCategory: false },
           company: { _id: 'TestCompany2id', name: 'TestCompany2' } },
+
       ];
 
       // eslint-disable-next-line no-underscore-dangle

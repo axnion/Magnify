@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Products = ({ products }) => (
   <ul>
     {products.map(product =>
-      <li key={product._id}>Name: {product.name}, Company: {product.company.name}, Category: {product.category.name} </li>)}
+      <Link key={product._id} to={`/ProductView/${product._id}`}>
+        <li>Name: {product.name}, Company: {product.company.name}, Category: {product.category.name} </li>
+      </Link>
+    )}
   </ul>
 );
 

@@ -4,6 +4,7 @@ const config = require('../config.js');
 const account = require('./account');
 const company = require('./company');
 const category = require('./category');
+const product = require('./product');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url, { useMongoClient: true });
@@ -99,5 +100,33 @@ commander
     mongoose.connection.close();
   }
 });
+
+commander
+  .command('product')
+  .description('Actions dealing with products')
+  .option('-L, --list', 'Lists all products')
+  .option('-C, --create', 'Creates a product')
+  .option('-n, --productname [name]', 'Specify product name')
+  .option('-c, --company [name]', 'Specify company name')
+  .option('--category', 'Specify product category')
+  .option('--drop', 'Drops products collection, deleting all data')
+  .action((flags) => {
+    if (flags.list) {
+      product.list();
+    } else if(flags.create) {
+      if (!flags.productname) {
+        console.log('Please specify a product name');
+      } else if (!flags.company) {
+        console.log('Please specify a company owning the product')
+      } else {
+        product.create(flags.productname, flags.company, flags.category);
+      }
+    } else if (flags.drop) {
+      product.drop(mongoose.connection);
+    } else {
+      console.log('No valid action found');
+      mongoose.connection.close();
+    }
+  });
 
 commander.parse(process.argv);

@@ -33,7 +33,7 @@ exports.list = function() {
     }
     return Promise.resolve().then(loop);
   }
-  
+
   categoryFacade.findAllMainCategories()
     .then((mainCategories) => {
       return Promise.all(mainCategories.map((mainCategory) => {
@@ -81,7 +81,7 @@ exports.drop = function(connection) {
     connection.dropCollection('categories', (err, result) => {
       if (err) reject(err);
       else {
-        console.log('Deletion completed: Database has been removed of all categories');
+        console.log('Categories collection dropped');
         resolve(result);
       }
     });
