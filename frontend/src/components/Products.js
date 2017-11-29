@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Products = ({ products }) => (
   <ul>
-    {products.map((product, key) =>
-      <li key={key}>Name: {product.name}, Company: {product.company}, Category: {product.category} </li>)}
+    {products.map(product =>
+      <li key={product._id}>Name: {product.name}, Company: {product.company.name}, Category: {product.category.name} </li>)}
   </ul>
 );
 

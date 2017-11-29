@@ -59,7 +59,14 @@ export function mockGetCompanies() {
     dispatch(beginGetCompanies());
 
     return new Promise(resolve => (setTimeout(() => {
-      const companies = ['TestCompany1', 'TestCompany2', 'TestCompany3'];
+      const companies = [
+        { _id: 'TestCompany1id', name: 'TestCompany1' },
+        { _id: 'TestCompany2id', name: 'TestCompany2' },
+        { _id: 'TestCompany3id', name: 'TestCompany3' },
+        { _id: 'TestCompany4id', name: 'TestCompany4' },
+        { _id: 'TestCompany5id', name: 'TestCompany5' },
+      ];
+
 
       // eslint-disable-next-line no-underscore-dangle
       companies._id = crypto.randomBytes(16).toString('hex');

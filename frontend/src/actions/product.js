@@ -65,17 +65,51 @@ function createProductError(payload) {
   };
 }
 
+function getCompaniesNames(products, companies) {
+  const newProducts = products.map((product) => {
+    const companyObj = companies.find(c => c._id === product.company);
+    const newProduct = companyObj !== undefined ? { ...product, company: companyObj.name } : product;
+    return newProduct;
+  });
+  return newProducts;
+}
+
+function getCategoriesNames(products, categories) {
+  const newProducts = products.map((product) => {
+    const categoryObj = categories.find(c => c._id === product.category);
+    return { ...product, categoryObj };
+  });
+  return newProducts;
+}
+
+function combineAllProductsData(product, categories, companies) {
+  const p1 = getCategoriesNames(product, categories);
+  return getCompaniesNames(p1, companies);
+}
+
 export function getProducts() {
   return (dispatch) => {
     dispatch(beginGetProducts());
+    const productsRequest = apiRequest('get', {}, endpoint);
+    const categoriesRequest = apiRequest('get', {}, '/category');
+    const companiesRequest = apiRequest('get', {}, '/company');
 
-    return apiRequest('get', {}, endpoint)
-      .then((response) => {
-        dispatch(getProductsSuccess(response.data));
-      })
-      .catch((response) => {
-        dispatch(getProductsError(response.message));
-      });
+    Promise.all([
+      productsRequest,
+      categoriesRequest,
+      companiesRequest,
+    ]).then((response) => {
+      const products = response[0].data;
+      const categories = response[1].data;
+      const companies = response[2].data;
+
+      const result = combineAllProductsData(products, categories, companies);
+
+      dispatch(getProductsSuccess(result));
+    })
+    .catch((response) => {
+      dispatch(getProductsError(response.message));
+    });
   };
 }
 
@@ -113,9 +147,18 @@ export function mockGetProducts() {
 
     return new Promise(resolve => (setTimeout(() => {
       const products = [
-        { name: 'TestName1', category: 'TestCat1', company: 'TestCompany1' },
-        { name: 'TestName2', category: 'TestCat2', company: 'TestCompany2' },
-        { name: 'TestName3', category: 'TestCat3', company: 'TestCompany3' },
+        { _id: 'TestNameid1',
+          name: 'TestName1',
+          category: { _id: 'TestCat1id', name: 'TestCat1', parent: '', mainCategory: true },
+          company: { _id: 'TestCompany1id', name: 'TestCompany1' } },
+        { _id: 'TestNameid2',
+          name: 'TestName2',
+          category: { _id: 'TestCat3id', name: 'TestCat3', parent: 'TestCat1id', mainCategory: false },
+          company: { _id: 'TestCompany1id', name: 'TestCompany1' } },
+        { _id: 'TestNameid3',
+          name: 'TestName3',
+          category: { _id: 'TestCat4id', name: 'TestCat4', parent: 'TestCat2id', mainCategory: false },
+          company: { _id: 'TestCompany2id', name: 'TestCompany2' } },
       ];
 
       // eslint-disable-next-line no-underscore-dangle

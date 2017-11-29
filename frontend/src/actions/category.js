@@ -43,12 +43,12 @@ export function mockGetCategories() {
 
     return new Promise(resolve => (setTimeout(() => {
       const categories = [
-        { name: 'TestCat1', parent: '', mainCategory: true },
-        { name: 'TestCat2', parent: '', mainCategory: true },
-        { name: 'TestCat3', parent: 'TestCat1', mainCategory: false },
-        { name: 'TestCat4', parent: 'TestCat2', mainCategory: false },
-        { name: 'TestCat5', parent: 'TestCat3', mainCategory: false },
-        { name: 'TestCat6', parent: 'TestCat4', mainCategory: false },
+        { _id: 'TestCat1id', name: 'TestCat1', parent: '', mainCategory: true },
+        { _id: 'TestCat2id', name: 'TestCat2', parent: '', mainCategory: true },
+        { _id: 'TestCat3id', name: 'TestCat3', parent: 'TestCat1id', mainCategory: false },
+        { _id: 'TestCat4id', name: 'TestCat4', parent: 'TestCat2id', mainCategory: false },
+        { _id: 'TestCat5id', name: 'TestCat5', parent: 'TestCat3id', mainCategory: false },
+        { _id: 'TestCat6id', name: 'TestCat6', parent: 'TestCat4id', mainCategory: false },
       ];
 
       // eslint-disable-next-line no-underscore-dangle

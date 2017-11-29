@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { mockGetProducts, setFilterByCompany } from '../actions/product';
-import { mockGetCompanies } from '../actions/company';
+import { mockGetProducts, setFilterByCompany, getProducts } from '../actions/product';
+import { mockGetCompanies, getCompanies } from '../actions/company';
 import Products from '../components/Products';
 import Picker from '../components/Picker';
 
@@ -12,26 +12,27 @@ class ProductsListContainer extends React.Component {
     const { dispatch } = this.props;
     this.handleChange = this.handleChange.bind(this);
     this.getFilteredProducts = this.getFilteredProducts.bind(this);
-    dispatch(mockGetProducts());
-    dispatch(mockGetCompanies());
+    dispatch(getProducts());
+    dispatch(getCompanies());
   }
 
   getFilteredProducts() {
-    const { products, filterByCompany } = this.props;
-    return filterByCompany === 'All' ? products : products.filter(product => product.company === filterByCompany);
+    const { products, filterByCompanyName } = this.props;
+    return filterByCompanyName !== 'All' ? products.filter(product => product.company._id === filterByCompanyName) : products;
   }
 
   handleChange(companyToFilterBy) {
+    console.log(companyToFilterBy);
     this.props.dispatch(setFilterByCompany(companyToFilterBy));
   }
 
   render() {
-    const { products, error, isWaiting, companies, filterByCompany } = this.props;
+    const { products, error, isWaiting, companies, filterByCompanyName } = this.props;
     return (
       <div>
         <Picker
-          options={['All'].concat(companies)}
-          value={filterByCompany}
+          options={[{ name: 'All', _id: 'All' }].concat(companies)}
+          value={filterByCompanyName}
           onChange={this.handleChange}
         />
         <h1>Products</h1>
@@ -53,7 +54,7 @@ ProductsListContainer.propTypes = {
   isWaiting: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   companies: PropTypes.array.isRequired, // eslint-disable-line
-  filterByCompany: PropTypes.string.isRequired,
+  filterByCompanyName: PropTypes.string.isRequired,
 };
 
 ProductsListContainer.defaultProps = {
@@ -61,15 +62,14 @@ ProductsListContainer.defaultProps = {
   isWaiting: false,
   products: [],
   companies: [],
-  filterByCompany: '',
+  filterByCompanyName: 'All',
 };
-
 
 const mapStateToProps = state => ({
   products: state.product.products,
   error: state.product.error,
   isWaiting: state.product.isWaiting,
-  filterByCompany: state.product.filterByCompany,
+  filterByCompanyName: state.product.filterByCompanyName,
   companies: state.company.companies,
 });
 
