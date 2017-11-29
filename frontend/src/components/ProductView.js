@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Materials from './Materials';
 
+// Materials UI components
+import {List, ListItem} from 'material-ui/List';
+import Download from 'material-ui/svg-icons/file/file-download';
+
 class ProductView extends React.Component {
     constructor(props) {
         super(props);
-
+        console.log(props.match.params.id);
         this.state = {};
-        this.loadSelected = props.loadSelected;
-        this.loadSelected();
+        this.getAProduct = props.getAProduct;
+        this.getAProduct(props.match.params.id);
     }
 
     render() {
@@ -45,7 +49,7 @@ ProductView.propTypes = {
     product: PropTypes.object,
     error: PropTypes.string,
     isWaiting: PropTypes.bool,
-    loadSelected: PropTypes.func.isRequired, 
+    getAProduct: PropTypes.func.isRequired, 
 }
 
 ProductView.defaultProps = {

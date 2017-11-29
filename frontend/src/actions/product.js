@@ -41,13 +41,6 @@ function getAProductSuccess(payload) {
   };
 }
 
-function selectProduct(product) {
-  return {
-    type: types.SELECT_A_PRODUCT,
-    product,
-  };
-}
-
 function getAProductError(payload) {
   return {
     type: types.GET_A_PRODUCT_ERROR,
@@ -121,9 +114,9 @@ export function mockGetProducts() {
 
     return new Promise(resolve => (setTimeout(() => {
       const products = [
-        { name: 'TestName1', category: 'TestCat1', company: 'TestCompany1' },
-        { name: 'TestName2', category: 'TestCat2', company: 'TestCompany2' },
-        { name: 'TestName3', category: 'TestCat3', company: 'TestCompany3' },
+        { name: 'TestName1', category: 'TestCat1', company: 'TestCompany1', id: 1 },
+        { name: 'TestName2', category: 'TestCat2', company: 'TestCompany2', id: 2},
+        { name: 'TestName3', category: 'TestCat3', company: 'TestCompany3', id: 3 },
       ];
 
       // eslint-disable-next-line no-underscore-dangle
@@ -141,24 +134,6 @@ export function mockGetProducts() {
         dispatch(getProductsError(error));
       });
   };
-}
-
-export function mockSelectProduct() {
-  return (dispatch) => {
-    return new Promise(resolve => (setTimeout(() => {
-      const product = { 
-        name: 'TestView', 
-        company: 'TestCompView', 
-        material: [
-          { title: 'Material1', url: 'http//:material1' },
-          { title: 'Material2', url: 'http//:material2' }
-        ]};
-      return resolve(product);
-      }))).then((response) => {
-        dispatch(selectProduct(response));
-      }).catch((error) => {
-      })
-  }
 }
 
 export function mockGetAProduct() {

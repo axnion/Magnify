@@ -37,7 +37,6 @@ const SideBar = ({ username, logout, role }) => (
       username === null ? <SideBarItem><Link to="/register"><button className="sidebar-btn">Create an account</button></Link></SideBarItem> : undefined
     }
     <SideBarItem><Link to="/products"><button className="sidebar-btn">Products</button></Link></SideBarItem>
-    <SideBarItem><Link to="/ProductView"><button className="sidebar-btn">TestViewProduct</button></Link></SideBarItem>
   </SideBarDivider>
 );
 

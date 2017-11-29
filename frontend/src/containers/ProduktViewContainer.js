@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
 import ProductView from '../components/ProductView';
-import { mockSelectProduct } from '../actions/product';
+import { getAProduct } from '../actions/product';
 
 const mapDispatchToProps = dispatch => ({
-  loadSelected: product => dispatch(mockSelectProduct()),
+  getAProduct: product => dispatch(getAProduct(dispatch)),
 });
 
 const mapStateToProps = state => ({

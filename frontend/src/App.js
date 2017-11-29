@@ -16,7 +16,11 @@ import SideBar from './containers/SideBarContainer';
 import ProductsList from './containers/ProductsListContainer';
 import ProductView from './containers/ProduktViewContainer';
 
+// Material UI
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 export default () => (
+  <MuiThemeProvider>
   <div className="App">
     <header className="App-header">
       <Link to="/"><img src={topBanner} className="App-top-banner" alt="Top banner" /></Link>
@@ -31,7 +35,8 @@ export default () => (
       <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
       <LoggedInRoute path="/Product"><AddProduct /></LoggedInRoute>
       <Route path="/material" component={AddMaterial} />
-      <Route path="/ProductView" component={ProductView} />
+      <Route path="/ProductView/:id" component={ProductView} />
     </div>
   </div>
+  </MuiThemeProvider>
 );

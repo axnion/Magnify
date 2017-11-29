@@ -6,10 +6,23 @@ export default (state = {
   product: null,
 }, action) => {
   switch(action.type) {
-    case types.SELECT_A_PRODUCT:
+    case types.GET_A_PRODUCT:
       return {
         ...state,
-        product: action.product,
+        isWaiting: true,
+      };
+    case types.GET_A_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products: action.payload,
+        isWaiting: false,
+        error: null,
+      };
+    case types.GET_A_PRODUCT_ERROR:
+      return {
+        ...state,
+        isWaiting: false,
+        error: action.payload,
       };
     default:
       return state;
