@@ -35,7 +35,10 @@ exports.drop = function(connection) {
   const promise = new Promise((resolve, reject) => {
     connection.dropCollection('companies', (err, result) => {
       if (err) reject(err);
-      else resolve(result);
+      else {
+        console.log('Companies collection dropped');
+        resolve(result);
+      }
     });
   });
 
