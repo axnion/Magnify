@@ -11,9 +11,7 @@ const productSchema = new Schema({
   },
   category: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Category',
-    required: true,
-    default: 'uncategorized'
+    ref: 'Category'
   },
   material: [
     {

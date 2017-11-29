@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
+import { setTimeout } from 'timers';
 
 const endpoint = '/products';
 
@@ -113,9 +114,9 @@ export function mockGetProducts() {
 
     return new Promise(resolve => (setTimeout(() => {
       const products = [
-        { name: 'TestName1', category: 'TestCat1', company: 'TestCompany1' },
-        { name: 'TestName2', category: 'TestCat2', company: 'TestCompany2' },
-        { name: 'TestName3', category: 'TestCat3', company: 'TestCompany3' },
+        { name: 'TestName1', category: 'TestCat1', company: 'TestCompany1', id: 1 },
+        { name: 'TestName2', category: 'TestCat2', company: 'TestCompany2', id: 2},
+        { name: 'TestName3', category: 'TestCat3', company: 'TestCompany3', id: 3 },
       ];
 
       // eslint-disable-next-line no-underscore-dangle

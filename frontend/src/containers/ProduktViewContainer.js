@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 
 import ProductView from '../components/ProductView';
+import { getAProduct } from '../actions/product';
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = dispatch => ({
+  getAProduct: product => dispatch(getAProduct(dispatch)),
 });
 
 const mapStateToProps = state => ({
-    materials: state.productView.materials,
     error: state.productView.error,
     isWaiting: state.productView.isWaiting,
-    productName: state.productView.productName,
-    productCompany: state.productView.productCompany
+    product: state.productView.product,   
 });
 
 const ProductViewContainer = connect(

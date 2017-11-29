@@ -1,13 +1,29 @@
 import * as types from '../constants';
 
 export default (state = {
-  materials: [],
   error: null,
   isWaiting: false,
-  productName: 'Name of product',
-  productCompany: 'Name of product company'
+  product: null,
 }, action) => {
   switch(action.type) {
+    case types.GET_A_PRODUCT:
+      return {
+        ...state,
+        isWaiting: true,
+      };
+    case types.GET_A_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products: action.payload,
+        isWaiting: false,
+        error: null,
+      };
+    case types.GET_A_PRODUCT_ERROR:
+      return {
+        ...state,
+        isWaiting: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

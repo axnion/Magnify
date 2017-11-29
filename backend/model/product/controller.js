@@ -4,10 +4,6 @@ const ProductFacade = require('./facade');
 const config = require('../../config');
 
 class ProductController extends Controller {
-  getProducts(req, res, next) {
-    return ProductFacade.find().then(resp => res.status(200).json(resp));
-  }
-
   create(req, res, next) {
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
