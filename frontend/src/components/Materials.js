@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Materials = ({ materials }) => (
   <ul>
     {materials.map((material, key) =>
-      <li key={key}><Link to={material.url} className='material-download'>Titel: {material.title}></Link></li>)}
+      <li key={key}><Link to={material.url} className='material-download'>Titel: {material.title}</Link></li>)}
   </ul>
 );
 

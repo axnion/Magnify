@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
+import { setTimeout } from 'timers';
 
 const endpoint = '/products';
 
@@ -37,6 +38,13 @@ function getAProductSuccess(payload) {
   return {
     type: types.GET_A_PRODUCT_SUCCESS,
     payload,
+  };
+}
+
+function selectProduct(product) {
+  return {
+    type: types.SELECT_A_PRODUCT,
+    product,
   };
 }
 
@@ -133,6 +141,24 @@ export function mockGetProducts() {
         dispatch(getProductsError(error));
       });
   };
+}
+
+export function mockSelectProduct() {
+  return (dispatch) => {
+    return new Promise(resolve => (setTimeout(() => {
+      const product = { 
+        name: 'TestView', 
+        company: 'TestCompView', 
+        material: [
+          { title: 'Material1', url: 'http//:material1' },
+          { title: 'Material2', url: 'http//:material2' }
+        ]};
+      return resolve(product);
+      }))).then((response) => {
+        dispatch(selectProduct(response));
+      }).catch((error) => {
+      })
+  }
 }
 
 export function mockGetAProduct() {
