@@ -1,16 +1,23 @@
 import { connect } from 'react-redux';
 
-import AddMaterial from '../components/AddMaterial';
+import material from '../components/AddMaterial';
+import uploadMaterial from '../actions/material';
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = dispatch => ({
+  sendForm: (data, token) => {
+    dispatch(uploadMaterial(data, token));
+  },
 });
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+  isWaiting: state.material.isWaiting,
+  error: state.material.error,
+  token: state.auth.token,
 });
 
 const AddMaterialContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddMaterial);
+)(material);
 
 export default AddMaterialContainer;
