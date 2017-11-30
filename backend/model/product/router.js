@@ -17,5 +17,5 @@ router
 
 router
   .route('/:id/material/:material')
-  .get((...args) => controller.getMaterialFile(...args));
+  .get((...args) => controller.getMaterialFileUgly(...args));
 module.exports = router;
