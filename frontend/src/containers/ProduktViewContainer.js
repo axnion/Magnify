@@ -6,9 +6,6 @@ import Materials from '../components/Materials';
 import { getAProduct } from '../actions/product';
 
 class ProductView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const {dispatch} = this.props;
