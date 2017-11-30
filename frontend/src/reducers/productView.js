@@ -4,7 +4,6 @@ export default (state = {
   error: null,
   isWaiting: false,
   product: null,
-  productId: null,
 }, action) => {
   switch(action.type) {
     case types.GET_A_PRODUCT:
