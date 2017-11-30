@@ -14,7 +14,7 @@ beforeAll(() => {
         username: 'admin',
         password: 'pass',
         role: 'companyAdmin',
-        company: 'Awesome Corp'
+        company: 'TestCompany'
       },
       company.id
     )
@@ -46,6 +46,84 @@ describe('Test GET', () => {
     });
   });
 
+  test('Create and get product', done => {
+    const authAttempt = request.agent(server);
+
+    const obj = {
+      name: 'thingy',
+      material: [
+        {
+          url: 'http://www.pdf995.com/samples/pdf.pdf',
+          title: 'bla',
+          description: 'descriptive'
+        }
+      ]
+    };
+
+    return authAttempt
+      .post('/account/login')
+      .send({
+        username: 'admin',
+        password: 'pass',
+        role: 'companyAdmin',
+        company: 'TestCompany'
+      })
+      .then(resp => {
+        authAttempt
+          .post('/product')
+          .set('Content-Type', 'application/json')
+          .set('Authorization', 'Bearer ' + resp.body.accessToken)
+          .send(obj)
+          .then(product => {
+            const productId = product.body._id;
+            const materialId = product.body.material[0]._id;
+            const connString =
+              '/product/' + productId + '/material/' + materialId;
+            console.log(connString);
+            authAttempt.get('/product/' + productId).end((err, response) => {
+              if (err) console.log(err);
+              console.log(product.body._id);
+              console.log(product.body.material[0]._id);
+              console.log(response.body);
+              expect(response.statusCode).toEqual(200);
+              done();
+            });
+          });
+
+        //ProductFacade.getMaterialFile()
+        /* .end((err, response) => {
+            if (err) console.log(err);
+            console.log(response.body);
+            expect(response.statusCode).toEqual(200);
+            done();
+          }); */
+      });
+  });
+
+  test('Get product', done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt.get('/product').then(products => {
+      const productId = products.body[0]._id;
+      console.log(productId);
+      authAttempt.get('/product/' + productId).end((err, response) => {
+        //console.log(response);
+        expect(response.statusCode).toEqual(200);
+        done();
+      });
+    });
+  });
+
+  test.skip('get products', done => {
+    const authAttempt = request.agent(server);
+
+    authAttempt.get('/product').end((err, resp) => {
+      if (err) console.log(err);
+      console.log(resp);
+      expect(resp.statusCode).toEqual(200);
+      done();
+    });
+  });
   test.skip('Get using getProducts should return list of products', done => {
     const getAttempt = request.agent(server);
 

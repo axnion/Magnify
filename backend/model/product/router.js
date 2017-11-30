@@ -7,12 +7,15 @@ router
   .get((...args) => controller.find(...args))
   .post((...args) => controller.create(...args));
 
-router
-  .route('/:id')
-  .get((...args) => controller.findById(...args));
+router.route('/:id').get((...args) => controller.findById(...args));
 
 router
   .route('/:id/material')
-  .post(controller.uploadMiddleware(), (...args) => controller.uploadMaterial(...args));
+  .post(controller.uploadMiddleware(), (...args) =>
+    controller.uploadMaterial(...args)
+  );
 
+router
+  .route('/:id/material/:material')
+  .get((...args) => controller.getMaterialFile(...args));
 module.exports = router;
