@@ -38,7 +38,8 @@ class AccountController extends Controller {
         user: {
           username: user.username,
           id: user.id,
-          role: user.role
+          role: user.role,
+          company: user.company
         }
       });
     })(req, res, next);
