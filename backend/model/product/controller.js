@@ -21,6 +21,10 @@ class ProductController extends Controller {
       const newProduct = req.body;
       newProduct.company = user.company;
 
+      if (newProduct.category === '') {
+        delete newProduct.category;
+      }
+
       return this.facade
         .create(newProduct)
         .then(doc => res.status(201).json(doc))
@@ -65,7 +69,7 @@ class ProductController extends Controller {
 
   getMaterialFile(req, res, next) {
     return this.facade
-      .getMaterialFile(req.params.id)
+      .getMaterialFile(req.params.material)
       .then(file => {
         if (!file) {
           return res.status(404);
@@ -75,7 +79,7 @@ class ProductController extends Controller {
           'Content-disposition',
           `attachment; filename=${file.name}`
         );
-        file.stream.pipe(res.status(200));
+        file.pipe(res.status(200));
       })
       .catch(err => next(err));
   }
