@@ -36,8 +36,13 @@ class ProductController extends Controller {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.role !== config.userRole.companyRep)
+      if (
+        !user ||
+        (user.role !== config.userRole.companyRep &&
+          user.role !== config.userRole.companyAdmin)
+      ) {
         return res.status(401).json({ message: 'Not authorized' });
+      }
 
       const material = {
         title: req.body.title,
