@@ -69,7 +69,7 @@ function createProductError(payload) {
 function getCompaniesNames(products, companies) {
   const newProducts = products.map((product) => {
     const companyObj = companies.find(c => c._id === product.company);
-    const newProduct = companyObj !== undefined ? { ...product, company: companyObj.name } : product;
+    const newProduct = companyObj !== undefined ? { ...product, company: companyObj } : product;
     return newProduct;
   });
   return newProducts;
