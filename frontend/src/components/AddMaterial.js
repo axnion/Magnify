@@ -9,6 +9,7 @@ class AddMaterial extends React.Component {
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log(this.props.match.params.id);
   }
 
   onDrop(files) {
@@ -31,9 +32,9 @@ class AddMaterial extends React.Component {
       files: this.state.files,
     };
 
-    console.log(data);
+    console.log(this.props.match.params.id);
 
-    this.sendForm(data, this.props.token);
+    this.sendForm(data, this.props.match.params.id, this.props.token);
     this.setState({ hasSubmitted: true });
     this.setState({ company: '', title: '', description: '', files: [] });
   }

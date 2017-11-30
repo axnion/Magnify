@@ -30,9 +30,6 @@ const SideBar = ({ username, logout, role }) => (
       username === null ? undefined : <SideBarItem><Link to="/addProduct"><button className="sidebar-btn">Add product</button></Link></SideBarItem>
     }
     {
-      username === null ? undefined : <SideBarItem><Link to="/material"><button className="sidebar-btn">Upload material</button></Link></SideBarItem>
-    }
-    {
       role === 'companyAdmin' ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
     }
     {

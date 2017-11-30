@@ -1,7 +1,7 @@
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
-const endpoint = '/material/upload';
+const endpoint = '/product';
 
 function beginUploadMaterial() {
   return { type: types.UPLOAD_MATERIAL };
@@ -21,11 +21,11 @@ function uploadMaterialError(payload) {
   };
 }
 
-export default function uploadMaterial(data, token) {
+export default function uploadMaterial(data, productId, token) {
   return (dispatch) => {
     dispatch(beginUploadMaterial());
-
-    return apiRequest('post', data, endpoint, token)
+    console.log(data);
+    return apiRequest('post', data, `/product/${productId}/material`, token)
       .then((response) => {
         dispatch(uploadMaterialSuccess(response.data));
       })

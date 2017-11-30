@@ -4,8 +4,8 @@ import material from '../components/AddMaterial';
 import uploadMaterial from '../actions/material';
 
 const mapDispatchToProps = dispatch => ({
-  sendForm: (data, token) => {
-    dispatch(uploadMaterial(data, token));
+  sendForm: (data, productId, token) => {
+    dispatch(uploadMaterial(data, productId, token));
   },
 });
 

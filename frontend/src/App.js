@@ -34,7 +34,7 @@ export default () => (
         <Route path="/products" component={ProductsList} />
         <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
         <LoggedInRoute path="/addProduct"><AddProduct /></LoggedInRoute>
-        <Route path="/material" component={AddMaterial} />
+        <Route path="/material/:id" component={AddMaterial} />
         <Route path="/ProductView/:id" component={ProductView} />
       </div>
     </div>

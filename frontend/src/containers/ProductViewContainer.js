@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Materials from '../components/Materials';
 import { getAProduct } from '../actions/product';
@@ -9,23 +10,26 @@ class ProductView extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    console.log(this.props.match.params.id);
     dispatch(getAProduct(this.props.match.params.id));
   }
 
   render() {
-    const { error, isWaiting } = this.props;
+    const { role, error, isWaiting } = this.props;
     let productHeadline = null;
     let materials = [];
+    
     if (this.props.product) {
+
       materials = this.props.product.material;
       productHeadline =
             (<div>
               <h1>Product: {this.props.product.name}</h1>
               <h3>Company: {this.props.product.company.name}</h3>
-            </div>);
+              {
+                (role === null || role === 'consumer') ? undefined : <Link to={`/material/${this.props.product._id}`}><button>Upload material</button></Link>
+              }
+             </div>);
     } else { productHeadline = <h1>No product selected</h1>; }
-
     return (
       <div className="product">
         {productHeadline}
@@ -46,6 +50,7 @@ ProductView.propTypes = {
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
+  role: PropTypes.string
 };
 
 ProductView.defaultProps = {
@@ -58,6 +63,7 @@ const mapStateToProps = state => ({
   error: state.productView.error,
   isWaiting: state.productView.isWaiting,
   product: state.productView.product,
+  role: state.auth.role,
 });
 
 const ProductViewContainer = connect(
