@@ -124,7 +124,7 @@ export function getAProduct(id) {
         return apiRequest('get', {}, `/company/${product.company}`);
       })
       .then((response) => {
-        const newProduct = {...product, company: response.data};
+        const newProduct = { ...product, company: response.data };
         dispatch(getAProductSuccess(newProduct));
       })
       .catch((response) => {
