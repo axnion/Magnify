@@ -35,7 +35,7 @@ class ProductController extends Controller {
         title: req.body.title,
         description: req.body.description,
         url: `/product/${req.params.id}/material/${req.file.originalname}`,
-        fileId: req.file.id
+        _id: req.file.id
       };
 
       return this.facade.saveMaterial(req.params.id, material)
