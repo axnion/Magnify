@@ -9,6 +9,10 @@ router
 
 router
   .route('/:id')
-  .get((...args) => controller.findById(...args))
+  .get((...args) => controller.findById(...args));
+
+router
+  .route('/:id/material')
+  .post(controller.uploadMiddleware(), (...args) => controller.uploadMaterial(...args));
 
 module.exports = router;
