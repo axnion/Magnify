@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 const Products = ({ products }) => (
   <ul>
-    {products.map(product =>
-      (<Link key={product._id} to={`/ProductView/${product._id}`}>
+    {products.map((product, key) =>
+      (<Link key={key} to={`/ProductView/${product._id}`}>
         <li>Name: {product.name}, Company: {product.company.name}{product.category ? `, Category: ${product.category.name}` : ''}</li>
       </Link>),
     )}

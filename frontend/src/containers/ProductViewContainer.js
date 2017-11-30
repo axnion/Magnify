@@ -30,6 +30,7 @@ class ProductView extends React.Component {
               }
              </div>);
     } else { productHeadline = <h1>No product selected</h1>; }
+    console.log(materials);
     return (
       <div className="product">
         {productHeadline}
