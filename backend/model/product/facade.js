@@ -1,6 +1,7 @@
 const Facade = require('../../lib/facade');
 const productSchema = require('./schema');
 const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
 
 class ProductFacade extends Facade {
   saveMaterial(productId, material) {

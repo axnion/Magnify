@@ -69,7 +69,7 @@ class ProductController extends Controller {
 
   getMaterialFile(req, res, next) {
     return this.facade
-      .getMaterialFile(req.params.id)
+      .getMaterialFile(req.params.material)
       .then(file => {
         if (!file) {
           return res.status(404);
