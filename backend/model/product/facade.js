@@ -5,8 +5,7 @@ class ProductFacade extends Facade {
 
   saveMaterial(productId, material) {
 
-    // TODO: return new product
-    return this.Schema.update(
+    return this.Schema.findOneAndUpdate(
       { _id: productId },
       { $push: { material: material } },
       { new: true }
