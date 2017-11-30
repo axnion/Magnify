@@ -18,7 +18,8 @@ const productSchema = new Schema({
       url: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        sparse: true
       },
       title: {
         type: String
