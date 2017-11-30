@@ -22,7 +22,6 @@ class ProductsListContainer extends React.Component {
   }
 
   handleChange(companyToFilterBy) {
-    console.log(companyToFilterBy);
     this.props.dispatch(setFilterByCompany(companyToFilterBy));
   }
 

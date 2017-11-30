@@ -66,7 +66,7 @@ function createProductError(payload) {
   };
 }
 
-function getCompaniesNames(products, companies) {
+function getCompaniesObject(products, companies) {
   const newProducts = products.map((product) => {
     const companyObj = companies.find(c => c._id === product.company);
     const newProduct = companyObj !== undefined ? { ...product, company: companyObj } : product;
@@ -85,7 +85,7 @@ function getCategoriesNames(products, categories) {
 
 function combineAllProductsData(product, categories, companies) {
   const p1 = getCategoriesNames(product, categories);
-  return getCompaniesNames(p1, companies);
+  return getCompaniesObject(p1, companies);
 }
 
 export function getProducts() {
@@ -117,10 +117,15 @@ export function getProducts() {
 export function getAProduct(id) {
   return (dispatch) => {
     dispatch(beginGetAProduct());
-
+    let product;
     return apiRequest('get', {}, `${endpoint}/${id}`)
       .then((response) => {
-        dispatch(getAProductSuccess(response.data));
+        product = response.data;
+        return apiRequest('get', {}, `/company/${product.company}`);
+      })
+      .then((response) => {
+        const newProduct = {...product, company: response.data};
+        dispatch(getAProductSuccess(newProduct));
       })
       .catch((response) => {
         dispatch(getAProductError(response.message));
