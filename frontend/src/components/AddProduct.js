@@ -18,8 +18,8 @@ class AddProduct extends React.Component {
     event.preventDefault();
 
     const data = {
-      title: this.state.title,
-      description: this.state.description,
+      // title: this.state.title,
+      // description: this.state.description,
       name: this.state.name,
       category: this.state.category,
     };
@@ -49,7 +49,7 @@ class AddProduct extends React.Component {
         <h1>Add Product here</h1>
         <form onSubmit={this.handleSubmit}>
           <fieldset disabled={this.props.isWaiting}>
-            <div>
+            {/* <div>
               <label htmlFor="title">
                 Title:
                 <input
@@ -72,10 +72,10 @@ class AddProduct extends React.Component {
                   onChange={this.handleChange}
                 />
               </label>
-            </div>
+            </div> */}
             <div>
               <label htmlFor="name">
-                Name:
+                Product name:
                 <input
                   id="name"
                   name="name"
@@ -87,7 +87,7 @@ class AddProduct extends React.Component {
             </div>
             <div>
               <label htmlFor="category">
-                Category:
+                Category ID:
                 <input
                   id="category"
                   name="category"
