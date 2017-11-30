@@ -1,7 +1,7 @@
 import crypto from 'crypto';
+import { setTimeout } from 'timers';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
-import { setTimeout } from 'timers';
 
 const endpoint = '/product';
 
