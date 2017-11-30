@@ -10,8 +10,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  isWaiting: state.account.isWaiting,
-  error: state.account.error,
+  isWaiting: state.product.isWaiting,
+  error: state.product.error,
   token: state.auth.token,
 });
 
