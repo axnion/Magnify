@@ -10,7 +10,7 @@ import config from '../config';
 const Materials = ({ materials }) => (
   <List>
     {materials.map((material, key) =>
-      <a key={key} href={`${config.serverURI}${material.url}`} className='material-download'><ListItem leftIcon={<Download />}>{material.title}</ListItem></a>)}
+      <a key={key} download href={`${config.serverURI}${material.url}`} className='material-download'><ListItem leftIcon={<Download />}>{material.title}</ListItem></a>)}
   </List>
 );
 
