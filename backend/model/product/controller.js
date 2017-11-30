@@ -51,6 +51,8 @@ class ProductController extends Controller {
         _id: req.file.id
       };
 
+      console.log(material);
+
       return this.facade
         .saveMaterial(req.params.id, material)
         .then(resp => res.status(201).json(resp))
@@ -69,7 +71,7 @@ class ProductController extends Controller {
       }
     });
 
-    return multer({ storage: gridfs }).single('file');
+    return multer({ storage: gridfs }).array();
   }
 
   getMaterialFile(req, res, next) {
