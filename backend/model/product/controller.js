@@ -71,7 +71,7 @@ class ProductController extends Controller {
       }
     });
 
-    return multer({ storage: gridfs }).array();
+    return multer({ storage: gridfs }).single('file');
   }
 
   getMaterialFile(req, res, next) {
