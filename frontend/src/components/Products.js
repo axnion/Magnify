@@ -6,7 +6,6 @@ const Products = ({ products }) => (
   <ul>
     {products.map(product =>   
       <Link key={product._id} to={`/ProductView/${product._id}`}>
-        {console.log(product)} 
         <li>Name: {product.name}, Company: {product.company.name}{product.category ? `, Category: ${product.category.name}` : ''}</li>
       </Link>    
     )}
