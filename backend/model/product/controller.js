@@ -34,7 +34,7 @@ class ProductController extends Controller {
       const material = {
         title: req.body.title,
         description: req.body.description,
-        url: `/product/${req.params.id}/material/${req.file.originalname}`,
+        url: `/product/${req.params.id}/material/${req.file.id}`,
         _id: req.file.id
       };
 
