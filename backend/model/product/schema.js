@@ -15,6 +15,7 @@ const productSchema = new Schema({
   },
   material: [
     {
+      type: Array,
       url: {
         type: String,
         required: true,
