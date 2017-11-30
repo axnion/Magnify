@@ -52,6 +52,8 @@ class AccountController extends Controller {
    * @param {*} next
    */
   createConsumerAccount(req, res, next) {
+    req.body.role = config.userRole.consumer;
+
     return AccountFacade.createAccount(req.body)
       .then(resp => res.status(201).json({ username: resp.username }))
       .catch(message => res.status(500).json(message));
