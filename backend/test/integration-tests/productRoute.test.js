@@ -105,12 +105,17 @@ describe('Test GET', () => {
 
     authAttempt.get('/product').then(products => {
       const productId = products.body[0]._id;
+      const materialId = products.body[0].material[0]._id;
       console.log(productId);
-      authAttempt.get('/product/' + productId).end((err, response) => {
-        //console.log(response);
-        expect(response.statusCode).toEqual(200);
-        done();
-      });
+      console.log(materialId);
+      authAttempt
+        .get('/product/' + productId + '/material/' + materialId)
+        .end((err, response) => {
+          console.log(err);
+          console.log(response.body);
+          expect(response.statusCode).toEqual(200);
+          done();
+        });
     });
   });
 
