@@ -24,8 +24,14 @@ function uploadMaterialError(payload) {
 export default function uploadMaterial(data, productId, token) {
   return (dispatch) => {
     dispatch(beginUploadMaterial());
-    console.log(data);
-    return apiRequest('post', data, `/product/${productId}/material`, token)
+
+    let formData = new FormData();
+    formData.append('file', data.files[0]);
+    formData.append('title', data.name);
+    formData.append('description', data.description);
+
+    console.log(formData);
+    return apiRequest('post', formData, `/product/${productId}/material`, token)
       .then((response) => {
         dispatch(uploadMaterialSuccess(response.data));
       })

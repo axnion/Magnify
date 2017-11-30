@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 class AddMaterial extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { files: [], company: '', title: '', description: '' };
+    this.state = { files: [], title: '', description: '' };
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    console.log(this.props.match.params.id);
   }
 
   onDrop(files) {
@@ -24,19 +23,18 @@ class AddMaterial extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
+    
     const data = {
-      company: this.state.company,
       title: this.state.title,
       description: this.state.description,
       files: this.state.files,
     };
 
-    console.log(this.props.match.params.id);
-
+    console.log(data);
+    
     this.sendForm(data, this.props.match.params.id, this.props.token);
     this.setState({ hasSubmitted: true });
-    this.setState({ company: '', title: '', description: '', files: [] });
+    this.setState({ title: '', description: '', files: [] });
   }
 
   printSubmitMessage() {
