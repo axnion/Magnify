@@ -22,7 +22,8 @@ const productSchema = new Schema({
         sparse: true
       },
       title: {
-        type: String
+        type: String,
+        required: true
       },
       description: {
         type: String
