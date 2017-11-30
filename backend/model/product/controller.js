@@ -7,20 +7,24 @@ const GridFsStorage = require('multer-gridfs-storage');
 
 class ProductController extends Controller {
   create(req, res, next) {
-    passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || (user.role !== config.userRole.companyRep
-                && user.role !== config.userRole.companyAdmin)) {
+      if (
+        !user ||
+        (user.role !== config.userRole.companyRep &&
+          user.role !== config.userRole.companyAdmin)
+      ) {
         return res.status(401).json({ message: 'Not authorized' });
       }
 
       const newProduct = req.body;
-      newProduct.company = user.company
+      newProduct.company = user.company;
 
-      return this.facade.create(newProduct)
-      .then(doc => res.status(201).json(doc))
-      .catch(err => next(err));
+      return this.facade
+        .create(newProduct)
+        .then(doc => res.status(201).json(doc))
+        .catch(err => next(err));
     })(req, res, next);
   }
 
@@ -38,7 +42,8 @@ class ProductController extends Controller {
         _id: req.file.id
       };
 
-      return this.facade.saveMaterial(req.params.id, material)
+      return this.facade
+        .saveMaterial(req.params.id, material)
         .then(resp => res.status(201).json(resp))
         .catch(err => next(err));
     })(req, res, next);
@@ -56,6 +61,23 @@ class ProductController extends Controller {
     });
 
     return multer({ storage: gridfs }).single('file');
+  }
+
+  getMaterialFile(req, res, next) {
+    return this.facade
+      .getMaterialFile(req.params.id)
+      .then(file => {
+        if (!file) {
+          return res.status(404);
+        }
+        res.contentType('application/pdf');
+        res.setHeader(
+          'Content-disposition',
+          `attachment; filename=${file.name}`
+        );
+        file.stream.pipe(res.status(200));
+      })
+      .catch(err => next(err));
   }
 }
 

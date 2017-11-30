@@ -46,7 +46,7 @@ describe('Test GET', () => {
     });
   });
 
-  test('Get using getProducts should return list of products', done => {
+  test.skip('Get using getProducts should return list of products', done => {
     const getAttempt = request.agent(server);
 
     getAttempt.get('/product/not-a-real-company').end((err, resp) => {
@@ -60,7 +60,7 @@ describe('Test GET', () => {
 });
 
 describe('Test ProductFacade', () => {
-  test('Add a product to a company using its facade', done => {
+  test.skip('Add a product to a company using its facade', done => {
     return CompanyFacade.findOne({ name: 'TestCompany' }).then(company => {
       ProductFacade.addProduct({ name: 'Thing' }, company._id).then(() => {
         const sut = request.agent(server);
