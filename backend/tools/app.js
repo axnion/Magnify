@@ -108,7 +108,7 @@ commander
   .option('-C, --create', 'Creates a product')
   .option('-n, --productname [name]', 'Specify product name')
   .option('-c, --company [name]', 'Specify company name')
-  .option('--category', 'Specify product category')
+  .option('--category [id]', 'Specify product category')
   .option('--drop', 'Drops products collection, deleting all data')
   .action((flags) => {
     if (flags.list) {

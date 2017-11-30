@@ -1,30 +1,24 @@
 const productFacade = require('../model/product/facade');
 const companyFacade = require('../model/company/facade');
-const categoryFacade = require('../model/category/facade');
 const mongoose = require('mongoose');
 const Promise       = require('bluebird');
 
 exports.create = function(name, company, category) {
-  companyFacade.findOne({name: company})
-  .then((results) => {
-    return results.id
-  })
-  .then((companyId) => {
-    return productFacade.create({
-      name,
-      company: companyId,
-      category
-    })
-  })
+  companyFacade.findOne({ name: company })
+  .then(results => productFacade.create({
+    name,
+    company: results.id,
+    category
+  }))
   .then((product) => {
     console.log('Created product: ');
-    console.log(JSON.stringify(product, null, 4))
+    console.log(JSON.stringify(product, null, 4));
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   })
-  .finally(() => mongoose.connection.close())
-}
+  .finally(() => mongoose.connection.close());
+};
 
 /**
 * Lists all products in the database
