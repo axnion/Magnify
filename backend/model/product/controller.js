@@ -21,6 +21,10 @@ class ProductController extends Controller {
       const newProduct = req.body;
       newProduct.company = user.company;
 
+      if (newProduct.category === '') {
+        delete newProduct.category;
+      }
+
       return this.facade
         .create(newProduct)
         .then(doc => res.status(201).json(doc))
