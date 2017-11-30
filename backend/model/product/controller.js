@@ -34,10 +34,10 @@ class ProductController extends Controller {
       const material = {
         title: req.body.title,
         description: req.body.description,
-        url: `/product/${req.params.id}/material/${req.file.originalname}`
+        url: `/product/${req.params.id}/material/${req.file.originalname}`,
+        fileId: req.file.id
       };
 
-      // TODO: make sure updated product is returned 
       return this.facade.saveMaterial(req.params.id, material)
         .then(resp => res.status(201).json(resp))
         .catch(err => next(err));

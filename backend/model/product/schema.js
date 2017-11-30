@@ -15,11 +15,11 @@ const productSchema = new Schema({
   },
   material: [
     {
-      type: Array,
       url: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        sparse: true
       },
       title: {
         type: String
