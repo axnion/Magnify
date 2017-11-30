@@ -1,6 +1,7 @@
 const Facade = require('../../lib/facade');
 const productSchema = require('./schema');
 const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
 
 class ProductFacade extends Facade {
   saveMaterial(productId, material) {
@@ -15,14 +16,10 @@ class ProductFacade extends Facade {
     const gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection('material');
 
-    return this.findById(materialId).then(material => {
-      const file = {
-        stream: gfs.createReadStream({
-          _id: material.fileId
-        }),
-        name: material.filename
-      };
-      return file;
+    return new Promise((resolve, reject) => {
+      resolve(gfs.createReadStream({
+        _id: materialId
+      }));
     });
   }
 }

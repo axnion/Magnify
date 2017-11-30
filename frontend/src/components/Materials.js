@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Materials UI components
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Download from 'material-ui/svg-icons/file/file-download';
 
 const Materials = ({ materials }) => (

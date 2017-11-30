@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { mockGetProducts, setFilterByCompany, getProducts } from '../actions/product';
-import { mockGetCompanies, getCompanies } from '../actions/company';
+import { setFilterByCompany, getProducts } from '../actions/product';
+import { getCompanies } from '../actions/company';
 import Products from '../components/Products';
 import Picker from '../components/Picker';
 

@@ -17,7 +17,7 @@ import Login from './containers/LoginContainer';
 import Profile from './containers/ProfileContainer';
 import SideBar from './containers/SideBarContainer';
 import ProductsList from './containers/ProductsListContainer';
-import ProductView from './containers/ProduktViewContainer';
+import ProductView from './containers/ProductViewContainer';
 
 export default () => (
   <MuiThemeProvider>
