@@ -8,7 +8,7 @@ import Download from 'material-ui/svg-icons/file/file-download';
 const Materials = ({ materials }) => (
   <List>
     {materials.map((material, key) =>
-      <a key={material._id} href={material.url} className='material-download'><ListItem leftIcon={<Download />}>Titel: {material.title}</ListItem></a>)}
+      <a key={key} href={material.url} className='material-download'><ListItem leftIcon={<Download />}>{material.title}</ListItem></a>)}
   </List>
 );
 
