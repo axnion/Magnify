@@ -75,7 +75,7 @@ class ProductController extends Controller {
           'Content-disposition',
           `attachment; filename=${file.name}`
         );
-        file.stream.pipe(res.status(200));
+        file.pipe(res.status(200));
       })
       .catch(err => next(err));
   }
