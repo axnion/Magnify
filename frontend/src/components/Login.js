@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
+    console.log(data);
 
     this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
@@ -36,7 +39,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
         <h1>Login</h1>
         {
           this.props.location.message ?
@@ -44,34 +47,25 @@ class Login extends React.Component {
               { this.props.location.message }
             </h3> : undefined
         }
-        <fieldset disabled={this.props.isWaiting}>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                name="username"
-                type="text"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                name="password"
-                type="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-          <input type="submit" value="Login" />
-          { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ?
-            <p> Could not log in. {this.props.error} </p> : undefined }
-        </fieldset>
-      </form>
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            hintText="Username"
+            value={this.state.username}
+            onChange={(event, value) => this.setState({ username: value })}
+            disabled={this.props.isWaiting}
+          /><br />
+          <TextField
+            hintText="Password"
+            type="password"
+            value={this.state.password}
+            onChange={(event, value) => this.setState({ password: value })}
+            disabled={this.props.isWaiting}
+          /><br />
+          <RaisedButton onClick={this.handleSubmit} label="Login" primary />
+        </form>
+        { this.props.error && !this.props.isWaiting && this.state.hasSubmitted ?
+          <p> Could not log in. {this.props.error} </p> : undefined }
+      </div>
     );
   }
 }
