@@ -6,6 +6,7 @@ export default (state = {
   token: null,
   username: null,
   role: null,
+  company: null,
 }, action) => {
   switch (action.type) {
     case types.LOG_IN:
@@ -15,6 +16,7 @@ export default (state = {
         token: null,
         username: null,
         role: null,
+        company: null,
       };
     case types.LOG_IN_SUCCESS:
       return {
@@ -24,6 +26,7 @@ export default (state = {
         token: action.payload.accessToken,
         username: action.payload.user.username,
         role: action.payload.user.role,
+        company: action.payload.user.company,
       };
     case types.LOG_IN_ERROR:
       return {
@@ -33,6 +36,7 @@ export default (state = {
         token: null,
         username: null,
         role: null,
+        company: null,
       };
     case types.LOG_OUT:
       return {
@@ -42,6 +46,7 @@ export default (state = {
         token: null,
         username: null,
         role: null,
+        company: null,
       };
     default:
       return state;
