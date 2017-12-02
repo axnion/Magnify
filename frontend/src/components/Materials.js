@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import StarRating from '../components/StarRating';
+
 // Materials UI components
 import { List, ListItem } from 'material-ui/List';
 import Download from 'material-ui/svg-icons/file/file-download';
+
 
 import config from '../config';
 
 const Materials = ({ materials }) => (
   <List>
     {materials.map((material, key) =>
-      <a key={key} download href={`${config.serverURI}${material.url}`} className='material-download'><ListItem leftIcon={<Download />}>{material.title}</ListItem></a>)}
+      <ListItem key={key} >
+        <a download href={`${config.serverURI}${material.url}`} className='material-download'>
+          <Download />
+        </a>{material.title}
+        {StarRating({rating: 3, function(){}})/* Rating and function not implmented yet*/} 
+      </ListItem>)}
   </List>
 );
 
