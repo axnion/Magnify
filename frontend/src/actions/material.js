@@ -1,8 +1,6 @@
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
-const endpoint = '/product';
-
 function beginUploadMaterial() {
   return { type: types.UPLOAD_MATERIAL };
 }
@@ -17,6 +15,24 @@ function uploadMaterialSuccess(payload) {
 function uploadMaterialError(payload) {
   return {
     type: types.UPLOAD_MATERIAL_ERROR,
+    payload,
+  };
+}
+
+function beginPostRating() {
+  return { type: types.POST_RATING };
+}
+
+function postRatingSuccess(payload) {
+  return {
+    type: types.POST_RATING_SUCCESS,
+    payload,
+  };
+}
+
+function postRatingError(payload) {
+  return {
+    type: types.POST_RATING_ERROR,
     payload,
   };
 }
@@ -36,6 +52,20 @@ export default function uploadMaterial(data, productId, token) {
       })
       .catch((response) => {
         dispatch(uploadMaterialError(response.message));
+      });
+  };
+}
+
+export function makeRating(data, productId, materialId, token) {
+  return (dispatch) => {
+    dispatch(beginPostRating());
+
+    return apiRequest('put', data, `/product/${productId}/material/${materialId}/rating`, token)
+      .then((response) => {
+        dispatch(postRatingSuccess(response.data));
+      })
+      .catch((response) => {
+        dispatch(postRatingError(response.message));
       });
   };
 }
