@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 // Material-UI
-import Paper from 'material-ui/Paper';
 
 const divStyle = styled('div')`
     height: 45px,
@@ -13,19 +12,19 @@ const divStyle = styled('div')`
     padding: 10px,
 `;
 
-const ShowRating = ({averageScore, numberOfRatings}) => (
-    <divStyle>
-        {averageScore}/5 from {numberOfRatings} ratings
-    </divStyle>
-)
+const ShowRating = ({ averageScore, numberOfRatings }) => (
+  <divStyle>
+    {averageScore}/5 from {numberOfRatings} ratings
+  </divStyle>
+);
 
 ShowRating.propTypes = {
-    averageScore: PropTypes.number,
-    numberOfRatings: PropTypes.number,
+  averageScore: PropTypes.number,
+  numberOfRatings: PropTypes.number,
 };
 
 ShowRating.defaultProps = {
-    averageScore: 0,
-    numberOfRatings: 0,
+  averageScore: 0,
+  numberOfRatings: 0,
 };
 export default ShowRating;
