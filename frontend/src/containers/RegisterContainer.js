@@ -4,9 +4,7 @@ import Register from '../components/Register';
 import { createConsumer } from '../actions/consumer';
 
 const mapDispatchToProps = dispatch => ({
-  sendForm: (data) => {
-    dispatch(createConsumer(data));
-  },
+  sendForm: data => dispatch(createConsumer(data)),
 });
 
 const mapStateToProps = state => ({

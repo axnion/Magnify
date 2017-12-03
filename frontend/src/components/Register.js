@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
     // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { username: '', password: '', hasSubmitted: false };
+    this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false, snackbarSuccess: false };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -24,58 +27,45 @@ class CreateAccount extends React.Component {
       password: this.state.password,
     };
 
-    this.sendForm(data);
+    this.sendForm(data).then(() => {
+      if (this.props.error) {
+        this.setState({ snackbarError: true });
+      } else {
+        this.setState({ snackbarSuccess: true });
+        this.props.history.push('/login');
+      }
+    });
     this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
   }
 
-  printSubmitMessage() {
-    if (this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Could not create account. {this.props.error} </p>
-      );
-    } else if (!this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Account created!</p>
-      );
-    }
-
-    return undefined;
-  }
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
         <h1>Create new account</h1>
-        <fieldset disabled={this.props.isWaiting}>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-          <input type="submit" value="Create" />
-          {this.printSubmitMessage()}
-        </fieldset>
-      </form>
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            hintText="Username"
+            value={this.state.username}
+            onChange={(event, value) => this.setState({ username: value, error: false })}
+            disabled={this.props.isWaiting}
+          /><br />
+          <TextField
+            hintText="Password"
+            type="password"
+            value={this.state.password}
+            onChange={(event, value) => this.setState({ password: value, error: false })}
+            disabled={this.props.isWaiting}
+          /><br />
+          <RaisedButton onClick={this.handleSubmit} label="Create" primary />
+        </form>
+        <Snackbar
+          open={this.state.snackbarError}
+          message={this.props.error || ''}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
+      </div>
     );
   }
 }
@@ -84,9 +74,13 @@ CreateAccount.propTypes = {
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
   sendForm: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 CreateAccount.defaultProps = {
+  snackbarSuccess: false,
   error: null,
   isWaiting: false,
 };
