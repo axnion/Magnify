@@ -9,7 +9,6 @@ import category from './category';
 import auth from './auth';
 import productView from './productView';
 import material from './material';
-import test from './test';
 
 export default combineReducers({
   example,
@@ -21,6 +20,5 @@ export default combineReducers({
   category,
   productView,
   material,
-  test,
   routing: routerReducer,
 });

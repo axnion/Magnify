@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Materials from '../components/Materials';
 import { getAProduct } from '../actions/product';
+import MaterialCard from '../components/MaterialCard';
 
 class ProductView extends React.Component {
 
@@ -39,7 +39,10 @@ class ProductView extends React.Component {
         {!isWaiting && error && <h2>Error. {error} </h2>}
         {materials.length > 0 &&
         <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
-          <Materials materials={materials} />
+          {materials.map((material, key) => 
+            <MaterialCard key={key} material={material}/>
+          )
+          }
         </div>}
       </div>
     );
