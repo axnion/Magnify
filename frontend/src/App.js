@@ -18,6 +18,7 @@ import Profile from './containers/ProfileContainer';
 import SideBar from './containers/SideBarContainer';
 import ProductsList from './containers/ProductsListContainer';
 import ProductView from './containers/ProductViewContainer';
+import Snackbar from './containers/SnackbarContainer';
 
 export default () => (
   <MuiThemeProvider>
@@ -37,6 +38,7 @@ export default () => (
         <Route path="/material/:id" component={AddMaterial} />
         <Route path="/ProductView/:id" component={ProductView} />
       </div>
+      <Snackbar />
     </div>
   </MuiThemeProvider>
 );

@@ -8,7 +8,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { username: '', password: '', hasSubmitted: false, openSnackbar: false, success: false };
+    this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -30,12 +30,11 @@ class Login extends React.Component {
     this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
 
-    this.props.sendForm(data).then(() => {
-      if (!this.props.error) {
-        this.setState({ success: true });
-        this.props.history.push('/');
+    this.sendForm(data).then(() => {
+      if (this.props.error) {
+        this.setState({ snackbarError: true });
       } else {
-        this.setState({ openSnackbar: true });
+        this.props.history.push('/');
       }
     });
   }
@@ -67,7 +66,7 @@ class Login extends React.Component {
           <RaisedButton onClick={this.handleSubmit} label="Login" primary />
         </form>
         <Snackbar
-          open={this.state.openSnackbar}
+          open={this.state.snackbarError}
           message={this.props.error || ''}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
@@ -91,7 +90,7 @@ Login.propTypes = {
 
 Login.defaultProps = {
   error: null,
-  openSnackbar: false,
+  snackbarError: false,
   isWaiting: false,
   location: {
     message: null,
