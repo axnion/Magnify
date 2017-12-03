@@ -5,7 +5,7 @@ export default (state = {
   isWaiting: false,
   product: null,
 }, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case types.GET_A_PRODUCT:
       return {
         ...state,
