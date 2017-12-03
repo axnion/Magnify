@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Material-ui
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import GetApp from 'material-ui/svg-icons/action/get-app';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
-import Download from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
 
 import config from '../config';
@@ -12,54 +13,48 @@ import StarRating from './StarRating';
 import ShowRating from './ShowRating';
 
 
-const DownloadLink = styled('a')`
-    margin: 15px;
+const StyledCard = styled(Card)`
+  padding: 0px;
+  margin: 10px;
+  min-height: 155px;
 `;
 
-const StyledCard = styled(Card)`
-    padding: 0px;
-    margin: 20px;
+const StyledFloatingActionButton = styled(FloatingActionButton)`
+  float: right;
+  margin-top: 50px;
+  z-index: 444;
 `;
 
 const StyledCardActions = styled(CardActions)`
-    height: 50px;
-    padding: 10px;
-`;
-
-const CardAction = styled('div')`
-    float: left;
-    display: inline;
+  max-width: 75%;
 `;
 
 const ColoredCardHeader = styled(CardHeader)`
     background-color: #BBDEFB;
 `;
 
-
 const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOfRatings }) => (
   <StyledCard>
+    <StyledFloatingActionButton download href={`${config.serverURI}${material.url}`}>
+      <GetApp />
+    </StyledFloatingActionButton>
     <ColoredCardHeader actAsExpander showExpandableButton title={material.title} />
     <StyledCardActions>
-      <CardAction>
-        <DownloadLink download href={`${config.serverURI}${material.url}`} className="material-download">
-          <Download />
-        </DownloadLink>
-      </CardAction>
-      <CardAction>
-        {
-                numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
-            }
-      </CardAction>
-      <CardAction>
-        {
-                !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
-            }
-      </CardAction>
+      {
+              numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
+          }
+      {
+              !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
+          }
     </StyledCardActions>
     <CardText expandable>
       <TextField
         hintText="Enter personal notes here"
         floatingLabelText="Notes"
+        fullWidth
+        multiLine
+        rows={2}
+        rowsMax={6}
       />
     </CardText>
   </StyledCard>

@@ -27,6 +27,7 @@ class ProductsListContainer extends React.Component {
 
   render() {
     const { products, error, isWaiting, companies, filterByCompanyName } = this.props;
+    
     return (
       <div>
         <Picker
