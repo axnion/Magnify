@@ -9,7 +9,7 @@ import config from '../config';
 import StarRating from './StarRating';
 
 
-const MaterialCardComponent = ({material}) => (
+const MaterialCardComponent = ({material}, {showRateStars}) => (
     <Card>
         <CardHeader actAsExpander={true} showExpandableButton={true} title={material.title}>
         <a download href={`${config.serverURI}${material.url}`} className='material-download'>

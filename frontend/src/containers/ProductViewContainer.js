@@ -14,7 +14,7 @@ class ProductView extends React.Component {
   }
 
   render() {
-    const { role, error, isWaiting } = this.props;
+    const { auth, error, isWaiting } = this.props;
     let productHeadline = null;
     let materials = [];
     
@@ -26,7 +26,8 @@ class ProductView extends React.Component {
               <h1>Product: {this.props.product.name}</h1>
               <h3>Company: {this.props.product.company.name}</h3>
               {
-                (role === null || role === 'consumer') ? undefined : <Link to={`/material/${this.props.product._id}`}><button>Upload material</button></Link>
+                
+                (auth.role === null || auth.role === 'consumer' || this.props.product.company._id !== auth.company) ? undefined : <Link to={`/material/${this.props.product._id}`}><button>Upload material</button></Link>
               }
              </div>);
     } else { productHeadline = <h1>No product selected</h1>; }
@@ -53,7 +54,7 @@ ProductView.propTypes = {
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  role: PropTypes.string
+  auth: PropTypes.object
 };
 
 ProductView.defaultProps = {
@@ -66,7 +67,7 @@ const mapStateToProps = state => ({
   error: state.productView.error,
   isWaiting: state.productView.isWaiting,
   product: state.productView.product,
-  role: state.auth.role,
+  auth: state.auth,
 });
 
 const ProductViewContainer = connect(
