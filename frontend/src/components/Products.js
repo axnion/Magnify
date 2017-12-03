@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { List, ListItem } from 'material-ui/List';
 
 const Products = ({ products }) => (
-  <ul>
-    {products.map((product, key) =>
-      (<Link key={key} to={`/ProductView/${product._id}`}>
-        <li>Name: {product.name}, Company: {product.company.name}{product.category ? `, Category: ${product.category.name}` : ''}</li>
+  <List>
+    {products.map(product =>
+      (<Link key={product._id} to={`/ProductView/${product._id}`}>
+        <ListItem primaryText={product.name} secondaryText={`${product.company.name} (${product.category.name})`} />
       </Link>),
     )}
-  </ul>
+  </List>
 );
 
 Products.propTypes = {
