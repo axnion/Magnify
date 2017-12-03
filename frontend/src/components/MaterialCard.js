@@ -17,28 +17,45 @@ const DownloadLink = styled('a')`
 `;
 
 const StyledCard = styled(Card)`
-    padding: 25px;
-    margin: 10px;
+    padding: 0px;
+    margin: 20px;
 `;
+
+const StyledCardActions = styled(CardActions)`
+    height: 50px;
+    padding: 10px;
+`;
+
+const CardAction = styled('div')`
+    float: left;
+    display: inline;
+`;
+
+const ColoredCardHeader = styled(CardHeader)`
+    background-color: #BBDEFB;
+`;
+
 
 const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOfRatings }) => (
   <StyledCard>
-    <CardHeader actAsExpander showExpandableButton title={material.title} />
-    <CardActions>
-      <div>
+    <ColoredCardHeader actAsExpander showExpandableButton title={material.title} />
+    <StyledCardActions>
+      <CardAction>
         <DownloadLink download href={`${config.serverURI}${material.url}`} className="material-download">
           <Download />
         </DownloadLink>
-        <div>
+      </CardAction>
+      <CardAction>
           {
                 numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
             }
+      </CardAction>
+      <CardAction>
           {
                 !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
             }
-        </div>
-      </div>
-    </CardActions>
+       </CardAction>
+    </StyledCardActions>
     <CardText expandable>
       <TextField
         hintText="Enter personal notes here"
