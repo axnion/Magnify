@@ -8,11 +8,13 @@ import Paper from 'material-ui/Paper';
 
 const starStyle = {
     margin: 10,
+    cursor: 'pointer', 
 };
 
 const paperStyle = {
     height: 45,
-    width: 225
+    width: 225,
+    display: 'inline'
 };
 
 

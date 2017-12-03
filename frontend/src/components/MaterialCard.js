@@ -8,19 +8,35 @@ import TextField from 'material-ui/TextField';
 
 import config from '../config';
 import StarRating from './StarRating';
+import ShowRating from './ShowRating';
+
+const cardStyle = {
+    padding: 25,
+};
+
+const downloadStyle = {
+    margin: 15,
+};
 
 
-const MaterialCardComponent = ({material, showRateStars}) => (
-    <Card>
+const MaterialCardComponent = ({material, showRateStars, averageScore, numberOfRatings}) => (
+    <Card style={cardStyle}>
         <CardHeader actAsExpander={true} showExpandableButton={true} title={material.title}>
         </CardHeader>
         <CardActions>
-        <a download href={`${config.serverURI}${material.url}`} className='material-download'>
-          <Download />
-        </a>  
+        <div>
+            <a style ={downloadStyle} download href={`${config.serverURI}${material.url}`} className='material-download'>
+                <Download />
+            </a>  
+            <div>
+            {
+                numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings}/>
+            }
             {
                 !showRateStars ? undefined : StarRating({rating: 3, function(){}})
             }
+            </div>
+        </div>
         </CardActions>
         <CardText expandable={true}>
             <TextField 
@@ -34,6 +50,8 @@ const MaterialCardComponent = ({material, showRateStars}) => (
 MaterialCardComponent.propTypes = {
     material: PropTypes.object, //eslint-disable-line
     showRateStars: PropTypes.bool,
+    averageScore: PropTypes.number,
+    numberOfRatings: PropTypes.number
   };
 
 export default MaterialCardComponent;

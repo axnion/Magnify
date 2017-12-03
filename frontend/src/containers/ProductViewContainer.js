@@ -41,7 +41,7 @@ class ProductView extends React.Component {
         {materials.length > 0 &&
         <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
           {materials.map((material, key) => 
-            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')}/>
+            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150}/>
           )
           }
         </div>}
