@@ -46,15 +46,15 @@ const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOf
         </DownloadLink>
       </CardAction>
       <CardAction>
-          {
+        {
                 numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
             }
       </CardAction>
       <CardAction>
-          {
+        {
                 !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
             }
-       </CardAction>
+      </CardAction>
     </StyledCardActions>
     <CardText expandable>
       <TextField
