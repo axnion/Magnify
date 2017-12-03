@@ -21,8 +21,8 @@ const StyledCard = styled(Card)`
 
 const StyledFloatingActionButton = styled(FloatingActionButton)`
   float: right;
-  margin-top: 50px;
-  z-index: 444;
+  margin-top: 60px;
+  margin-right: 10px;
 `;
 
 const StyledCardActions = styled(CardActions)`
@@ -41,11 +41,11 @@ const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOf
     <ColoredCardHeader actAsExpander showExpandableButton title={material.title} />
     <StyledCardActions>
       {
-              numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
-          }
+        numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
+      }
       {
-              !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
-          }
+        !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
+      }
     </StyledCardActions>
     <CardText expandable>
       <TextField

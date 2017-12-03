@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 
 // Material-UI
 
-const divStyle = styled('div')`
+const StyledDiv = styled('div')`
     height: 45px,
     width: 100px,
-    tesxtAlign: center,
+    textAlign: center,
     display: inline,
     padding: 10px,
 `;
 
 const ShowRating = ({ averageScore, numberOfRatings }) => (
-  <divStyle>
+  <StyledDiv>
     {averageScore}/5 from {numberOfRatings} ratings
-  </divStyle>
+  </StyledDiv>
 );
 
 ShowRating.propTypes = {
