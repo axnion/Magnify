@@ -4,19 +4,12 @@ import React from 'react';
 import BorderStar from 'material-ui/svg-icons/toggle/star-border';
 import FullStar from 'material-ui/svg-icons/toggle/star';
 import { yellow600 } from 'material-ui/styles/colors';
-import Paper from 'material-ui/Paper';
+
 
 const starStyle = {
   margin: 10,
   cursor: 'pointer',
 };
-
-const paperStyle = {
-  height: 45,
-  width: 225,
-  display: 'inline',
-};
-
 
 function StarRating(props) {
   const starsToDisplay = new Array(5);
@@ -30,15 +23,13 @@ function StarRating(props) {
 
   const toReturn = (
     <div>
-      <Paper rounded zDepth={1} style={paperStyle}>
-        {starsToDisplay[0]}
-        {starsToDisplay[1]}
-        {starsToDisplay[2]}
-        {starsToDisplay[3]}
-        {starsToDisplay[4]}
-      </Paper>
+      {starsToDisplay[0]}
+      {starsToDisplay[1]}
+      {starsToDisplay[2]}
+      {starsToDisplay[3]}
+      {starsToDisplay[4]}
     </div>
-    );
+  );
 
   return toReturn;
 }

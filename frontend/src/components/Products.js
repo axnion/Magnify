@@ -6,14 +6,12 @@ import { List, ListItem } from 'material-ui/List';
 const Products = ({ products }) => (
   
   <List>
-    {console.log(products)}
     {
       products.map((product, key) =>
       (<Link key={key} to={`/ProductView/${product._id}`}>
-        {console.log(product)}
-        <ListItem primaryText={`${product.name}`} 
-        secondaryText={`${product.company.name} 
-        (${product.category.name})`} />
+        <ListItem>
+        Name: {product.name}, Company: {product.company.name}{product.category ? `, Category: ${product.category.name}` : ''}
+        </ListItem>
       </Link>),
     )}
   </List>

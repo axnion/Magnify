@@ -7,9 +7,10 @@ import PropTypes from 'prop-types';
 const StyledDiv = styled('div')`
     height: 45px,
     width: 100px,
-    textAlign: center,
-    display: inline,
+    text-align: center,
     padding: 10px,
+    vertical-align: middle;
+    display: inline;
 `;
 
 const ShowRating = ({ averageScore, numberOfRatings }) => (

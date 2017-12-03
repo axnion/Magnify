@@ -29,23 +29,33 @@ const StyledCardActions = styled(CardActions)`
   max-width: 75%;
 `;
 
+const StyledCardAction = styled('div')`
+  float: left;
+`;
+
 const ColoredCardHeader = styled(CardHeader)`
     background-color: #BBDEFB;
 `;
 
-const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOfRatings }) => (
+const MaterialCardComponent = ({
+  material, showRateStars, averageScore, numberOfRatings,
+}) => (
   <StyledCard>
     <StyledFloatingActionButton download href={`${config.serverURI}${material.url}`}>
       <GetApp />
     </StyledFloatingActionButton>
     <ColoredCardHeader actAsExpander showExpandableButton title={material.title} />
     <StyledCardActions>
-      {
+      <StyledCardAction>
+        {
         numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
       }
-      {
+      </StyledCardAction>
+      <StyledCardAction>
+        {
         !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
       }
+      </StyledCardAction>
     </StyledCardActions>
     <CardText expandable>
       <TextField
@@ -53,7 +63,7 @@ const MaterialCardComponent = ({ material, showRateStars, averageScore, numberOf
         floatingLabelText="Notes"
         fullWidth
         multiLine
-        rows={2}
+        rows={1}
         rowsMax={6}
       />
     </CardText>
