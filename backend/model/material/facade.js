@@ -23,10 +23,6 @@ class MaterialFacade extends Facade {
     });
   }
 
-  getMaterialById(id) {
-    return this.findById(id);
-  }
-
   getMaterialFile(materialId) {
     const gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection('material');

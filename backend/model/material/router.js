@@ -6,7 +6,7 @@ router.route('/upload')
   .post(controller.uploadMiddleware(), (...args) => controller.upload(...args));
 
 router.route('/:id')
-  .get((...args) => controller.getMaterialById(...args));
+  .get((...args) => controller.findById(...args));
 
 router.route('/:id/download')
   .get((...args) => controller.getMaterialFile(...args));

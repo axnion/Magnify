@@ -28,12 +28,6 @@ class MaterialController extends Controller {
     })(req, res, next);
   }
 
-  getMaterialById(req, res, next) {
-    return this.facade.getMaterialById(req.params.id)
-      .then(material => res.status(200).json(material))
-      .catch(err => next(err));
-  }
-
   getMaterialFile(req, res, next) {
     return this.facade.getMaterialFile(req.params.id)
       .then((file) => {
