@@ -7,6 +7,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import GetApp from 'material-ui/svg-icons/action/get-app';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
+import Save from 'material-ui/svg-icons/content/save';
 
 import config from '../config';
 import StarRating from './StarRating';
@@ -35,6 +36,11 @@ const StyledCardAction = styled('div')`
 
 const ColoredCardHeader = styled(CardHeader)`
     background-color: #BBDEFB;
+`;
+
+const SaveButton = styled(FloatingActionButton)`
+  float: right;
+  margin-right: -10px;
 `;
 
 const MaterialCardComponent = ({
@@ -66,6 +72,9 @@ const MaterialCardComponent = ({
         rows={1}
         rowsMax={6}
       />
+      <SaveButton tooltipPosition="bottom-center" touch tooltip="Save notes">
+        <Save />
+      </SaveButton>
     </CardText>
   </StyledCard>
 );
