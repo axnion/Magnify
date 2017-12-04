@@ -6,14 +6,14 @@ const Grid = require('gridfs-stream');
 
 class MaterialFacade extends Facade {
 
-  save(file, title, description, productId) {
+  save(file, body) {
 
     const id = mongoose.Types.ObjectId();
 
     const material = new this.Schema({
       _id: id,
-      title,
-      description,
+      title: body.title,
+      description: body.description,
       file: {
         id: file.id,
         name: file.originalname
@@ -23,7 +23,7 @@ class MaterialFacade extends Facade {
 
     return material.save().then(() => {
       return productSchema.findOneAndUpdate(
-        { _id: productId },
+        { _id: body.productId },
         { $push: { material } },
         { new: true }
       );

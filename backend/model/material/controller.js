@@ -27,7 +27,7 @@ class MaterialController extends Controller {
             return res.status(401).json({ message: 'Not authorized' });
           }
 
-          return this.facade.save(req.file, req.body.title, req.body.description, req.body.productId)
+          return this.facade.save(req.file, req.body)
             .then(resp => res.status(201).json({ message: 'File saved' }))
             .catch(err => next(err));
         })
