@@ -36,6 +36,13 @@ class ProductController extends Controller {
     .then(resp => res.status(201).json(resp))
     .catch(err => next(err));
   }
+
+  find(req, res, next) {
+    return this.facade
+    .find()
+    .then(resp => res.status(201).json(resp))
+    .catch(err => next(err));
+  }
 }
 
 module.exports = new ProductController(ProductFacade);

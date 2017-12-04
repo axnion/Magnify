@@ -17,6 +17,11 @@ class ProductFacade extends Facade {
       .populate('material');
   }
 
+  find() {
+    return this.Schema.find()
+      .populate('material');
+  }
+
   getMaterialFile(materialId) {
     const gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection('material');
