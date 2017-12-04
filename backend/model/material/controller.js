@@ -1,5 +1,6 @@
 const Controller = require('../../lib/controller');
 const materialFacade = require('./facade');
+const productFacade = require('../product/facade');
 const passport = require('passport');
 const config = require('../../config');
 
@@ -11,7 +12,6 @@ class MaterialController extends Controller {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      // TODO: implement check for company so reps cannot upload materials to other companies
       if (
         !user ||
         (user.role !== config.accountRole.companyRep &&
@@ -20,8 +20,17 @@ class MaterialController extends Controller {
         return res.status(401).json({ message: 'Not authorized' });
       }
 
-      return this.facade.save(req.file, req.body.title, req.body.description, req.body.productId)
-        .then(resp => res.status(201).json({ message: 'File saved' }))
+      // Check if company rep is associated with the company responsible for the product
+      productFacade.findById(req.body.productId)
+        .then((product) => {
+          if (!user.company.equals(product.company)) {
+            return res.status(401).json({ message: 'Not authorized' });
+          }
+
+          return this.facade.save(req.file, req.body.title, req.body.description, req.body.productId)
+            .then(resp => res.status(201).json({ message: 'File saved' }))
+            .catch(err => next(err));
+        })
         .catch(err => next(err));
     })(req, res, next);
   }
