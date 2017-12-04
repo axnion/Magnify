@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Account = require('../account/schema');
 
 const annotationSchema = new Schema({
   // TODO: implement Material here once it has been refactored

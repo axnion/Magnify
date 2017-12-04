@@ -36,7 +36,7 @@ afterAll(done => {
   });
 });
 
-describe('Test GET', () => {
+describe.skip('Test GET', () => {
   test('login using correct credentials', done => {
     const authAttempt = request.agent(server);
 
@@ -142,7 +142,7 @@ describe('Test GET', () => {
   });
 });
 
-describe('Test ProductFacade', () => {
+describe.skip('Test ProductFacade', () => {
   test.skip('Add a product to a company using its facade', done => {
     return CompanyFacade.findOne({ name: 'TestCompany' }).then(company => {
       ProductFacade.addProduct({ name: 'Thing' }, company._id).then(() => {
