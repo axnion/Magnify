@@ -1,8 +1,8 @@
-const passport = require("passport");
-const Controller = require("../../lib/controller");
-const AccountFacade = require("./facade");
-const generateJWTToken = require("../helpers").generateJWTToken;
-const config = require("../../config");
+const passport = require('passport');
+const Controller = require('../../lib/controller');
+const AccountFacade = require('./facade');
+const generateJWTToken = require('../helpers').generateJWTToken;
+const config = require('../../config');
 
 class AccountController extends Controller {
   /**
@@ -10,13 +10,14 @@ class AccountController extends Controller {
   */
   createAccount(req, res, next) {
     // Check authorization
-    passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.role !== config.accountRole.companyAdmin)
-        return res.status(401).json({ message: "Not authorized" });
+      if (!user || user.role !== config.accountRole.companyAdmin) {
+        return res.status(401).json({ message: 'Not authorized' });
+      }
 
-      return AccountFacade.createAccount(req.body, user.company)
+      return this.facade.createAccount(req.body, user.company)
         .then(resp => res.status(201).json({ username: resp.username }))
         .catch(err => next(err));
     })(req, res, next);
@@ -26,7 +27,7 @@ class AccountController extends Controller {
   * Login method
   */
   login(req, res, next) {
-    passport.authenticate("local", { session: false }, (err, user, info) => {
+    passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err) return next(err);
 
       if (!user) {
@@ -54,7 +55,7 @@ class AccountController extends Controller {
   createConsumerAccount(req, res, next) {
     req.body.role = config.accountRole.consumer;
 
-    return AccountFacade.createAccount(req.body)
+    return this.facade.createAccount(req.body)
       .then(resp => res.status(201).json({ username: resp.username }))
       .catch(message => res.status(500).json(message));
   }
