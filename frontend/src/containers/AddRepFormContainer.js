@@ -4,9 +4,7 @@ import AddRepForm from '../components/AddRepForm';
 import { createAccount } from '../actions/account';
 
 const mapDispatchToProps = dispatch => ({
-  sendForm: (data, token) => {
-    dispatch(createAccount(data, token));
-  },
+  sendForm: (data, token) => dispatch(createAccount(data, token)),
 });
 
 const mapStateToProps = state => ({
