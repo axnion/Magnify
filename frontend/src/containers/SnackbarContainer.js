@@ -18,7 +18,7 @@ class SnackbarContainer extends React.Component {
         />
         <Snackbar
           open={registerSuccess}
-          message="Successfully logged in"
+          message="Successfully registered"
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
           bodyStyle={{ backgroundColor: '#21ba45' }}

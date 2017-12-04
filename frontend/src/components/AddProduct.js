@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CategoryPickerContainer from '../containers/CategoryPickerContainer';
+
 class AddProduct extends React.Component {
   constructor(props) {
     super(props);
@@ -8,10 +10,22 @@ class AddProduct extends React.Component {
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubComponentChange = this.handleSubComponentChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubComponentChange(change) {
+    const update = { category: '' };
+    if (change.selectedSubCategory !== 'All' && change.selectedSubCategory) {
+      update.category = change.selectedSubCategory;
+    } else if (change.selectedMainCategory !== 'All' && change.selectedMainCategory) {
+      update.category = change.selectedMainCategory;
+    }
+
+    this.setState(update);
   }
 
   handleSubmit(event) {
@@ -85,18 +99,7 @@ class AddProduct extends React.Component {
                 />
               </label>
             </div>
-            <div>
-              <label htmlFor="category">
-                Category ID:
-                <input
-                  id="category"
-                  name="category"
-                  type="category"
-                  value={this.state.category}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
+            <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
             <input type="submit" value="Add" />
             {this.printSubmitMessage()}
           </fieldset>

@@ -2,9 +2,11 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { setFilterByCompany, getProducts } from '../actions/product';
+import { getProducts } from '../actions/product';
 import { getCompanies } from '../actions/company';
 import { getCategories } from '../actions/category';
+
+import CategoryPickerContainer from './CategoryPickerContainer';
 import Products from '../components/Products';
 import Picker from '../components/Picker';
 
@@ -12,11 +14,12 @@ class ProductsListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubComponentChange = this.handleSubComponentChange.bind(this);
     this.getFilteredProducts = this.getFilteredProducts.bind(this);
     this.state = {
-      filterByCompanyName: 'All',
-      filterByMainCategory: 'All',
-      filterBySubCategory: 'All',
+      selectedCompanyName: 'All',
+      selectedMainCategory: 'All',
+      selectedSubCategory: 'All',
     };
   }
 
@@ -28,14 +31,47 @@ class ProductsListContainer extends React.Component {
   }
 
   getFilteredProducts() {
-    const { products,  } = this.props;
-    const { filterByCompanyName } = this.state;
-    return filterByCompanyName !== 'All' ? products.filter(product => product.company._id === filterByCompanyName) : products;
+    const { products } = this.props;
+    const { selectedCompanyName, selectedSubCategory, selectedMainCategory } = this.state;
+    let productsFilteredByCompany;
+
+    if (selectedCompanyName !== 'All') {
+      productsFilteredByCompany = products.filter(product => product.company._id === selectedCompanyName);
+    } else {
+      productsFilteredByCompany = products;
+    }
+
+    let productsFilteredByMainCat;
+    if (selectedMainCategory !== 'All') {
+      productsFilteredByMainCat = productsFilteredByCompany.filter((product) => {
+        if (product.category) {
+          if (product.category._id === selectedMainCategory) return true;
+          if (product.category.parent === selectedMainCategory) return true;
+        }
+        return false;
+      });
+    } else {
+      productsFilteredByMainCat = productsFilteredByCompany;
+    }
+
+    let productsFilteredBySubCat;
+    if (selectedSubCategory !== 'All') {
+      productsFilteredBySubCat = productsFilteredByMainCat.filter((product) => {
+        return product.category ? product.category._id === selectedSubCategory : false;
+      });
+    } else {
+      productsFilteredBySubCat = productsFilteredByMainCat;
+    }
+
+    return productsFilteredBySubCat;
   }
 
-  handleChange(companyToFilterBy) {
-    //this.props.dispatch(setFilterByCompany(companyToFilterBy));
-    this.setState({ filterByCompanyName: companyToFilterBy });
+  handleSubComponentChange(stateChange) {
+    this.setState(stateChange);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
@@ -44,33 +80,20 @@ class ProductsListContainer extends React.Component {
       error,
       isWaiting,
       companies,
-      //filterByCompanyName,
-      mainCategories,
-      subCategories } = this.props;
+    } = this.props;
 
-    const { filterByCompanyName } = this.state;
-    
+    const { selectedCompanyName } = this.state;
+
     return (
       <div>
         <Picker
           options={[{ name: 'All', _id: 'All' }].concat(companies)}
-          value={filterByCompanyName}
-          //onChange={(event, value) => this.setState({ filterByCompanyName: value })}
+          value={selectedCompanyName}
           onChange={this.handleChange}
           title={'Filter by company'}
+          name={'selectedCompanyName'}
         />
-        <Picker
-          options={[{ name: 'All', _id: 'All' }].concat(mainCategories)}
-          value={filterByCompanyName}
-          onChange={this.handleChange}
-          title={'Filter by main category'}
-        />
-        <Picker
-          options={[{ name: 'All', _id: 'All' }].concat(subCategories)}
-          value={filterByCompanyName}
-          onChange={this.handleChange}
-          title={'Filter by sub category'}
-        />
+        <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
         <h1>Products</h1>
         {isWaiting && products.length === 0 && <h2>Loading...</h2>}
         {!isWaiting && products.length === 0 && <h2>Empty.</h2>}
@@ -90,9 +113,6 @@ ProductsListContainer.propTypes = {
   isWaiting: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   companies: PropTypes.array.isRequired, // eslint-disable-line
-  //filterByCompanyName: PropTypes.string.isRequired,
-  mainCategories: PropTypes.array.isRequired, // eslint-disable-line
-  subCategories: PropTypes.array.subCategories, // eslint-disable-line
 };
 
 ProductsListContainer.defaultProps = {
@@ -100,17 +120,15 @@ ProductsListContainer.defaultProps = {
   isWaiting: false,
   products: [],
   companies: [],
-  //filterByCompanyName: 'All',
+  mainCategories: [],
+  subCategories: [],
 };
 
 const mapStateToProps = state => ({
   products: state.product.products,
   error: state.product.error,
   isWaiting: state.product.isWaiting,
-  //filterByCompanyName: state.product.filterByCompanyName,
   companies: state.company.companies,
-  mainCategories: state.category.mainCategories,
-  subCategories: state.category.subCategories,
 });
 
 export default connect(

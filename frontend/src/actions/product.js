@@ -71,7 +71,8 @@ function getCompaniesObject(products, companies) {
 function getCategoriesNames(products, categories) {
   const newProducts = products.map((product) => {
     const categoryObj = categories.find(c => c._id === product.category);
-    return { ...product, categoryObj };
+    const newProduct = categoryObj !== undefined ? { ...product, category: categoryObj } : product;
+    return newProduct;
   });
   return newProducts;
 }
@@ -97,7 +98,9 @@ export function getProducts() {
       const categories = response[1].data;
       const companies = response[2].data;
 
+      console.log(categories);
       const result = combineAllProductsData(products, categories, companies);
+      
 
       dispatch(getProductsSuccess(result));
     })

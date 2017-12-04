@@ -30,8 +30,8 @@ node app.js category -C -n Diskmaskiner -p Vitvaror
 node app.js category -C -n Gräsklippare -p Trädgrådsprodukter
 node app.js category -C -n Lövblåsare -p Trädgrådsprodukter
 
-node app.js category -C -n Elektriska -p Gräsklippare
-node app.js category -C -n Bensindrivna -p Gräsklippare
+#node app.js category -C -n Elektriska -p Gräsklippare
+#node app.js category -C -n Bensindrivna -p Gräsklippare
 
 # Create Products
 node app.js product -C -n EvilCutter -c EvilCorp
