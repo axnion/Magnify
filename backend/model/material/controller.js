@@ -13,8 +13,14 @@ class MaterialController extends Controller {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.role !== config.userRole.companyRep)
+      // TODO: implement check for company so reps cannot upload materials to other companies
+      if (
+        !user ||
+        (user.role !== config.userRole.companyRep &&
+         user.role !== config.userRole.companyAdmin)
+      ) {
         return res.status(401).json({ message: 'Not authorized' });
+      }
 
       return this.facade.save(req.file, req.body.title, req.body.description, req.body.productId)
         .then(resp => res.status(201).json({ message: 'File saved' }))
