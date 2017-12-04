@@ -41,12 +41,10 @@ class MaterialController extends Controller {
   uploadMiddleware(req, res, next) {
     const gridfs = new GridFsStorage({
       url: config.mongo.url,
-      file: (req, file) => {
-        return {
-          filename: file,
-          bucketName: 'material'
-        };
-      }
+      file: (req, file) => ({
+        filename: file,
+        bucketName: 'material'
+      })
     });
 
     return multer({ storage: gridfs }).single('file');
