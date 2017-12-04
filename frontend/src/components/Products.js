@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 
 const Products = ({ products }) => (
-  
   <List>
     {
       products.map((product, key) =>
