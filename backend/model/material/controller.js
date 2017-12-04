@@ -33,7 +33,7 @@ class MaterialController extends Controller {
       .then((file) => {
         res.contentType('application/pdf');
         res.setHeader('Content-disposition', `attachment; filename=${file.name}`);
-        file.pipe(res.status(200));
+        file.stream.pipe(res.status(200));
       })
       .catch(err => next(err));
   }

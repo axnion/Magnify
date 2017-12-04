@@ -15,6 +15,12 @@ const materialSchema = new Schema({
   description: {
     type: String
   },
+  fileId: {
+    type: mongoose.Schema.ObjectId
+  },
+  filename: {
+    type: String
+  },
   rating: [{
     account: {
       type: mongoose.Schema.ObjectId,
