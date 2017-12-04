@@ -45,8 +45,9 @@ export default function uploadMaterial(data, productId, token) {
     formData.append('file', data.files[0]);
     formData.append('title', data.title);
     formData.append('description', data.description);
+    formData.append('productId', productId);
 
-    return apiRequest('post', formData, `/product/${productId}/material`, token)
+    return apiRequest('post', formData, '/material/upload', token)
       .then((response) => {
         dispatch(uploadMaterialSuccess(response.data));
       })

@@ -15,19 +15,8 @@ const productSchema = new Schema({
   },
   material: [
     {
-      url: {
-        type: String,
-        required: true,
-        unique: true,
-        sparse: true
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      description: {
-        type: String
-      }
+      type: mongoose.Schema.ObjectId,
+      ref: 'Material'
     }
   ]
 });
