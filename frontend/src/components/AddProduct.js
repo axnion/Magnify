@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import CategoryPickerContainer from '../containers/CategoryPickerContainer';
 
 class AddProduct extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: '', description: '', name: '', category: '', hasSubmitted: false };
+    this.state = { title: '', description: '', name: '', category: '', hasSubmitted: false, snackbarError: false, snackbarSuccess: false };
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,23 +41,15 @@ class AddProduct extends React.Component {
       category: this.state.category,
     };
 
-    this.sendForm(data, this.props.token);
+    this.sendForm(data, this.props.token).then(() => {
+      if (this.props.error) {
+        this.setState({ snackbarError: true });
+      } else {
+        this.setState({ snackbarSuccess: true });
+      }
+    });
     this.setState({ hasSubmitted: true });
     this.setState({ title: '', description: '', name: '', category: '' });
-  }
-
-  printSubmitMessage() {
-    if (this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Could not add new product. {this.props.error} </p>
-      );
-    } else if (!this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Product added!</p>
-      );
-    }
-
-    return undefined;
   }
 
   render() {
@@ -62,48 +57,29 @@ class AddProduct extends React.Component {
       <div className="AddProduct">
         <h1>Add Product here</h1>
         <form onSubmit={this.handleSubmit}>
-          <fieldset disabled={this.props.isWaiting}>
-            {/* <div>
-              <label htmlFor="title">
-                Title:
-                <input
-                  id="title"
-                  name="title"
-                  type="text"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="description">
-                Description:
-                <input
-                  id="description"
-                  name="description"
-                  type="description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div> */}
-            <div>
-              <label htmlFor="name">
-                Product name:
-                <input
-                  id="name"
-                  name="name"
-                  type="name"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
-            <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
-            <input type="submit" value="Add" />
-            {this.printSubmitMessage()}
-          </fieldset>
+          <TextField
+            hintText="Product name"
+            value={this.state.name}
+            onChange={(event, value) => this.setState({ name: value, error: false })}
+            disabled={this.props.isWaiting}
+          /><br />
+          <CategoryPickerContainer functionToRun={this.handleSubComponentChange} /> <br />
+          <RaisedButton onClick={this.handleSubmit} label="Add" primary />
         </form>
+        <Snackbar
+          open={this.state.snackbarError}
+          message={this.props.error || ''}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
+        <Snackbar
+          open={this.state.snackbarSuccess}
+          message={'Product added!'}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+          bodyStyle={{ backgroundColor: '#21ba45' }}
+          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+        />
       </div>
     );
   }
@@ -118,6 +94,8 @@ AddProduct.propTypes = {
 
 AddProduct.defaultProps = {
   error: null,
+  snackbarError: false,
+  snackbarSuccess: false,
   isWaiting: false,
   token: null,
 };
