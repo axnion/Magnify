@@ -44,6 +44,22 @@ class MaterialController extends Controller {
       })
       .catch(err => next(err));
   }
+
+  setRating(req, res, next) {
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) return res.status(500).json({ message: info });
+
+      if (!user || user.role !== config.accountRole.consumer) {
+        return res.status(401).json({ message: 'Not authorized' });
+      }
+
+      return materialFacade.setRating(req.params.id, user.id, req.body.rating)
+      .then((result) => {
+        res.status(200).json(result);
+        next();
+      });
+    })(req, res, next);
+  }
 }
 
 module.exports = new MaterialController(materialFacade);

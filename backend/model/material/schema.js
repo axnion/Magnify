@@ -23,7 +23,7 @@ const materialSchema = new Schema({
       type: String
     }
   },
-  rating: [{
+  ratings: [{
     account: {
       type: mongoose.Schema.ObjectId,
       ref: 'Account'

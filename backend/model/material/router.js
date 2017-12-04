@@ -12,4 +12,7 @@ router.route('/:id')
 router.route('/:id/download')
   .get((...args) => controller.getMaterialFile(...args));
 
+router.route('/:id/rating')
+  .put((...args) => controller.setRating(...args));
+
 module.exports = router;
