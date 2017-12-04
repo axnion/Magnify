@@ -57,11 +57,11 @@ export default function uploadMaterial(data, productId, token) {
   };
 }
 
-export function makeRating(data, productId, materialId, token) {
+export function makeRating(data, materialId, token) {
   return (dispatch) => {
     dispatch(beginPostRating());
 
-    return apiRequest('put', data, `/product/${productId}/material/${materialId}/rating`, token)
+    return apiRequest('put', data, `/material/${materialId}/rating`, token)
       .then((response) => {
         dispatch(postRatingSuccess(response.data));
       })
