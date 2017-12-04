@@ -42,17 +42,6 @@ class MaterialFacade extends Facade {
       return file;
     });
   }
-
-  /* getMaterialFile(materialId) {
-    const gfs = Grid(mongoose.connection.db, mongoose.mongo);
-    gfs.collection('material');
-
-    return new Promise((resolve, reject) => {
-      resolve(gfs.createReadStream({
-        _id: materialId
-      }));
-    });
-  } */
 }
 
 module.exports = new MaterialFacade(materialSchema);
