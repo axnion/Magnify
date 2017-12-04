@@ -1,9 +1,10 @@
 const controller = require('./controller');
+const uploadMiddleWare = require('../helpers').uploadMiddleWare;
 const Router = require('express').Router;
 const router = new Router();
 
 router.route('/upload')
-  .post(controller.uploadMiddleware(), (...args) => controller.upload(...args));
+  .post(uploadMiddleWare(), (...args) => controller.upload(...args));
 
 router.route('/:id')
   .get((...args) => controller.findById(...args));

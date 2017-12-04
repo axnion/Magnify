@@ -2,8 +2,6 @@ const Controller = require('../../lib/controller');
 const materialFacade = require('./facade');
 const passport = require('passport');
 const config = require('../../config');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
 
 class MaterialController extends Controller {
 
@@ -36,18 +34,6 @@ class MaterialController extends Controller {
         file.stream.pipe(res.status(200));
       })
       .catch(err => next(err));
-  }
-
-  uploadMiddleware(req, res, next) {
-    const gridfs = new GridFsStorage({
-      url: config.mongo.url,
-      file: (req, file) => ({
-        filename: file,
-        bucketName: 'material'
-      })
-    });
-
-    return multer({ storage: gridfs }).single('file');
   }
 }
 
