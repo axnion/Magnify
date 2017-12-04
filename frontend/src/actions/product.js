@@ -5,13 +5,6 @@ import { apiRequest } from './helpers';
 
 const endpoint = '/product';
 
-export function setFilterByCompany(company) {
-  return {
-    type: types.FILTER_BY_COMPANY,
-    filterByCompany: company,
-  };
-}
-
 function beginGetProducts() {
   return { type: types.GET_PRODUCTS };
 }

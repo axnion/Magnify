@@ -2,7 +2,7 @@ import * as types from '../constants';
 
 export default (state = {
   isWaiting: false,
-  categories: [],
+  subCategories: [],
   mainCategories: [],
   error: null,
 }, action) => {
@@ -15,7 +15,7 @@ export default (state = {
     case types.GET_CATEGORIES_SUCCESS:
       return {
         ...state,
-        categories: action.payload,
+        subCategories: action.payload.filter(cat => cat.mainCategory === false),
         mainCategories: action.payload.filter(cat => cat.mainCategory === true),
         isWaiting: false,
         error: null,

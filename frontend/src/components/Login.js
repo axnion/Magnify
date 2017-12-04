@@ -11,12 +11,7 @@ class Login extends React.Component {
     this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false };
 
     this.sendForm = props.sendForm;
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
