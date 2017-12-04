@@ -12,17 +12,19 @@ class MaterialFacade extends Facade {
 
     const material = new this.Schema({
       _id: id,
-      title: title,
-      description: description,
-      fileId: file.id,
-      filename: file.originalname,
+      title,
+      description,
+      file: {
+        id: file.id,
+        name: file.originalname
+      },
       url: `/material/${id}/download`
     });
 
     return material.save().then(() => {
       return productSchema.findOneAndUpdate(
         { _id: productId },
-        { $push: { material: material } },
+        { $push: { material } },
         { new: true }
       );
     });
@@ -35,9 +37,9 @@ class MaterialFacade extends Facade {
     return this.findById(materialId).then((material) => {
       const file = {
         stream: gfs.createReadStream({
-          _id: material.fileId
+          _id: material.file.id
         }),
-        name: material.filename
+        name: material.file.name
       };
       return file;
     });
