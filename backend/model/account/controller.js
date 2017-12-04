@@ -13,7 +13,7 @@ class AccountController extends Controller {
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
-      if (!user || user.role !== config.userRole.companyAdmin)
+      if (!user || user.role !== config.accountRole.companyAdmin)
         return res.status(401).json({ message: "Not authorized" });
 
       return AccountFacade.createAccount(req.body, user.company)
@@ -52,7 +52,7 @@ class AccountController extends Controller {
    * @param {*} next
    */
   createConsumerAccount(req, res, next) {
-    req.body.role = config.userRole.consumer;
+    req.body.role = config.accountRole.consumer;
 
     return AccountFacade.createAccount(req.body)
       .then(resp => res.status(201).json({ username: resp.username }))

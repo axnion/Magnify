@@ -11,7 +11,7 @@ const accountSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Company',
     required() {
-      return this.role === config.userRole.companyAdmin || this.role === config.userRole.companyRep;
+      return this.role === config.accountRole.companyAdmin || this.role === config.accountRole.companyRep;
     }
   },
   role: {

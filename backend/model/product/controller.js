@@ -10,8 +10,8 @@ class ProductController extends Controller {
 
       if (
         !user ||
-        (user.role !== config.userRole.companyRep &&
-          user.role !== config.userRole.companyAdmin)
+        (user.role !== config.accountRole.companyRep &&
+          user.role !== config.accountRole.companyAdmin)
       ) {
         return res.status(401).json({ message: 'Not authorized' });
       }
