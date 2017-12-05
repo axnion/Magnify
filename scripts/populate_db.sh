@@ -7,6 +7,7 @@ node app.js account --drop # Drop accounts collection
 node app.js company --drop # Drop companies collection
 node app.js category --drop # Drop categories collection
 node app.js product --drop # Drop products collection
+node app.js material --drop # Drop materials collection
 
 # Create companies
 node app.js company -C -n AwesomeCorp

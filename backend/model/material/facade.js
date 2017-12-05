@@ -44,6 +44,34 @@ class MaterialFacade extends Facade {
       return file;
     });
   }
+
+  setRating(materialId, accountId, newRating) {
+    return this.findById(materialId)
+    .then((material) => {
+      if (!material) {
+        throw new Error('Material not found');
+      }
+
+      let isRated = false;
+
+      material.ratings.forEach((rating) => {
+        console.log(typeof rating.account);
+        if (rating.account == accountId) {
+          console.log("Updatning");
+          rating.rating = newRating;
+          isRated = true;
+        }
+      });
+
+      if (!isRated) {
+        console.log("Creating new");
+        material.ratings.push({ account: accountId, rating: newRating });
+
+      }
+
+      return this.update(material);
+    })
+  }
 }
 
 module.exports = new MaterialFacade(materialSchema);
