@@ -65,7 +65,8 @@ const MaterialCardComponent = ({
     </StyledCardActions>
     <CardText expandable>
       <TextField
-        hintText={annotation}
+        hintText="Enter personal notes here"
+        defaultValue={annotation}
         floatingLabelText="Notes"
         fullWidth
         multiLine
@@ -95,7 +96,7 @@ MaterialCardComponent.defaultProps = {
   showRateStars: false,
   averageScore: 0,
   numberOfRatings: 0,
-  annotation: 'Enter personal notes here',
+  annotation: '',
 };
 
 export default MaterialCardComponent;

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Snackbar from 'material-ui/Snackbar';
 
 import { getAProduct } from '../actions/product';
-import { mockUploadAnnotation } from '../actions/annotation';
+import { mockUploadAnnotation, mockGetAnnotation } from '../actions/annotation';
 import MaterialCard from '../components/MaterialCard';
 
 class ProductView extends React.Component {
@@ -22,9 +22,17 @@ class ProductView extends React.Component {
     dispatch(getAProduct(this.props.match.params.id));
   }
 
-  saveAnnotation(annotation, materialId) {
+  /*addAnnotationsToMaterial() {
     const { dispatch } = this.props;
 
+    const newMaterials = product
+
+   return dispatch(mockGetAnnotation(materialId, this.props.auth.token));
+  }*/
+
+  saveAnnotation(annotation, materialId) {
+    const { dispatch } = this.props;
+    
     if (annotation !== '') {
       dispatch(mockUploadAnnotation(annotation, materialId, this.props.auth.token))
         .then(() => {
@@ -64,8 +72,8 @@ class ProductView extends React.Component {
         {materials.length > 0 &&
         <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
           {materials.map((material, key) =>
-            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} annotation="test" saveAnnotation={this.saveAnnotation} />)
-          }
+            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={material.annotation} />)
+        }
         </div>}
         <Snackbar
           open={this.state.snackbarError}

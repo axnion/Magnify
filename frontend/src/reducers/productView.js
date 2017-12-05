@@ -43,6 +43,24 @@ export default (state = {
         waitingUploadAnnotation: false,
         error: action.payload,
       };
+    case types.GET_ANNOTATION:
+      return {
+        ...state,
+        isWaiting: true,
+      };
+    case types.GET_ANNOTATION_SUCCESS:
+      return {
+        ...state,
+        currentAnnotation: action.payload,
+        isWaiting: false,
+        error: null,
+      };
+    case types.GET_ANNOTATION_ERROR:
+      return {
+        ...state,
+        isWaiting: false,
+        error: action.payload,
+      };
     default:
       return state;
   }
