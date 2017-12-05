@@ -92,6 +92,7 @@ class MaterialController extends Controller {
         });
 
         const response = {
+          materialId: req.params.id,
           avgRating: parseFloat((sumOfRatings / numberOfRatings).toFixed(1)),
           nrRates: numberOfRatings
         };
