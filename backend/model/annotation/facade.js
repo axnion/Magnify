@@ -4,6 +4,7 @@ const AnnotationSchema = require('./schema');
 class AnnotationFacade extends Facade {
   createAnnotation(body) {
     const schema = new this.Schema({
+      material: body.material,
       account: body.account,
       annotation: body.annotation
     });
