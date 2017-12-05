@@ -91,7 +91,7 @@ class MaterialController extends Controller {
           }
         });
 
-        let response = {
+        const response = {
           avgRating: parseFloat((sumOfRatings / numberOfRatings).toFixed(1)),
           nrRates: numberOfRatings
         };
