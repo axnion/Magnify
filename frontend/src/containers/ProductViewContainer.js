@@ -68,7 +68,7 @@ class ProductView extends React.Component {
           marginTop: '25px' }}
         >
           {materials.map((material, key) =>
-            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)
+            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id).annotation} />)
         }
         </div>}
         <Snackbar
