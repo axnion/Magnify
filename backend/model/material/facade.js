@@ -46,9 +46,14 @@ class MaterialFacade extends Facade {
   }
 
   setRating(material, account, rating) {
-    return materialSchema.findByIdAndUpdate(
-      material
-    ).exec();
+    return this.Schema.findByIdAndUpdate(
+      material,
+      { $push: { rating: { account, rating } } },
+      { safe: true, upsert: true, new: true },
+      (err, model) => {
+        throw err;
+      }
+    );
 //    return this.findById(material)
 //    .then((results) => {
 //      results.rating.forEach((item) => {

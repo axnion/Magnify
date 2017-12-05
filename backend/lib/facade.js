@@ -37,6 +37,12 @@ class Facade {
       .remove(...args)
       .exec();
   }
+
+  findByIdAndUpdate(...args) {
+    return this.Schema
+      .findByIdAndUpdate(...args)
+      .exec();
+  }
 }
 
 module.exports = Facade;

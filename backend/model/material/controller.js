@@ -53,7 +53,15 @@ class MaterialController extends Controller {
         return res.status(401).json({ message: 'Not authorized' });
       }
 
-      return materialFacade.setRating(req.params.id, user.id, req.body.rating)
+      const material = req.params.id;
+      const account = user.id;
+      const rating = req.body.rating;
+
+      return materialFacade.findByIdAndUpdate(
+        material,
+        { $push: { ratings: { account, rating } } },
+        { safe: true, upsert: true, new: true }
+      )
       .then((result) => {
         res.status(200).json(result);
         next();
