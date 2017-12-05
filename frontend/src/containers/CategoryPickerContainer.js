@@ -46,13 +46,16 @@ class CategoryPickerContainer extends React.Component {
           title={'Select main category'}
           name={'selectedMainCategory'}
         />
-        <Picker
-          options={[{ name: 'All', _id: 'All' }].concat(this.getFilteredSubCategories(subCategories))}
-          value={selectedSubCategory}
-          onChange={this.handleChange}
-          title={'Select sub category'}
-          name={'selectedSubCategory'}
-        />
+        {
+          subCategories.length <= 0 ? undefined :
+          <Picker
+            options={[{ name: 'All', _id: 'All' }].concat(this.getFilteredSubCategories(subCategories))}
+            value={selectedSubCategory}
+            onChange={this.handleChange}
+            title={'Select sub category'}
+            name={'selectedSubCategory'}
+          />
+        }
       </div>
     );
   }

@@ -19,25 +19,49 @@ function uploadAnnotationError(payload) {
   };
 }
 
-function beginGetAnnotation() {
-  return { type: types.GET.UPLOAD_ANNOTATION };
+function beginGetAnnotations() {
+  return { type: types.GET_ANNOTATIONS };
 }
 
-function getAnnotationSuccess(payload) {
+function getAnnotationsSuccess(payload) {
   return {
-    type: types.GET_ANNOTATION_SUCCESS,
+    type: types.GET_ANNOTATIONS_SUCCESS,
     payload,
   };
 }
 
-function getAnnotationError(payload) {
+function getAnnotationsError(payload) {
   return {
-    type: types.GET_ANNOTATION_ERROR,
+    type: types.GET_ANNOTATIONS_ERROR,
     payload,
   };
 }
 
-export default function uploadAnnotation(text, materialId, token) {
+export function mockUploadAnnotation(text, materialId, token)
+{
+  return (dispatch) => {
+    dispatch(beginUploadAnnotation());
+
+    return new Promise((resolve, reject) => (setTimeout(() => {
+      if (!text || !materialId || !token) {
+        return reject(new Error('Please eneter all required data'))
+      }
+      const data = {
+        annotation: text,
+        material: materialId,
+      };
+      return resolve(data);
+    }, 2000)))
+      .then((response) => {
+        dispatch(uploadAnnotationSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(uploadAnnotationError(error.message));
+      });
+  };
+}
+
+export function uploadAnnotation(text, materialId, token) {
   return (dispatch) => {
     dispatch(beginUploadAnnotation());
 
@@ -56,17 +80,16 @@ export default function uploadAnnotation(text, materialId, token) {
   };
 }
 
-export function getAnnotation(materialId, token) {
+export function getAnnotations(token) {
   return (dispatch) => {
-    dispatch(beginGetAnnotation());
+    dispatch(beginGetAnnotations());
 
-
-    return apiRequest('get', {}, `/annotation/${materialId}`, token)
+    return apiRequest('get', {}, '/annotation/', token)
       .then((response) => {
-        dispatch(getAnnotationSuccess(response.data));
+        dispatch(getAnnotationsSuccess(response.data));
       })
       .catch((response) => {
-        dispatch(getAnnotationError(response.message));
+        dispatch(getAnnotationsError(response.message));
       });
   };
 }

@@ -99,14 +99,12 @@ export function getProducts() {
       const companies = response[2].data;
 
       console.log(categories);
-      const result = combineAllProductsData(products, categories, companies);
-      
-
+      const result = combineAllProductsData(products, categories, companies);      
       dispatch(getProductsSuccess(result));
     })
-    .catch((response) => {
-      dispatch(getProductsError(response.message));
-    });
+      .catch((response) => {
+        dispatch(getProductsError(response.message));
+      });
   };
 }
 
