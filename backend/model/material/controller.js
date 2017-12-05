@@ -98,7 +98,7 @@ class MaterialController extends Controller {
 
         // Return consumer rating only if the current user is a logged in consumer
         if (user.role === config.accountRole.consumer) {
-          response.consumerRating = consumerRating || 'undefined';
+          response.consumerRating = consumerRating;
         }
 
         return res.status(200).json(response);
