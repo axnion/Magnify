@@ -68,6 +68,10 @@ class MaterialController extends Controller {
       });
     })(req, res, next);
   }
+
+  getRating(req, res, next) {
+    // TODO
+  }
 }
 
 module.exports = new MaterialController(materialFacade);
