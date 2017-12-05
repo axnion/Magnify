@@ -90,22 +90,22 @@ class ProductView extends React.Component {
   }
 }
 ProductView.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.object, // eslint-disable-line
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired, // eslint-disable-line
   waitingUploadAnnotation: PropTypes.bool,
   errorUploadAnnotation: PropTypes.string,
-  annotations: PropTypes.array
+  annotations: PropTypes.array, // eslint-disable-line
 };
 
 ProductView.defaultProps = {
   product: null,
   error: null,
   isWaiting: false,
-  snackbarError: false,
-  snackbarSuccess: false,
+  snackbarError: false, // eslint-disable-line
+  snackbarSuccess: false, // eslint-disable-line
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
   annotations: [],
