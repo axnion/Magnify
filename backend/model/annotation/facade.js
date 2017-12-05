@@ -4,12 +4,20 @@ const AnnotationSchema = require('./schema');
 class AnnotationFacade extends Facade {
   createAnnotation(body) {
     const schema = new this.Schema({
+      material: body.material,
       account: body.account,
       annotation: body.annotation
     });
 
     return schema.save();
   }
+
+  findAllAnnotationsByAccount(accountId) {
+    return this.Schema
+      .find({ account: accountId })
+      .exec();
+  }
+
 }
 
 module.exports = new AnnotationFacade(AnnotationSchema);

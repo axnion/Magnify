@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Account = require('../account/schema');
+const Material = require('../material/schema');
 
 const annotationSchema = new Schema({
-  // TODO: implement Material here once it has been refactored
   account: {
     type: mongoose.Schema.ObjectId,
     ref: 'account',
     required: true
+  },
+  material: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Material'
   },
   annotation: {
     type: String,

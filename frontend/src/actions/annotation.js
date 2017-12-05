@@ -19,20 +19,20 @@ function uploadAnnotationError(payload) {
   };
 }
 
-function beginGetAnnotation() {
-  return { type: types.GET_ANNOTATION };
+function beginGetAnnotations() {
+  return { type: types.GET_ANNOTATIONS };
 }
 
-function getAnnotationSuccess(payload) {
+function getAnnotationsSuccess(payload) {
   return {
-    type: types.GET_ANNOTATION_SUCCESS,
+    type: types.GET_ANNOTATIONS_SUCCESS,
     payload,
   };
 }
 
-function getAnnotationError(payload) {
+function getAnnotationsError(payload) {
   return {
-    type: types.GET_ANNOTATION_ERROR,
+    type: types.GET_ANNOTATIONS_ERROR,
     payload,
   };
 }
@@ -80,37 +80,16 @@ export function uploadAnnotation(text, materialId, token) {
   };
 }
 
-export function mockGetAnnotation(materialId, token) {
+export function getAnnotations(token) {
   return (dispatch) => {
-    dispatch(beginGetAnnotation());
-  
-    console.log('material ' + materialId + ' logged in token: '+ token);
+    dispatch(beginGetAnnotations());
 
-    return new Promise(resolve => (setTimeout(() => {
-      const annotation = 'testMockAnnotation';
-         
-      return resolve(annotation);
-    }, 500)))
+    return apiRequest('get', {}, '/annotation/', token)
       .then((response) => {
-        dispatch(getAnnotationSuccess(response.data));
+        dispatch(getAnnotationsSuccess(response.data));
       })
       .catch((response) => {
-        dispatch(getAnnotationError(response.message));
-      });
-  };
-}
-
-
-export function getAnnotation(materialId, token) {
-  return (dispatch) => {
-    dispatch(beginGetAnnotation());
-
-    return apiRequest('get', {}, `/annotation/${materialId}`, token)
-      .then((response) => {
-        dispatch(getAnnotationSuccess(response.data));
-      })
-      .catch((response) => {
-        dispatch(getAnnotationError(response.message));
+        dispatch(getAnnotationsError(response.message));
       });
   };
 }

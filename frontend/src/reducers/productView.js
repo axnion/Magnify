@@ -6,6 +6,7 @@ export default (state = {
   product: null,
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
+  annotations: [],
 }, action) => {
   switch (action.type) {
     case types.GET_A_PRODUCT:
@@ -35,27 +36,27 @@ export default (state = {
       return {
         ...state,
         waitingUploadAnnotation: false,
-        error: null,
+        errorUploadAnnotation: null,
       };
     case types.UPLOAD_ANNOTATION_ERROR:
       return {
         ...state,
         waitingUploadAnnotation: false,
-        error: action.payload,
+        errorUploadAnnotation: action.payload,
       };
-    case types.GET_ANNOTATION:
+    case types.GET_ANNOTATIONS:
       return {
         ...state,
         isWaiting: true,
       };
-    case types.GET_ANNOTATION_SUCCESS:
+    case types.GET_ANNOTATIONS_SUCCESS:
       return {
         ...state,
-        currentAnnotation: action.payload,
+        annotations: action.payload,
         isWaiting: false,
         error: null,
       };
-    case types.GET_ANNOTATION_ERROR:
+    case types.GET_ANNOTATIONS_ERROR:
       return {
         ...state,
         isWaiting: false,
