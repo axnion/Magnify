@@ -59,8 +59,8 @@ class MaterialController extends Controller {
 
       return materialFacade.findByIdAndUpdate(
         material,
-        { $push: { ratings: { account, rating } } },
-        { safe: true, upsert: true, new: true }
+        { $addToSet: { ratings: { account, rating } } },
+        { upsert: true }
       )
       .then((result) => {
         res.status(200).json(result);

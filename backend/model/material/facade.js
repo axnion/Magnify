@@ -44,33 +44,6 @@ class MaterialFacade extends Facade {
       return file;
     });
   }
-
-  setRating(material, account, rating) {
-    return this.Schema.findByIdAndUpdate(
-      material,
-      { $push: { rating: { account, rating } } },
-      { safe: true, upsert: true, new: true },
-      (err, model) => {
-        throw err;
-      }
-    );
-//    return this.findById(material)
-//    .then((results) => {
-//      results.rating.forEach((item) => {
-//        let isRated = false;
-//        if (item.account === account) {
-//          item.rating = rating;
-//          isRated = true;
-//        }
-//      });
-//
-//      if (isRated) {
-//        return this.update(results);
-//      } else {
-//        return this.create(results);
-//      }
-//    });
-  }
 }
 
 module.exports = new MaterialFacade(materialSchema);
