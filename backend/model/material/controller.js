@@ -58,19 +58,10 @@ class MaterialController extends Controller {
       const rating = req.body.rating;
 
       materialFacade.setRating(material, account, rating)
-      .then((result) => {
-        res.status(200).json(result);
+      .then(() => {
+        res.status(200);
         next();
       });
- //     return materialFacade.findByIdAndUpdate(
- //       material,
- //       { $addToSet: { ratings: { account, rating } } },
- //       { upsert: true }
- //     )
- //     .then((result) => {
- //       res.status(200).json(result);
- //       next();
- //     });
     })(req, res, next);
   }
 

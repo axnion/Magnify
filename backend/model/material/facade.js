@@ -56,21 +56,18 @@ class MaterialFacade extends Facade {
 
       material.ratings.forEach((rating) => {
         console.log(typeof rating.account);
-        if (rating.account == accountId) {
-          console.log("Updatning");
+        if (rating.account == accountId) {  // HAS TO BE "==" or shit will break. Trust me, I'm a comment.
           rating.rating = newRating;
           isRated = true;
         }
       });
 
       if (!isRated) {
-        console.log("Creating new");
         material.ratings.push({ account: accountId, rating: newRating });
-
       }
 
       return this.update(material);
-    })
+    });
   }
 }
 
