@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 const Account = require('../account/schema');
 
 const annotationSchema = new Schema({
-  // TODO: implement Material here once it has been refactored
   account: {
     type: mongoose.Schema.ObjectId,
     ref: 'account',
+    required: true
+  },
+  material: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Material',
     required: true
   },
   annotation: {

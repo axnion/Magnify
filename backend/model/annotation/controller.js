@@ -10,8 +10,6 @@ class AnnotationController extends Controller {
 
       if (!user) return res.status(401).json({ message: 'Not authorized' });
 
-      const annotation = req.body;
-
       return AnnotationsFacade.createAnnotation(req.body)
         .then(doc => res.status(201).json(doc))
         .catch(err => next(err));
