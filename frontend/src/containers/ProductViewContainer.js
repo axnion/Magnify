@@ -6,7 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { getAProduct } from '../actions/product';
-import { mockUploadAnnotation, mockGetAnnotation } from '../actions/annotation';
+import { uploadAnnotation, getAnnotations } from '../actions/annotation';
 import MaterialCard from '../components/MaterialCard';
 
 class ProductView extends React.Component {
@@ -21,23 +21,16 @@ class ProductView extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getAProduct(this.props.match.params.id));
+    dispatch(getAnnotations(this.props.auth.token));
   }
-
-  /* addAnnotationsToMaterial() {
-    const { dispatch } = this.props;
-
-    const newMaterials = product
-
-   return dispatch(mockGetAnnotation(materialId, this.props.auth.token));
-  } */
 
   saveAnnotation(annotation, materialId) {
     const { dispatch } = this.props;
 
     if (annotation !== '') {
-      dispatch(mockUploadAnnotation(annotation, materialId, this.props.auth.token))
+      dispatch(uploadAnnotation(annotation, materialId, this.props.auth.token))
         .then(() => {
-          if (this.props.error) {
+          if (this.props.errorUploadAnnotation) {
             this.setState({ snackbarError: true });
           } else {
             this.setState({ snackbarSuccess: true });
@@ -50,6 +43,8 @@ class ProductView extends React.Component {
     const { auth, error, isWaiting } = this.props;
     let productHeadline = null;
     let materials = [];
+
+    console.log(this.props.annotations);
 
     if (this.props.product) {
       materials = this.props.product.material;
@@ -78,7 +73,7 @@ class ProductView extends React.Component {
         </div>}
         <Snackbar
           open={this.state.snackbarError}
-          message={this.props.error || ''}
+          message={this.props.errorUploadAnnotation || ''}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
         />
@@ -102,6 +97,7 @@ ProductView.propTypes = {
   auth: PropTypes.object.isRequired,
   waitingUploadAnnotation: PropTypes.bool,
   errorUploadAnnotation: PropTypes.string,
+  annotations: PropTypes.array
 };
 
 ProductView.defaultProps = {
@@ -112,6 +108,7 @@ ProductView.defaultProps = {
   snackbarSuccess: false,
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
+  annotations: [],
 };
 
 const mapStateToProps = state => ({
@@ -119,6 +116,9 @@ const mapStateToProps = state => ({
   isWaiting: state.productView.isWaiting,
   product: state.productView.product,
   auth: state.auth,
+  waitingUploadAnnotation: state.productView.waitingUploadAnnotation,
+  errorUploadAnnotation: state.productView.errorUploadAnnotation,
+  annotations: state.productView.annotations,
 });
 
 const ProductViewContainer = connect(

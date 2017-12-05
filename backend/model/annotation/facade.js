@@ -10,6 +10,13 @@ class AnnotationFacade extends Facade {
 
     return schema.save();
   }
+
+  findAllAnnotationsByAccount(accountId) {
+    return this.Schema
+      .find({ account: accountId })
+      .exec();
+  }
+
 }
 
 module.exports = new AnnotationFacade(AnnotationSchema);
