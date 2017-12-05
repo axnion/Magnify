@@ -1,6 +1,5 @@
 .App {
   border: 1px solid black;
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 1022px;
@@ -27,7 +26,6 @@
   height: 671px;
   width: 844px;
   margin-left: 179px;
-  padding: 20px;
 }
 
 h1 {

@@ -16,6 +16,7 @@ const SideBarDivider = styled('div')`
   border-right: 1px solid black;
   float: left;
   text-align: center;
+  margin-right: 20px;
 `;
 
 const SideBar = ({ username, logout, role }) => (
