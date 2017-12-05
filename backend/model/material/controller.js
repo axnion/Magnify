@@ -70,7 +70,34 @@ class MaterialController extends Controller {
   }
 
   getRating(req, res, next) {
-    // TODO
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) return res.status(500).json({ message: info });
+
+      if (!user || user.role === config.accountRole.consumer) {
+
+        this.facade.findById(req.params.id).then((material) => {
+          const numberOfRatings = material.ratings.length;
+          let sumOfRatings = 0;
+          let consumerRating = undefined;
+
+          material.ratings.forEach((rating) => {
+            sumOfRatings += rating.rating;
+            if (rating.account.equals(user.id)) {
+              consumerRating = rating.rating;
+            }
+          });
+
+          const response = {
+            consumerRating,
+            avgRating: parseFloat((sumOfRatings / numberOfRatings).toFixed(1)),
+            nrRates: numberOfRatings
+          };
+
+          return res.status(200).json(response);
+        })
+      .catch(err => next(err));
+      }
+    })(req, res, next);
   }
 }
 
