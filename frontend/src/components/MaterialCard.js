@@ -44,7 +44,7 @@ const SaveButton = styled(FloatingActionButton)`
 `;
 
 const MaterialCardComponent = ({
-  material, showRateStars, averageScore, numberOfRatings,
+  material, showRateStars, averageScore, numberOfRatings, annotation, saveAnnotation,
 }) => (
   <StyledCard>
     <StyledFloatingActionButton download href={`${config.serverURI}${material.url}`}>
@@ -65,14 +65,16 @@ const MaterialCardComponent = ({
     </StyledCardActions>
     <CardText expandable>
       <TextField
-        hintText="Enter personal notes here"
+        hintText={annotation}
         floatingLabelText="Notes"
         fullWidth
         multiLine
         rows={1}
         rowsMax={6}
+        id="AnnotationTextField"
+        // onChange={(event, value) => this.setState({ annotation: value })}
       />
-      <SaveButton tooltipPosition="bottom-center" touch tooltip="Save notes">
+      <SaveButton onClick={() => saveAnnotation(document.getElementById('AnnotationTextField').value, material._id)}>
         <Save />
       </SaveButton>
     </CardText>
@@ -84,6 +86,8 @@ MaterialCardComponent.propTypes = {
   showRateStars: PropTypes.bool,
   averageScore: PropTypes.number,
   numberOfRatings: PropTypes.number,
+  annotation: PropTypes.string,
+  saveAnnotation: PropTypes.func.isRequired,
 };
 
 MaterialCardComponent.defaultProps = {
@@ -91,6 +95,7 @@ MaterialCardComponent.defaultProps = {
   showRateStars: false,
   averageScore: 0,
   numberOfRatings: 0,
+  annotation: 'Enter personal notes here',
 };
 
 export default MaterialCardComponent;

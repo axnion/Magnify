@@ -20,7 +20,7 @@ function uploadAnnotationError(payload) {
 }
 
 function beginGetAnnotation() {
-  return { type: types.GET.UPLOAD_ANNOTATION };
+  return { type: types.GET_ANNOTATION };
 }
 
 function getAnnotationSuccess(payload) {
@@ -37,7 +37,31 @@ function getAnnotationError(payload) {
   };
 }
 
-export default function uploadAnnotation(text, materialId, token) {
+export function mockUploadAnnotation(text, materialId, token)
+{
+  return (dispatch) => {
+    dispatch(beginUploadAnnotation());
+
+    return new Promise((resolve, reject) => (setTimeout(() => {
+      if (!text || !materialId || !token) {
+        return reject(new Error('Please eneter all required data'))
+      }
+      const data = {
+        annotation: text,
+        material: materialId,
+      };
+      return resolve(data);
+    }, 2000)))
+      .then((response) => {
+        dispatch(uploadAnnotationSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(uploadAnnotationError(error.message));
+      });
+  };
+}
+
+export function uploadAnnotation(text, materialId, token) {
   return (dispatch) => {
     dispatch(beginUploadAnnotation());
 
@@ -59,7 +83,6 @@ export default function uploadAnnotation(text, materialId, token) {
 export function getAnnotation(materialId, token) {
   return (dispatch) => {
     dispatch(beginGetAnnotation());
-
 
     return apiRequest('get', {}, `/annotation/${materialId}`, token)
       .then((response) => {
