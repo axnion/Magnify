@@ -5,6 +5,7 @@ const account = require('./account');
 const company = require('./company');
 const category = require('./category');
 const product = require('./product');
+const material = require('./material');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url, { useMongoClient: true });
@@ -123,6 +124,22 @@ commander
       }
     } else if (flags.drop) {
       product.drop(mongoose.connection);
+    } else {
+      console.log('No valid action found');
+      mongoose.connection.close();
+    }
+  });
+
+commander
+  .command('material')
+  .description('Actions dealing with materials')
+  .option('-L, --list', 'Lists all materials')
+  .option('--drop', 'Drops products collection, deleting all data')
+  .action((flags) => {
+    if (flags.list) {
+      material.list();
+    } else if (flags.drop) {
+      material.drop(mongoose.connection);
     } else {
       console.log('No valid action found');
       mongoose.connection.close();
