@@ -32,6 +32,8 @@ class ProductController extends Controller {
 
   findById(req, res, next) {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) return res.status(500).json({ message: info });
+
       return this.facade
       .findById(req.params.id, user)
       .then(resp => res.status(201).json(resp))

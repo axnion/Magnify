@@ -37,7 +37,7 @@ class ProductFacade extends Facade {
               $eq: ['$$this.account', mongoose.Types.ObjectId(u)]
             }
           }
-        },
+        }
       } },
       { $unwind: { path: '$material.userRating', preserveNullAndEmptyArrays: true } },
       { $addFields: {
