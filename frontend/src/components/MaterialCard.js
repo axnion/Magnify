@@ -54,12 +54,12 @@ const MaterialCardComponent = ({
     <StyledCardActions>
       <StyledCardAction>
         {
-          material.numberOfRatings === 0 ? undefined : <ShowRating averageScore={material.avgScore} numberOfRatings={material.numberOfRatings} />
+          material.numRatings === 0 ? undefined : <ShowRating averageScore={material.avgRating} numberOfRatings={material.numRatings} />
         }
       </StyledCardAction>
       <StyledCardAction>
         {
-          !showRateStars ? undefined : StarRating({ rating: material.consumerRating, saveRating, materialId: material._id })
+          !showRateStars ? undefined : StarRating({ rating: material.userRating, saveRating, materialId: material._id })
         }
       </StyledCardAction>
     </StyledCardActions>

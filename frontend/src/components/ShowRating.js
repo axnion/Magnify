@@ -15,7 +15,7 @@ const StyledDiv = styled('div')`
 
 const ShowRating = ({ averageScore, numberOfRatings }) => (
   <StyledDiv>
-    {averageScore}/5 from {numberOfRatings} ratings
+    {Math.round(averageScore * 10) / 10}/5 from {numberOfRatings} ratings
   </StyledDiv>
 );
 

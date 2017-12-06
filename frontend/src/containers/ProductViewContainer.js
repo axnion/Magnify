@@ -52,7 +52,7 @@ class ProductView extends React.Component {
         } else {
           this.setState({ snackbarSuccess: true });
         }
-        dispatch(getAProduct(this.props.match.params.id));
+        dispatch(getAProduct(this.props.match.params.id, this.props.auth.token));
       });
   }
 
@@ -60,7 +60,7 @@ class ProductView extends React.Component {
     const { auth, error, isWaiting } = this.props;
     let productHeadline = null;
     let materials = [];
-  
+
     if (this.props.product) {
       materials = this.props.product.materials;
       productHeadline =
