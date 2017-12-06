@@ -15,7 +15,7 @@ export default (state = {
       return {
         ...state,
         isWaiting: false,
-        products: [...state.materials, action.payload],
+        materials: [...state.materials, action.payload],
         error: null,
       };
     case types.UPLOAD_MATERIAL_ERROR:

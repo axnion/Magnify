@@ -44,7 +44,7 @@ const SaveButton = styled(FloatingActionButton)`
 `;
 
 const MaterialCardComponent = ({
-  material, showRateStars, averageScore, numberOfRatings, annotation, saveAnnotation,
+  material, showRateStars, annotation, saveAnnotation, saveRating,
 }) => (
   <StyledCard>
     <StyledFloatingActionButton download href={`${config.serverURI}${material.url}`}>
@@ -54,13 +54,13 @@ const MaterialCardComponent = ({
     <StyledCardActions>
       <StyledCardAction>
         {
-        numberOfRatings === 0 ? undefined : <ShowRating averageScore={averageScore} numberOfRatings={numberOfRatings} />
-      }
+          material.numberOfRatings === 0 ? undefined : <ShowRating averageScore={material.avgScore} numberOfRatings={material.numberOfRatings} />
+        }
       </StyledCardAction>
       <StyledCardAction>
         {
-        !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
-      }
+          !showRateStars ? undefined : StarRating({ rating: material.consumerRating, saveRating, materialId: material._id })
+        }
       </StyledCardAction>
     </StyledCardActions>
     <CardText expandable>
@@ -85,10 +85,9 @@ const MaterialCardComponent = ({
 MaterialCardComponent.propTypes = {
   material: PropTypes.object, // eslint-disable-line
   showRateStars: PropTypes.bool,
-  averageScore: PropTypes.number,
-  numberOfRatings: PropTypes.number,
   annotation: PropTypes.string,
   saveAnnotation: PropTypes.func.isRequired,
+  saveRating: PropTypes.func.isRequired,
 };
 
 MaterialCardComponent.defaultProps = {

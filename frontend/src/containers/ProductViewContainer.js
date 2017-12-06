@@ -6,6 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { getAProduct } from '../actions/product';
+import { uploadRating } from '../actions/product';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
 import MaterialCard from '../components/MaterialCard';
 
@@ -16,6 +17,7 @@ class ProductView extends React.Component {
     this.state = { snackbarError: false, snackbarSuccess: false };
 
     this.saveAnnotation = this.saveAnnotation.bind(this);
+    this.saveRating = this.saveRating.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +39,20 @@ class ProductView extends React.Component {
           }
         });
     }
+  }
+
+  saveRating(rating, materialId) {
+    const { dispatch } = this.props;
+
+    console.log(rating, materialId);
+    /*dispatch(uploadRating(rating, materialId, this.props.auth.token))
+      .then(() => {
+        if (this.props.errorUploadRating) {
+          this.setState({ snackbarError: true });
+        } else {
+          this.setState({ snackbarSuccess: true });
+        }
+      });*/
   }
 
   render() {
@@ -64,12 +80,8 @@ class ProductView extends React.Component {
         {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
         {!isWaiting && error && <h2>Error. {error} </h2>}
         {materials.length > 0 &&
-        <div style={{ opacity: isWaiting ? 0.5 : 1,
-          marginTop: '25px' }}
-        >
-          {materials.map((material, key) =>
-            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)
-        }
+        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
+          {materials.map((material, key) => <MaterialCard key={key} material={material} saveRating={this.saveRating} showRateStars={(auth.role === 'consumer')} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)}
         </div>}
         <Snackbar
           open={this.state.snackbarError}

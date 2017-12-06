@@ -15,9 +15,9 @@ function StarRating(props) {
   const starsToDisplay = new Array(5);
   for (let i = 0; i < 5; i += 1) {
     if (i < props.rating) {
-      starsToDisplay[i] = <FullStar style={starStyle} color={yellow600} onClick={() => props.onClick(i + 1)} />;
+      starsToDisplay[i] = <FullStar style={starStyle} color={yellow600} onClick={() => props.saveRating(i + 1, props.materialId)} />;
     } else {
-      starsToDisplay[i] = <BorderStar style={starStyle} onClick={() => props.onClick(i + 1)} />;
+      starsToDisplay[i] = <BorderStar style={starStyle} onClick={() => props.saveRating(i + 1, props.materialId)} />;
     }
   }
 
