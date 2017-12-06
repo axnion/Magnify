@@ -13,7 +13,7 @@ const productSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Category'
   },
-  material: [
+  materials: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Material'

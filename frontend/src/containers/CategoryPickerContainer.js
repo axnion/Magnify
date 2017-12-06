@@ -8,7 +8,8 @@ import { getCategories } from '../actions/category';
 class CategoryPickerContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeMain = this.handleChangeMain.bind(this);
+    this.handleChangeSub = this.handleChangeSub.bind(this);
     this.getFilteredSubCategories = this.getFilteredSubCategories.bind(this);
     this.state = {
       selectedMainCategory: 'All',
@@ -30,8 +31,12 @@ class CategoryPickerContainer extends React.Component {
     return selectedMainCategory !== 'All' ? subCategories.filter(cat => cat.parent === selectedMainCategory) : subCategories;
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChangeMain(event, index, value) {
+    this.setState({ selectedMainCategory: value });
+  }
+
+  handleChangeSub(event, index, value) {
+    this.setState({ selectedSubCategory: value });
   }
 
   render() {
@@ -42,8 +47,8 @@ class CategoryPickerContainer extends React.Component {
         <Picker
           options={[{ name: 'All', _id: 'All' }].concat(mainCategories)}
           value={selectedMainCategory}
-          onChange={this.handleChange}
-          title={'Select main category'}
+          onChange={this.handleChangeMain}
+          title={'Main category'}
           name={'selectedMainCategory'}
         />
         {
@@ -51,8 +56,8 @@ class CategoryPickerContainer extends React.Component {
           <Picker
             options={[{ name: 'All', _id: 'All' }].concat(this.getFilteredSubCategories(subCategories))}
             value={selectedSubCategory}
-            onChange={this.handleChange}
-            title={'Select sub category'}
+            onChange={this.handleChangeSub}
+            title={'Sub category'}
             name={'selectedSubCategory'}
           />
         }

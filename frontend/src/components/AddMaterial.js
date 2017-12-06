@@ -1,6 +1,8 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class AddMaterial extends React.Component {
   constructor(props) {
@@ -54,47 +56,46 @@ class AddMaterial extends React.Component {
   render() {
     return (
       <div className="AddMaterial">
-        <label htmlFor="title">
-              Title:
-          <br />
-          <input
-            id="title"
-            name="title"
-            type="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-          />
-        </label>
+        <TextField
+          id="title"
+          name="title"
+          floatingLabelText="Title"
+          value={this.state.title}
+          onChange={this.handleChange}
+        />
         <br />
-        <label htmlFor="title">
-              Description:
-          <br />
-          <input
-            id="description"
-            name="description"
-            type="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-          />
-        </label>
-        <br />
-        <br />
+        <TextField
+          id="description"
+          name="description"
+          floatingLabelText="Description"
+          value={this.state.description}
+          onChange={this.handleChange}
+        />
         <section>
-          <div className="dropzone">
-            <Dropzone accept=".pdf" onDrop={this.onDrop.bind(this)}>
+          <div className="dropzoneContainer">
+            <Dropzone
+              accept=".pdf"
+              onDrop={this.onDrop.bind(this)}
+              style={{
+                borderColor: '#afafaf',
+                borderRadius: '2px',
+                borderStyle: 'dashed',
+                borderWidth: '2px',
+                width: '200px',
+                height: '200px',
+                padding: '25px',
+              }}
+            >
               <p>Drag and drop some files here, or click to select files to upload.</p>
             </Dropzone>
           </div>
           <aside>
-            <h2>Dropped files</h2>
             <ul>
-              {
-                this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-              }
+              {this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}
             </ul>
           </aside>
         </section>
-        { this.state.files[0] ? (<button onClick={this.handleSubmit}>Upload</button>) : (null) }
+        { this.state.files[0] ? (<RaisedButton label="Upload" primary onClick={this.handleSubmit} />) : (null) }
         {this.printSubmitMessage()}
       </div>
     );

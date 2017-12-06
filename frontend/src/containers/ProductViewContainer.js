@@ -23,7 +23,7 @@ class ProductView extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getAProduct(this.props.match.params.id));
-    dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
+    //dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
   }
 
   saveAnnotation(annotation, materialId) {
@@ -63,7 +63,7 @@ class ProductView extends React.Component {
     console.log(this.props.annotations);
 
     if (this.props.product) {
-      materials = this.props.product.material;
+      materials = this.props.product.materials;
       productHeadline =
             (<div>
               <h1>Product: {this.props.product.name}</h1>
