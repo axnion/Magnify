@@ -24,7 +24,7 @@ class MaterialFacade extends Facade {
     return material.save().then(() => {
       return productSchema.findOneAndUpdate(
         { _id: body.productId },
-        { $push: { material } },
+        { $push: { materials: material } },
         { new: true }
       );
     });
