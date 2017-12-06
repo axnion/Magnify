@@ -36,7 +36,7 @@ class ProductView extends React.Component {
             this.setState({ snackbarError: true });
           } else {
             this.setState({ snackbarSuccess: true });
-            dispatch(getAProduct(this.props.match.params.id));
+            dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
           }
         });
     }
