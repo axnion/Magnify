@@ -8,8 +8,8 @@ class ProductFacade extends Facade {
 
     return this.Schema.aggregate(
       { $match: { _id: mongoose.Types.ObjectId(id) } },
-      { $lookup: { from: 'materials', localField: 'material', foreignField: '_id', as: 'material' } },
       { $unwind: '$material' },
+      { $lookup: { from: 'materials', localField: 'material', foreignField: '_id', as: 'material' } },
       { $addFields: {
         'material.avgRating': {
           $divide: [

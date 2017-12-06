@@ -80,11 +80,11 @@ export function uploadAnnotation(text, materialId, token) {
   };
 }
 
-export function getAnnotations(token) {
+export function getAnnotations(token, productId) {
   return (dispatch) => {
     dispatch(beginGetAnnotations());
 
-    return apiRequest('get', {}, '/annotation/', token)
+    return apiRequest('get', {}, `/annotation/product/${productId}`, token)
       .then((response) => {
         dispatch(getAnnotationsSuccess(response.data));
       })

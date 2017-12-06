@@ -21,7 +21,7 @@ class ProductView extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getAProduct(this.props.match.params.id));
-    dispatch(getAnnotations(this.props.auth.token));
+    dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
   }
 
   saveAnnotation(annotation, materialId) {
