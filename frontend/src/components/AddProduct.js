@@ -55,7 +55,7 @@ class AddProduct extends React.Component {
   render() {
     return (
       <div className="AddProduct">
-        <h1>Add Product here</h1>
+        <h1>Add Product</h1>
         <form onSubmit={this.handleSubmit}>
           <TextField
             hintText="Product name"

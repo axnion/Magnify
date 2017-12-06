@@ -14,6 +14,8 @@ class ProductsListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeMain = this.handleChangeMain.bind(this);
+    this.handleChangeSub = this.handleChangeSub.bind(this);
     this.handleSubComponentChange = this.handleSubComponentChange.bind(this);
     this.getFilteredProducts = this.getFilteredProducts.bind(this);
     this.state = {
@@ -56,9 +58,7 @@ class ProductsListContainer extends React.Component {
 
     let productsFilteredBySubCat;
     if (selectedSubCategory !== 'All') {
-      productsFilteredBySubCat = productsFilteredByMainCat.filter((product) => {
-        return product.category ? product.category._id === selectedSubCategory : false;
-      });
+      productsFilteredBySubCat = productsFilteredByMainCat.filter(product => product.category ? product.category._id === selectedSubCategory : false);
     } else {
       productsFilteredBySubCat = productsFilteredByMainCat;
     }
@@ -70,8 +70,16 @@ class ProductsListContainer extends React.Component {
     this.setState(stateChange);
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange(event, index, value) {
+    this.setState({ selectedCompanyName: value });
+  }
+
+  handleChangeMain(event, index, value) {
+    this.setState({ selectedMainCategory: value });
+  }
+
+  handleChangeSub(event, index, value) {
+    this.setState({ selectedSubCategory: value });
   }
 
   render() {

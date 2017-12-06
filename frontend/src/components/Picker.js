@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
-const Picker = ({ value, options, onChange, title, name }) => (
+const Picker = ({ value, options, onChange, title }) => (
   <span>
-    <p>{title}</p>
-    <select onChange={onChange} value={value} name={name}>
+    <SelectField
+      onChange={onChange}
+      value={value}
+      hintText="Select a category"
+      floatingLabelText={title}
+      floatingLabelStyle={{ color: 'black' }}
+    >
       {options.map(option => (
-        <option value={option._id} key={option._id}>
-          {option.name}
-        </option>
+        <MenuItem value={option._id} key={option._id} primaryText={option.name} />
       ))}
-    </select>
+    </SelectField>
   </span>
 );
 
@@ -19,7 +24,6 @@ Picker.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
 };
 
 export default Picker;
