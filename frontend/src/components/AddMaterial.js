@@ -32,8 +32,6 @@ class AddMaterial extends React.Component {
       files: this.state.files,
     };
 
-    console.log(data);
-
     this.sendForm(data, this.props.match.params.id, this.props.token);
     this.setState({ hasSubmitted: true });
     this.setState({ title: '', description: '', files: [] });
