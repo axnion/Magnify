@@ -8,41 +8,52 @@ class ProductFacade extends Facade {
 
     return this.Schema.aggregate(
       { $match: { _id: mongoose.Types.ObjectId(id) } },
-      { $unwind: { path: '$material', preserveNullAndEmptyArrays: true } },
-      { $lookup: { from: 'materials', localField: 'material', foreignField: '_id', as: 'material' } },
+      { $lookup: { from: 'materials', localField: 'materials', foreignField: '_id', as: 'materials' } },
+      { $unwind: { path: '$materials', preserveNullAndEmptyArrays: true } },
       { $addFields: {
-        'material.avgRating': {
+        materials: { $ifNull: ['$materials', {}] }
+      } },
+      { $addFields: {
+        'materials.avgRating': {
           $divide: [
             { // expression returns total
               $reduce: {
-                input: '$material.ratings',
+                input: '$materials.ratings',
                 initialValue: 0,
                 in: { $add: ['$$value', '$$this.rating'] }
               }
             },
             { // expression returns ratings count
               $cond: [
-                  { $ne: [{ $size: '$material.ratings' }, 0] },
-                  { $size: '$material.ratings' },
+                  { $and: [
+                    { $ne: ['$materials', {}] },
+                    { $ne: [{ $size: '$materials.ratings' }, 0] }] },
+                  { $size: '$materials.ratings' },
                 1
               ]
             }
           ]
         },
-        'material.numRatings': { $size: '$material.ratings' },
-        'material.userRating': {
+        'materials.numRatings': {
+          $cond: [
+            { $ne: ['$materials', {}] },
+            { $size: '$materials.ratings' },
+            0
+          ]
+        },
+        'materials.userRating': {
           $filter: {
-            input: '$material.ratings',
+            input: '$materials.ratings',
             cond: {
               $eq: ['$$this.account', mongoose.Types.ObjectId(u)]
             }
           }
         }
       } },
-      { $unwind: { path: '$material.userRating', preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: '$materials.userRating', preserveNullAndEmptyArrays: true } },
       { $addFields: {
-        'material.userRating': {
-          $ifNull: ['$material.userRating.rating', null] }
+        'materials.userRating': {
+          $ifNull: ['$materials.userRating.rating', null] }
       }
       },
       { $group: {
@@ -50,9 +61,21 @@ class ProductFacade extends Facade {
         name: { $first: '$name' },
         company:  { $first: '$company' },
         category: { $first: '$category' },
-        material: { $push: '$material' }
+        materials: { $push: '$materials' }
       } },
-      { $project: { 'material.ratings': 0 } },
+      {
+        $addFields: {
+          materials: {
+            $filter: {
+              input: '$materials',
+              cond: {
+                $ne: [{ $type: '$$this._id' }, 'missing']
+              }
+            }
+          }
+        }
+      },
+      { $project: { 'materials.ratings': 0 } },
       { $limit: 1 }
     );
   }
