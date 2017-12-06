@@ -7,6 +7,8 @@ export default (state = {
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
   annotations: [],
+  errorPostRating: null,
+  waitingPostRating: false,
 }, action) => {
   switch (action.type) {
     case types.GET_A_PRODUCT:
@@ -26,6 +28,23 @@ export default (state = {
         ...state,
         isWaiting: false,
         error: action.payload,
+      };
+    case types.POST_RATING:
+      return {
+        ...state,
+        waitingUploadAnnotation: true,
+      };
+    case types.POST_RATING_SUCCESS:
+      return {
+        ...state,
+        waitingUploadAnnotation: false,
+        errorUploadAnnotation: null,
+      };
+    case types.POST_RATING_ERROR:
+      return {
+        ...state,
+        waitingUploadAnnotation: false,
+        errorUploadAnnotation: action.payload,
       };
     case types.UPLOAD_ANNOTATION:
       return {

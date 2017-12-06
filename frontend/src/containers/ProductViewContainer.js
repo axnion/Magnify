@@ -6,7 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { getAProduct } from '../actions/product';
-import { uploadRating } from '../actions/product';
+import { postRating } from '../actions/rating';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
 import MaterialCard from '../components/MaterialCard';
 
@@ -45,14 +45,15 @@ class ProductView extends React.Component {
     const { dispatch } = this.props;
 
     console.log(rating, materialId);
-    /*dispatch(uploadRating(rating, materialId, this.props.auth.token))
+    dispatch(postRating(rating, materialId, this.props.auth.token))
       .then(() => {
-        if (this.props.errorUploadRating) {
+        if (this.props.errorPostRating) {
           this.setState({ snackbarError: true });
         } else {
           this.setState({ snackbarSuccess: true });
         }
-      });*/
+        dispatch(getAProduct(this.props.match.params.id));
+      });
   }
 
   render() {
@@ -109,6 +110,8 @@ ProductView.propTypes = {
   auth: PropTypes.object.isRequired, // eslint-disable-line
   waitingUploadAnnotation: PropTypes.bool,
   errorUploadAnnotation: PropTypes.string,
+  waitingPostRating: PropTypes.bool,
+  errorPostRating: PropTypes.string,
   annotations: PropTypes.array, // eslint-disable-line
 };
 
@@ -120,6 +123,8 @@ ProductView.defaultProps = {
   snackbarSuccess: false, // eslint-disable-line
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
+  errorPostRating: null,
+  waitingPostRating: null,
   annotations: [],
 };
 
@@ -131,6 +136,8 @@ const mapStateToProps = state => ({
   waitingUploadAnnotation: state.productView.waitingUploadAnnotation,
   errorUploadAnnotation: state.productView.errorUploadAnnotation,
   annotations: state.productView.annotations,
+  errorPostRating: state.productView.errorPostRating,
+  waitingPostRating: state.productView.waitingPostRating,
 });
 
 const ProductViewContainer = connect(
