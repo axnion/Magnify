@@ -52,7 +52,9 @@ class ProductFacade extends Facade {
         category: { $first: '$category' },
         material: { $push: '$material' }
       } },
-      { $project: { 'material.ratings': 0 } } );
+      { $project: { 'material.ratings': 0 } },
+      { $limit: 1 }
+    );
   }
 
   find() {

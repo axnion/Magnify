@@ -34,9 +34,10 @@ class ProductController extends Controller {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
+      // Return only the first document in the list
       return this.facade
       .findById(req.params.id, user)
-      .then(resp => res.status(201).json(resp))
+      .then(resp => res.status(201).json(resp[0]))
       .catch(err => next(err));
     })(req, res, next);
   }
