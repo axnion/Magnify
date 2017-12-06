@@ -11,11 +11,11 @@ const annotationSchema = new Schema({
   },
   material: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Material'
+    ref: 'Material',
+    required: true
   },
   annotation: {
-    type: String,
-    required: true
+    type: String
   }
 });
 

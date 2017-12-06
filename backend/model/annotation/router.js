@@ -11,7 +11,7 @@ router
   .get((...args) => controller.findAllAnnotationsByAccount(...args));
 
 router
-  .route('/product/:productId')
+  .route('/product/:id')
   .get((...args) => controller.findByAccount(...args));
 
 module.exports = router;

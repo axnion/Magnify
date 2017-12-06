@@ -24,7 +24,7 @@ export const POST_RATING = 'POST_RATING';
 export const POST_RATING_SUCCESS = 'POST_RATING_SUCCESS';
 export const POST_RATING_ERROR = 'POST_RATING_ERROR';
 
-export default function postRating(rating, materialId, token) {
+export function postRating(rating, materialId, token) {
   return (dispatch) => {
     dispatch(beginpostRating());
 

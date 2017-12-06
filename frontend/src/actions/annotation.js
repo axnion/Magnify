@@ -84,7 +84,7 @@ export function getAnnotations(token, productId) {
   return (dispatch) => {
     dispatch(beginGetAnnotations());
 
-    return apiRequest('get', {}, `/annotation/product/${productId}`, token)
+    return apiRequest('get', {}, '/annotation/', token)
       .then((response) => {
         dispatch(getAnnotationsSuccess(response.data));
       })

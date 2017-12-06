@@ -85,7 +85,7 @@ const MaterialCardComponent = ({
 MaterialCardComponent.propTypes = {
   material: PropTypes.object, // eslint-disable-line
   showRateStars: PropTypes.bool,
-  annotation: PropTypes.string,
+  annotation: PropTypes.object,
   saveAnnotation: PropTypes.func.isRequired,
   saveRating: PropTypes.func.isRequired,
 };

@@ -2,21 +2,20 @@ const passport = require('passport');
 const config = require('../../config');
 const Controller = require('../../lib/controller');
 const AnnotationsFacade = require('./facade');
-const ProductSchema = require('../product/facade');
+const ProductFacade = require('../product/facade');
 class AnnotationController extends Controller {
   create(req, res, next) {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
 
       if (!user) return res.status(401).json({ message: 'Not authorized' });
-      console.log(user.id);
+     
       return AnnotationsFacade.findOne({
         material: req.body.material,
         account: user.id
       })
         .then(response => {
-          console.log(response);
-
+         
           if (response === null) {
             return AnnotationsFacade.createAnnotation(req.body, user.id).then(
               doc => res.status(201).json(doc)
@@ -41,10 +40,12 @@ class AnnotationController extends Controller {
 
       if (!user) return res.status(401).json({ message: 'Not authorized' });
 
-      return ProductSchema.findById(req.params.id, user).then(resp => {
-        console.log(resp);
-        res.status(200).json(resp);
-      });
+      return ProductFacade.findById(req.params.id).then((resp) => {
+        
+        return AnnotationsFacade.find();
+      })
+      .then(resp =>  res.status(200).json(resp))
+      .catch(err => next(err));
     })(req, res, next);
   }
   findAnnotation(req) {}

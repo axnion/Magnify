@@ -23,7 +23,7 @@ class ProductView extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getAProduct(this.props.match.params.id));
-    //dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
+    dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
   }
 
   saveAnnotation(annotation, materialId) {
@@ -36,6 +36,7 @@ class ProductView extends React.Component {
             this.setState({ snackbarError: true });
           } else {
             this.setState({ snackbarSuccess: true });
+            dispatch(getAProduct(this.props.match.params.id));
           }
         });
     }
@@ -44,7 +45,6 @@ class ProductView extends React.Component {
   saveRating(rating, materialId) {
     const { dispatch } = this.props;
 
-    console.log(rating, materialId);
     dispatch(postRating(rating, materialId, this.props.auth.token))
       .then(() => {
         if (this.props.errorPostRating) {
@@ -60,9 +60,7 @@ class ProductView extends React.Component {
     const { auth, error, isWaiting } = this.props;
     let productHeadline = null;
     let materials = [];
-
-    console.log(this.props.product);
-
+  
     if (this.props.product) {
       materials = this.props.product.materials;
       productHeadline =
@@ -82,7 +80,7 @@ class ProductView extends React.Component {
         {!isWaiting && error && <h2>Error. {error} </h2>}
         {materials.length > 0 &&
         <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
-          {materials.map((material, key) => <MaterialCard key={key} material={material} saveRating={this.saveRating} showRateStars={(auth.role === 'consumer')} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)}
+          {materials.map((material, key) => <MaterialCard key={key} material={material} saveRating={this.saveRating} showRateStars={(auth.role === 'consumer')} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material === material._id)} />)}
         </div>}
         <Snackbar
           open={this.state.snackbarError}
