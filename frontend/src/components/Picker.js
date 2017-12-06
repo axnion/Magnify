@@ -8,7 +8,6 @@ const Picker = ({ value, options, onChange, title }) => (
     <SelectField
       onChange={onChange}
       value={value}
-      hintText="Select a category"
       floatingLabelText={title}
       floatingLabelStyle={{ color: 'black' }}
     >

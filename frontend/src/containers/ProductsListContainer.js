@@ -99,7 +99,6 @@ class ProductsListContainer extends React.Component {
           value={selectedCompanyName}
           onChange={this.handleChange}
           title={'Filter by company'}
-          name={'selectedCompanyName'}
         />
         <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
         <h1>Products</h1>
