@@ -24,6 +24,7 @@ const materialSchema = new Schema({
     }
   },
   ratings: [{
+    _id: false,
     account: {
       type: mongoose.Schema.ObjectId,
       ref: 'Account'
