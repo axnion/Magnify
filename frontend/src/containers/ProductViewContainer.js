@@ -22,7 +22,7 @@ class ProductView extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(getAProduct(this.props.match.params.id));
+    dispatch(getAProduct(this.props.match.params.id, this.props.auth.token));
     dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
   }
 

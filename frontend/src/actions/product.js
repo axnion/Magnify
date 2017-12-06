@@ -107,11 +107,11 @@ export function getProducts() {
   };
 }
 
-export function getAProduct(id) {
+export function getAProduct(id, token) {
   return (dispatch) => {
     dispatch(beginGetAProduct());
     let product;
-    return apiRequest('get', {}, `${endpoint}/${id}`)
+    return apiRequest('get', {}, `${endpoint}/${id}`, token)
       .then((response) => {
         product = response.data;
         return apiRequest('get', {}, `/company/${product.company}`);
