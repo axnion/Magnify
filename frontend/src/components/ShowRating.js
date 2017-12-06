@@ -28,4 +28,5 @@ ShowRating.defaultProps = {
   averageScore: 0,
   numberOfRatings: 0,
 };
+
 export default ShowRating;

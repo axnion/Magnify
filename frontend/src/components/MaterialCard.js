@@ -59,7 +59,7 @@ const MaterialCardComponent = ({
       </StyledCardAction>
       <StyledCardAction>
         {
-        !showRateStars ? undefined : StarRating({ rating: 3, function() {} })
+        !showRateStars ? undefined : StarRating({ rating: 3, onClick: null })
       }
       </StyledCardAction>
     </StyledCardActions>

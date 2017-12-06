@@ -98,7 +98,6 @@ export function getProducts() {
       const categories = response[1].data;
       const companies = response[2].data;
 
-      console.log(categories);
       const result = combineAllProductsData(products, categories, companies);      
       dispatch(getProductsSuccess(result));
     })
@@ -115,6 +114,7 @@ export function getAProduct(id) {
     return apiRequest('get', {}, `${endpoint}/${id}`)
       .then((response) => {
         product = response.data;
+        console.log(response.data);
         return apiRequest('get', {}, `/company/${product.company}`);
       })
       .then((response) => {

@@ -44,10 +44,11 @@ class ProductView extends React.Component {
     let productHeadline = null;
     let materials = [];
 
-    console.log(this.props.annotations);
+    console.log(this.props.product);
 
     if (this.props.product) {
       materials = this.props.product.material;
+
       productHeadline =
             (<div>
               <h1>Product: {this.props.product.name}</h1>
@@ -64,11 +65,10 @@ class ProductView extends React.Component {
         {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
         {!isWaiting && error && <h2>Error. {error} </h2>}
         {materials.length > 0 &&
-        <div style={{ opacity: isWaiting ? 0.5 : 1,
-          marginTop: '25px' }}
-        >
-          {materials.map((material, key) =>
-            <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)
+        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }}>
+          {
+            materials.map((material, key) =>
+              <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)
         }
         </div>}
         <Snackbar
