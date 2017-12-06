@@ -6,6 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { getAProduct } from '../actions/product';
+import { postRating } from '../actions/rating';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
 import MaterialCard from '../components/MaterialCard';
 
@@ -16,12 +17,13 @@ class ProductView extends React.Component {
     this.state = { snackbarError: false, snackbarSuccess: false };
 
     this.saveAnnotation = this.saveAnnotation.bind(this);
+    this.saveRating = this.saveRating.bind(this);
   }
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getAProduct(this.props.match.params.id));
-    dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
+    //dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
   }
 
   saveAnnotation(annotation, materialId) {
@@ -39,6 +41,21 @@ class ProductView extends React.Component {
     }
   }
 
+  saveRating(rating, materialId) {
+    const { dispatch } = this.props;
+
+    console.log(rating, materialId);
+    dispatch(postRating(rating, materialId, this.props.auth.token))
+      .then(() => {
+        if (this.props.errorPostRating) {
+          this.setState({ snackbarError: true });
+        } else {
+          this.setState({ snackbarSuccess: true });
+        }
+        dispatch(getAProduct(this.props.match.params.id));
+      });
+  }
+
   render() {
     const { auth, error, isWaiting } = this.props;
     let productHeadline = null;
@@ -47,8 +64,7 @@ class ProductView extends React.Component {
     console.log(this.props.product);
 
     if (this.props.product) {
-      materials = this.props.product.material;
-
+      materials = this.props.product.materials;
       productHeadline =
             (<div>
               <h1>Product: {this.props.product.name}</h1>
@@ -65,11 +81,8 @@ class ProductView extends React.Component {
         {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
         {!isWaiting && error && <h2>Error. {error} </h2>}
         {materials.length > 0 &&
-        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }}>
-          {
-            materials.map((material, key) =>
-              <MaterialCard key={key} material={material} showRateStars={(auth.role === 'consumer')} averageScore={3.5} numberOfRatings={150} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)
-        }
+        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
+          {materials.map((material, key) => <MaterialCard key={key} material={material} saveRating={this.saveRating} showRateStars={(auth.role === 'consumer')} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material._id === material._id)} />)}
         </div>}
         <Snackbar
           open={this.state.snackbarError}
@@ -97,6 +110,8 @@ ProductView.propTypes = {
   auth: PropTypes.object.isRequired, // eslint-disable-line
   waitingUploadAnnotation: PropTypes.bool,
   errorUploadAnnotation: PropTypes.string,
+  waitingPostRating: PropTypes.bool,
+  errorPostRating: PropTypes.string,
   annotations: PropTypes.array, // eslint-disable-line
 };
 
@@ -108,6 +123,8 @@ ProductView.defaultProps = {
   snackbarSuccess: false, // eslint-disable-line
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
+  errorPostRating: null,
+  waitingPostRating: null,
   annotations: [],
 };
 
@@ -119,6 +136,8 @@ const mapStateToProps = state => ({
   waitingUploadAnnotation: state.productView.waitingUploadAnnotation,
   errorUploadAnnotation: state.productView.errorUploadAnnotation,
   annotations: state.productView.annotations,
+  errorPostRating: state.productView.errorPostRating,
+  waitingPostRating: state.productView.waitingPostRating,
 });
 
 const ProductViewContainer = connect(

@@ -113,6 +113,7 @@ export function getAProduct(id) {
     let product;
     return apiRequest('get', {}, `${endpoint}/${id}`)
       .then((response) => {
+        console.log(response.data);
         product = response.data;
         console.log(response.data);
         return apiRequest('get', {}, `/company/${product.company}`);

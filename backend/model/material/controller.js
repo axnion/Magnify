@@ -59,8 +59,11 @@ class MaterialController extends Controller {
 
       materialFacade.setRating(material, account, rating)
       .then(() => {
-        res.status(200);
+        res.status(200).end();
         next();
+      })
+      .catch((err) => {
+        next(err);
       });
     })(req, res, next);
   }

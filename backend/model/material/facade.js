@@ -24,7 +24,7 @@ class MaterialFacade extends Facade {
     return material.save().then(() => {
       return productSchema.findOneAndUpdate(
         { _id: body.productId },
-        { $push: { material } },
+        { $push: { materials: material } },
         { new: true }
       );
     });
@@ -50,6 +50,11 @@ class MaterialFacade extends Facade {
     .then((material) => {
       if (!material) {
         throw new Error('Material not found');
+      }
+
+      // Manual validation, mongoose does not check on update for some reason
+      if (newRating < 1 || newRating > 5) {
+        throw new Error('Rating has to be between 1 and 5');
       }
 
       let isRated = false;
