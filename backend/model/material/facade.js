@@ -52,6 +52,11 @@ class MaterialFacade extends Facade {
         throw new Error('Material not found');
       }
 
+      // Manual validation, mongoose does not check on update for some reason
+      if (newRating < 1 || newRating > 5) {
+        throw new Error('Rating has to be between 1 and 5');
+      }
+
       let isRated = false;
 
       material.ratings.forEach((rating) => {
