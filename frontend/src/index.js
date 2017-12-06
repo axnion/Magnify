@@ -6,13 +6,14 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
+import throttle from 'lodash/throttle';
 import rootReducer from './reducers';
+import { saveState, loadState } from './localStorage';
 // import store from './store';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const initialState = {};
 const enhancers = [];
 
 const history = createBrowserHistory();
@@ -30,6 +31,8 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
+const persistedState = loadState();
+
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
   ...enhancers,
@@ -37,9 +40,20 @@ const composedEnhancers = compose(
 
 const store = createStore(
   rootReducer,
-  initialState,
+  persistedState,
   composedEnhancers,
 );
+
+store.subscribe(throttle(() => {
+  saveState({
+    auth: {
+      token: store.getState().auth.token,
+      username: store.getState().auth.username,
+      role: store.getState().auth.role,
+      company: store.getState().auth.company,
+    },
+  });
+}, 1000));
 
 // eslint-disable-next-line function-paren-newline
 ReactDOM.render(
