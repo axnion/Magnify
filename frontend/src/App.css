@@ -21,6 +21,11 @@
   cursor: pointer;
 }
 
+.dropzoneContainer {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
 .App-content {
   background-color: #f2faf7;
   height: 671px;
