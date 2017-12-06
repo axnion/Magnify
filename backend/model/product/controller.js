@@ -36,11 +36,10 @@ class ProductController extends Controller {
 
       // Return only the first document in the list
       return this.facade
-      .findById(req.params.id, user)
-      .then(resp => {
-        console.log(resp);
-        res.status(200).json(resp[0]);
-      })
+      .findByIdAndUser(req.params.id, user)
+      .then(resp =>
+        res.status(200).json(resp[0])
+      )
       .catch(err => next(err));
     })(req, res, next);
   }

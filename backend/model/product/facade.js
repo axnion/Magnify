@@ -3,7 +3,7 @@ const Facade = require('../../lib/facade');
 const productSchema = require('./schema');
 
 class ProductFacade extends Facade {
-  findById(id, user) {
+  findByIdAndUser(id, user) {
     const u = user === false ? null : user._id;
 
     return this.Schema.aggregate(
