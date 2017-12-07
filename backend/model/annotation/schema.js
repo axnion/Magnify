@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Account = require('../account/schema');
+const Material = require('../material/schema');
 
 const annotationSchema = new Schema({
   account: {
