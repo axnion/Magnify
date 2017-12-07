@@ -6,6 +6,7 @@ const company = require('./company');
 const category = require('./category');
 const product = require('./product');
 const material = require('./material');
+const annotation = require('./annotation');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url, { useMongoClient: true });
@@ -102,6 +103,7 @@ commander
   }
 });
 
+// Prodct Subcommand
 commander
   .command('product')
   .description('Actions dealing with products')
@@ -130,6 +132,7 @@ commander
     }
   });
 
+// Material Subcommand
 commander
   .command('material')
   .description('Actions dealing with materials')
@@ -140,6 +143,24 @@ commander
       material.list();
     } else if (flags.drop) {
       material.drop(mongoose.connection);
+    } else {
+      console.log('No valid action found');
+      mongoose.connection.close();
+    }
+  });
+
+
+// Material Subcommand
+commander
+  .command('annotation')
+  .description('Actions dealing with annotations')
+  .option('-L, --list', 'Lists all annotations')
+  .option('--drop', 'Drops annotations collection, deleting all data')
+  .action((flags) => {
+    if (flags.list) {
+      annotation.list();
+    } else if (flags.drop) {
+      annotation.drop(mongoose.connection);
     } else {
       console.log('No valid action found');
       mongoose.connection.close();
