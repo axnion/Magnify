@@ -1,5 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+// Material-ui
+import { Card, CardHeader } from 'material-ui/Card'; 
+
+const ColoredCardHeader = styled(CardHeader)`
+  background-color: #BBDEFB;
+`;
+
+const StyledCard = styled(Card)`
+padding: 0px;
+margin: 10px;
+min-height: 155px;
+`;
 
 class Profile extends React.Component {
   constructor(props) {
@@ -26,13 +40,13 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div className="profile">
-        <h1>Username: {this.props.username}</h1>
-        {
-          (!this.props.companyId || !this.props.company)? undefined : <h3>Company: {this.props.company.name}</h3>
-        }
+      <StyledCard className="profile">
+        <ColoredCardHeader
+          title={`Username: ${this.props.username}`} 
+          subtitle={(!this.props.companyId || !this.props.company) ? undefined : `Company: ${this.props.company.name}`} 
+        />
         <h3>Type of user: { this.roleToString()}</h3>
-      </div>
+      </StyledCard>
     );
   }
 }
