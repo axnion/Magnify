@@ -111,18 +111,19 @@ commander
   .option('-C, --create', 'Creates a product')
   .option('-n, --productname [name]', 'Specify product name')
   .option('-c, --company [name]', 'Specify company name')
-  .option('--category [id]', 'Specify product category')
+  .option('--maincategory [name]', 'Specify product category')
+  .option('--subcategory [name]', 'Specify the category parent')
   .option('--drop', 'Drops products collection, deleting all data')
   .action((flags) => {
     if (flags.list) {
       product.list();
-    } else if(flags.create) {
+    } else if (flags.create) {
       if (!flags.productname) {
         console.log('Please specify a product name');
       } else if (!flags.company) {
-        console.log('Please specify a company owning the product')
+        console.log('Please specify a company owning the product');
       } else {
-        product.create(flags.productname, flags.company, flags.category);
+        product.create(flags.productname, flags.company, flags.maincategory, flags.subcategory);
       }
     } else if (flags.drop) {
       product.drop(mongoose.connection);
@@ -150,7 +151,7 @@ commander
   });
 
 
-// Material Subcommand
+// Annotation Subcommand
 commander
   .command('annotation')
   .description('Actions dealing with annotations')
