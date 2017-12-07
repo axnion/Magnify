@@ -5,9 +5,7 @@ const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
 
 class MaterialFacade extends Facade {
-
   save(file, body) {
-
     const id = mongoose.Types.ObjectId();
 
     const material = new this.Schema({
@@ -21,20 +19,25 @@ class MaterialFacade extends Facade {
       url: `/material/${id}/download`
     });
 
-    return material.save().then(() => {
-      return productSchema.findOneAndUpdate(
-        { _id: body.productId },
-        { $push: { materials: material } },
-        { new: true }
-      );
-    });
+    return material
+      .save()
+      .then(() => {
+        return productSchema.findOneAndUpdate(
+          { _id: body.productId },
+          { $push: { materials: material } },
+          { new: true }
+        );
+      })
+      .catch(err => {
+        throw new Error(err.message);
+      });
   }
 
   getMaterialFile(materialId) {
     const gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection('material');
 
-    return this.findById(materialId).then((material) => {
+    return this.findById(materialId).then(material => {
       const file = {
         stream: gfs.createReadStream({
           _id: material.file.id
@@ -46,8 +49,7 @@ class MaterialFacade extends Facade {
   }
 
   setRating(materialId, accountId, newRating) {
-    return this.findById(materialId)
-    .then((material) => {
+    return this.findById(materialId).then(material => {
       if (!material) {
         throw new Error('Material not found');
       }
@@ -59,9 +61,9 @@ class MaterialFacade extends Facade {
 
       let isRated = false;
 
-      material.ratings.forEach((rating) => {
-
-        if (rating.account == accountId) {  // HAS TO BE "==" or shit will break. Trust me, I'm a comment.
+      material.ratings.forEach(rating => {
+        if (rating.account == accountId) {
+          // HAS TO BE "==" or shit will break. Trust me, I'm a comment.
           rating.rating = newRating;
           isRated = true;
         }
@@ -70,7 +72,9 @@ class MaterialFacade extends Facade {
       if (!isRated) {
         material.ratings.push({ account: accountId, rating: newRating });
       }
-      return this.Schema.findByIdAndUpdate(materialId, { ratings: material.ratings }).exec();
+      return this.Schema.findByIdAndUpdate(materialId, {
+        ratings: material.ratings
+      }).exec();
       //return this.update(material); //This is not working, existing model should not be used.
     });
   }
