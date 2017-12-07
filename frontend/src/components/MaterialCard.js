@@ -93,7 +93,6 @@ MaterialCardComponent.propTypes = {
 MaterialCardComponent.defaultProps = {
   material: null,
   showRateStars: false,
-  annotation: '',
 };
 
 export default MaterialCardComponent;
