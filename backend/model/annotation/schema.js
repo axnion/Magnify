@@ -13,8 +13,7 @@ const annotationSchema = new Schema({
     required: true
   },
   annotation: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
