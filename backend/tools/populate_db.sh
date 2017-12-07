@@ -1,8 +1,6 @@
 #! /bin/bash
 
-# Change to tool directroy
-cd ../backend/tools/
-
+# Drop connections
 node app.js account --drop # Drop accounts collection
 node app.js company --drop # Drop companies collection
 node app.js category --drop # Drop categories collection
@@ -35,7 +33,7 @@ node app.js category -C -n Lövblåsare -p Trädgrådsprodukter
 #node app.js category -C -n Bensindrivna -p Gräsklippare
 
 # Create Products
-node app.js product -C -n EvilCutter -c EvilCorp
-node app.js product -C -n AwesomeCutter -c AwesomeCorp
-node app.js product -C -n AwesomeTest -c AwesomeCorp
-node app.js product -C -n EvilTest -c EvilCorp
+node app.js product -C -n EvilCutter -c EvilCorp --maincategory Trädgrådsprodukter
+node app.js product -C -n AwesomeCutter -c AwesomeCorp --maincategory Trädgrådsprodukter --subcategory Gräsklippare
+node app.js product -C -n AwesomeTest -c AwesomeCorp 
+node app.js product -C -n EvilTest -c EvilCorp --maincategory Vitvaror --subcategory Diskmaskiner
