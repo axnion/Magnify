@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const annotationSchema = new Schema({
   account: {
     type: mongoose.Schema.ObjectId,
-    ref: 'account',
+    ref: 'Account',
     required: true
   },
   material: {

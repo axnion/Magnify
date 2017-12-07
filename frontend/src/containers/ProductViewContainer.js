@@ -63,6 +63,8 @@ class ProductView extends React.Component {
     let productHeadline = null;
     let materials = [];
 
+    console.log(this.props.annotations);
+
     if (this.props.product) {
       materials = this.props.product.materials;
       productHeadline =
