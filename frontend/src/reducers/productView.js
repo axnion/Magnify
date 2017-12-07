@@ -32,19 +32,19 @@ export default (state = {
     case types.POST_RATING:
       return {
         ...state,
-        waitingUploadAnnotation: true,
+        waitingPostRating: true,
       };
     case types.POST_RATING_SUCCESS:
       return {
         ...state,
-        waitingUploadAnnotation: false,
+        waitingPostRating: false,
         errorUploadAnnotation: null,
       };
     case types.POST_RATING_ERROR:
       return {
         ...state,
-        waitingUploadAnnotation: false,
-        errorUploadAnnotation: action.payload,
+        waitingPostRating: false,
+        errorPostRating: action.payload,
       };
     case types.UPLOAD_ANNOTATION:
       return {

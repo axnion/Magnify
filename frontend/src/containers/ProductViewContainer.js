@@ -14,7 +14,9 @@ class ProductView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { snackbarError: false, snackbarSuccess: false };
+    this.state = {
+      snackbarError: false, snackbarSuccess: false, snackbarPostRatingError: false, snackbarPostRatingSuccess: false 
+    };
 
     this.saveAnnotation = this.saveAnnotation.bind(this);
     this.saveRating = this.saveRating.bind(this);
@@ -48,9 +50,9 @@ class ProductView extends React.Component {
     dispatch(postRating(rating, materialId, this.props.auth.token))
       .then(() => {
         if (this.props.errorPostRating) {
-          this.setState({ snackbarError: true });
+          this.setState({ snackbarPostRatingError: true });
         } else {
-          this.setState({ snackbarSuccess: true });
+          this.setState({ snackbarPostRatingSuccess: true });
         }
         dispatch(getAProduct(this.props.match.params.id, this.props.auth.token));
       });
@@ -96,6 +98,20 @@ class ProductView extends React.Component {
           bodyStyle={{ backgroundColor: '#21ba45' }}
           contentStyle={{ color: '#fff', fontWeight: 'bold' }}
         />
+        <Snackbar
+          open={this.state.snackbarPostRatingError}
+          message={this.props.errorPostRating || ''}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
+        <Snackbar
+          open={this.state.snackbarPostRatingSuccess}
+          message={'Material was rated'}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+          bodyStyle={{ backgroundColor: '#21ba45' }}
+          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+        />
       </div>
     );
   }
@@ -106,9 +122,9 @@ ProductView.propTypes = {
   isWaiting: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired, // eslint-disable-line
-  waitingUploadAnnotation: PropTypes.bool,
+  waitingUploadAnnotation: PropTypes.bool, // eslint-disable-line
   errorUploadAnnotation: PropTypes.string,
-  waitingPostRating: PropTypes.bool,
+  waitingPostRating: PropTypes.bool, // eslint-disable-line
   errorPostRating: PropTypes.string,
   annotations: PropTypes.array, // eslint-disable-line
 };
@@ -119,6 +135,8 @@ ProductView.defaultProps = {
   isWaiting: false,
   snackbarError: false, // eslint-disable-line
   snackbarSuccess: false, // eslint-disable-line
+  snackbarPostRatingError: false, // eslint-disable-line
+  snackbarPostRatingSuccess: false, // eslint-disable-line
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
   errorPostRating: null,
