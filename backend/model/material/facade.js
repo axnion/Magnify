@@ -60,7 +60,7 @@ class MaterialFacade extends Facade {
       let isRated = false;
 
       material.ratings.forEach((rating) => {
-        console.log(typeof rating.account);
+
         if (rating.account == accountId) {  // HAS TO BE "==" or shit will break. Trust me, I'm a comment.
           rating.rating = newRating;
           isRated = true;
@@ -70,8 +70,8 @@ class MaterialFacade extends Facade {
       if (!isRated) {
         material.ratings.push({ account: accountId, rating: newRating });
       }
-
-      return this.update(material);
+      return this.Schema.findByIdAndUpdate(materialId, { ratings: material.ratings }).exec();
+      //return this.update(material); //This is not working, existing model should not be used.
     });
   }
 }
