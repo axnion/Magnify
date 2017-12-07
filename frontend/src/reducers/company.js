@@ -4,6 +4,7 @@ export default (state = {
   isWaiting: false,
   companies: [],
   error: null,
+  currentCompany: null,
 }, action) => {
   switch (action.type) {
     case types.GET_COMPANIES:
@@ -19,6 +20,24 @@ export default (state = {
         error: null,
       };
     case types.GET_COMPANIES_ERROR:
+      return {
+        ...state,
+        isWaiting: false,
+        error: action.payload,
+      };
+    case types.GET_A_COMPANY:
+      return {
+        ...state,
+        isWaiting: true,
+      };
+    case types.GET_A_COMPANY_SUCCESS:
+      return {
+        ...state,
+        currentCompany: action.payload,
+        isWaiting: false,
+        error: null,
+      };
+    case types.GET_A_COMPANY_ERROR:
       return {
         ...state,
         isWaiting: false,

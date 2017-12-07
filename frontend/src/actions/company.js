@@ -22,6 +22,23 @@ function getCompaniesError(payload) {
   };
 }
 
+function beginGetACompany() {
+  return { type: types.GET_A_COMPANY };
+}
+
+function getACompanySuccess(payload) {
+  return {
+    type: types.GET_A_COMPANY_SUCCESS,
+    payload,
+  };
+}
+
+function getACompanyError(payload) {
+  return {
+    type: types.GET_A_COMPANY_ERROR,
+    payload,
+  };
+}
 function beginCreateCompany() {
   return { type: types.CREATE_COMPANY };
 }
@@ -37,6 +54,20 @@ function createCompanyError(payload) {
   return {
     type: types.CREATE_COMPANY_ERROR,
     payload,
+  };
+}
+
+export function getACompany(id) {
+  return (dispatch) => {
+    dispatch(beginGetACompany());
+
+    return apiRequest('get', {}, `${endpoint}/${id}`)
+      .then((response) => {
+        dispatch(getACompanySuccess(response.data));
+      })
+      .catch((response) => {
+        dispatch(getACompanyError(response.message));
+      });
   };
 }
 
