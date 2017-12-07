@@ -6,6 +6,7 @@ const company = require('./company');
 const category = require('./category');
 const product = require('./product');
 const material = require('./material');
+const annotation = require('./annotation');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url, { useMongoClient: true });
@@ -102,6 +103,7 @@ commander
   }
 });
 
+// Prodct Subcommand
 commander
   .command('product')
   .description('Actions dealing with products')
@@ -109,18 +111,19 @@ commander
   .option('-C, --create', 'Creates a product')
   .option('-n, --productname [name]', 'Specify product name')
   .option('-c, --company [name]', 'Specify company name')
-  .option('--category [id]', 'Specify product category')
+  .option('--maincategory [name]', 'Specify product category')
+  .option('--subcategory [name]', 'Specify the category parent')
   .option('--drop', 'Drops products collection, deleting all data')
   .action((flags) => {
     if (flags.list) {
       product.list();
-    } else if(flags.create) {
+    } else if (flags.create) {
       if (!flags.productname) {
         console.log('Please specify a product name');
       } else if (!flags.company) {
-        console.log('Please specify a company owning the product')
+        console.log('Please specify a company owning the product');
       } else {
-        product.create(flags.productname, flags.company, flags.category);
+        product.create(flags.productname, flags.company, flags.maincategory, flags.subcategory);
       }
     } else if (flags.drop) {
       product.drop(mongoose.connection);
@@ -130,6 +133,7 @@ commander
     }
   });
 
+// Material Subcommand
 commander
   .command('material')
   .description('Actions dealing with materials')
@@ -140,6 +144,24 @@ commander
       material.list();
     } else if (flags.drop) {
       material.drop(mongoose.connection);
+    } else {
+      console.log('No valid action found');
+      mongoose.connection.close();
+    }
+  });
+
+
+// Annotation Subcommand
+commander
+  .command('annotation')
+  .description('Actions dealing with annotations')
+  .option('-L, --list', 'Lists all annotations')
+  .option('--drop', 'Drops annotations collection, deleting all data')
+  .action((flags) => {
+    if (flags.list) {
+      annotation.list();
+    } else if (flags.drop) {
+      annotation.drop(mongoose.connection);
     } else {
       console.log('No valid action found');
       mongoose.connection.close();

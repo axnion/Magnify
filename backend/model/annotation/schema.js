@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Account = require('../account/schema');
-const Material = require('../material/schema');
 
 const annotationSchema = new Schema({
   account: {
@@ -15,7 +13,8 @@ const annotationSchema = new Schema({
     required: true
   },
   annotation: {
-    type: String
+    type: String,
+    required: true
   }
 });
 
