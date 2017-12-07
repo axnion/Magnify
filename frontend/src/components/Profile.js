@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Material-ui
-import { Card, CardHeader } from 'material-ui/Card'; 
+import { Card, CardHeader } from 'material-ui/Card';
 
 const ColoredCardHeader = styled(CardHeader)`
   background-color: #BBDEFB;
@@ -11,8 +11,12 @@ const ColoredCardHeader = styled(CardHeader)`
 
 const StyledCard = styled(Card)`
 padding: 0px;
-margin: 10px;
+margin: 0px;
 min-height: 155px;
+`;
+
+const MainDiv = styled('div')`
+padding: 10px;
 `;
 
 class Profile extends React.Component {
@@ -40,13 +44,15 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <StyledCard className="profile">
-        <ColoredCardHeader
-          title={`Username: ${this.props.username}`} 
-          subtitle={(!this.props.companyId || !this.props.company) ? undefined : `Company: ${this.props.company.name}`} 
-        />
-        <h3>Type of user: { this.roleToString()}</h3>
-      </StyledCard>
+      <MainDiv>
+        <StyledCard className="profile">
+          <ColoredCardHeader
+            title={`Username: ${this.props.username}`}
+            subtitle={(!this.props.companyId || !this.props.company) ? undefined : `Company: ${this.props.company.name}`}
+          />
+          <h3>Type of user: { this.roleToString()}</h3>
+        </StyledCard>
+      </MainDiv>
     );
   }
 }
