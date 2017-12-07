@@ -5,16 +5,25 @@ const mongoose = require('mongoose');
 const Promise       = require('bluebird');
 
 exports.create = function(name, company, maincategory, subcategory) {
+  let categoryId;
   categoryFacade.findOne({ name: maincategory, mainCategory: true })
   .then((mainCat) => {
+    if (!mainCat) {
+      return;
+    }
+    categoryId = mainCat.id;
     return categoryFacade.findOne({ name: subcategory, parent: mainCat.id });
   })
-  .then((category) => {
+  .then((subcategory) => {
+    if (subcategory) {
+      categoryId = subcategory.id;
+    }
+
     return companyFacade.findOne({ name: company })
     .then(results => productFacade.create({
       name,
       company: results.id,
-      category: category.id
+      category: categoryId
     }))
     .then((product) => {
       console.log('Created product: ');
