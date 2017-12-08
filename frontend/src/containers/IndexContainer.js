@@ -17,17 +17,16 @@ class IndexContainer extends React.Component {
 }
 
 IndexContainer.propTypes = {
-}
+};
 
 IndexContainer.defaultProps = {
-}
+};
 
-
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 });
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
 });
 
 export default connect(
