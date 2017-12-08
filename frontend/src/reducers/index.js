@@ -7,7 +7,6 @@ import consumer from './consumer';
 import product from './product';
 import category from './category';
 import auth from './auth';
-import productView from './productView';
 import material from './material';
 
 export default combineReducers({
@@ -18,7 +17,6 @@ export default combineReducers({
   consumer,
   product,
   category,
-  productView,
   material,
   routing: routerReducer,
 });
