@@ -41,7 +41,7 @@ export default function uploadMaterial(data, productId, token) {
   return (dispatch) => {
     dispatch(beginUploadMaterial());
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', data.files[0]);
     formData.append('title', data.title);
     formData.append('description', data.description);

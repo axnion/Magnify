@@ -19,12 +19,7 @@ function postRatingError(payload) {
   };
 }
 
-
-export const POST_RATING = 'POST_RATING';
-export const POST_RATING_SUCCESS = 'POST_RATING_SUCCESS';
-export const POST_RATING_ERROR = 'POST_RATING_ERROR';
-
-export function postRating(rating, materialId, token) {
+export default function postRating(rating, materialId, token) {
   return (dispatch) => {
     dispatch(beginpostRating());
 
@@ -32,7 +27,7 @@ export function postRating(rating, materialId, token) {
       rating,
     };
 
-    return apiRequest('put', data, '/material/' + materialId + '/rating', token)
+    return apiRequest('put', data, `/material/${materialId}/rating`, token)
       .then((response) => {
         dispatch(postRatingSuccess(response.data));
       })

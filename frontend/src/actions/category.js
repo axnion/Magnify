@@ -43,15 +43,26 @@ export function mockGetCategories() {
 
     return new Promise(resolve => (setTimeout(() => {
       const categories = [
-        { _id: 'TestCat1id', name: 'TestCat1', parent: '', mainCategory: true },
-        { _id: 'TestCat2id', name: 'TestCat2', parent: '', mainCategory: true },
-        { _id: 'TestCat3id', name: 'TestCat3', parent: 'TestCat1id', mainCategory: false },
-        { _id: 'TestCat4id', name: 'TestCat4', parent: 'TestCat2id', mainCategory: false },
-        { _id: 'TestCat5id', name: 'TestCat5', parent: 'TestCat3id', mainCategory: false },
-        { _id: 'TestCat6id', name: 'TestCat6', parent: 'TestCat4id', mainCategory: false },
+        {
+          _id: 'TestCat1id', name: 'TestCat1', parent: '', mainCategory: true,
+        },
+        {
+          _id: 'TestCat2id', name: 'TestCat2', parent: '', mainCategory: true,
+        },
+        {
+          _id: 'TestCat3id', name: 'TestCat3', parent: 'TestCat1id', mainCategory: false,
+        },
+        {
+          _id: 'TestCat4id', name: 'TestCat4', parent: 'TestCat2id', mainCategory: false,
+        },
+        {
+          _id: 'TestCat5id', name: 'TestCat5', parent: 'TestCat3id', mainCategory: false,
+        },
+        {
+          _id: 'TestCat6id', name: 'TestCat6', parent: 'TestCat4id', mainCategory: false,
+        },
       ];
 
-      // eslint-disable-next-line no-underscore-dangle
       categories._id = crypto.randomBytes(16).toString('hex');
 
       return resolve(categories);
