@@ -73,7 +73,7 @@ export default (state = {
         isWaiting: false,
         error: action.payload,
       };
-      case types.POST_RATING:
+    case types.POST_RATING:
       return {
         ...state,
         waitingPostRating: true,
