@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "init", type: "shell", path: "scripts/init.sh"
     config.vm.provider 'virtualbox' do |vb|
         vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
+        vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
     end
 
     config.vm.box = "ubuntu/xenial64"
