@@ -4,6 +4,18 @@ export default (state = {
   isWaiting: false,
   products: [],
   error: null,
+  currentProduct: {
+    materials: [],
+    name: '',
+    company: {
+      name: '',
+    },
+  },
+  waitingUploadAnnotation: false,
+  errorUploadAnnotation: null,
+  annotations: [],
+  errorPostRating: null,
+  waitingPostRating: false,
 }, action) => {
   switch (action.type) {
     case types.GET_PRODUCTS:
@@ -33,6 +45,7 @@ export default (state = {
       return {
         ...state,
         products: [...state.products, action.payload],
+        currentProduct: action.payload,
         isWaiting: false,
         error: null,
       };
@@ -55,6 +68,58 @@ export default (state = {
         error: null,
       };
     case types.CREATE_PRODUCT_ERROR:
+      return {
+        ...state,
+        isWaiting: false,
+        error: action.payload,
+      };
+      case types.POST_RATING:
+      return {
+        ...state,
+        waitingPostRating: true,
+      };
+    case types.POST_RATING_SUCCESS:
+      return {
+        ...state,
+        waitingPostRating: false,
+        errorUploadAnnotation: null,
+      };
+    case types.POST_RATING_ERROR:
+      return {
+        ...state,
+        waitingPostRating: false,
+        errorPostRating: action.payload,
+      };
+    case types.UPLOAD_ANNOTATION:
+      return {
+        ...state,
+        waitingUploadAnnotation: true,
+      };
+    case types.UPLOAD_ANNOTATION_SUCCESS:
+      return {
+        ...state,
+        waitingUploadAnnotation: false,
+        errorUploadAnnotation: null,
+      };
+    case types.UPLOAD_ANNOTATION_ERROR:
+      return {
+        ...state,
+        waitingUploadAnnotation: false,
+        errorUploadAnnotation: action.payload,
+      };
+    case types.GET_ANNOTATIONS:
+      return {
+        ...state,
+        isWaiting: true,
+      };
+    case types.GET_ANNOTATIONS_SUCCESS:
+      return {
+        ...state,
+        annotations: action.payload,
+        isWaiting: false,
+        error: null,
+      };
+    case types.GET_ANNOTATIONS_ERROR:
       return {
         ...state,
         isWaiting: false,

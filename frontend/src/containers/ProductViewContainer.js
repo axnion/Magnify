@@ -72,15 +72,15 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  error: state.productView.error,
-  isWaiting: state.productView.isWaiting,
-  product: state.productView.product,
+  error: state.product.error,
+  isWaiting: state.product.isWaiting,
+  product: state.product.currentProduct,
   auth: state.auth,
-  waitingUploadAnnotation: state.productView.waitingUploadAnnotation,
-  errorUploadAnnotation: state.productView.errorUploadAnnotation,
-  annotations: state.productView.annotations,
-  errorPostRating: state.productView.errorPostRating,
-  waitingPostRating: state.productView.waitingPostRating,
+  waitingUploadAnnotation: state.product.waitingUploadAnnotation,
+  errorUploadAnnotation: state.product.errorUploadAnnotation,
+  annotations: state.product.annotations,
+  errorPostRating: state.product.errorPostRating,
+  waitingPostRating: state.product.waitingPostRating,
 });
 
 ProductViewContainer.propTypes = ({
