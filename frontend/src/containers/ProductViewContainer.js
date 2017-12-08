@@ -1,21 +1,19 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Snackbar from 'material-ui/Snackbar';
-
-import RaisedButton from 'material-ui/RaisedButton';
+import ProductView from '../components/ProductView';
 import { getAProduct } from '../actions/product';
 import { postRating } from '../actions/rating';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
-import MaterialCard from '../components/MaterialCard';
 
-class ProductView extends React.Component {
+class ProductViewContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      snackbarError: false, snackbarSuccess: false, snackbarPostRatingError: false, snackbarPostRatingSuccess: false 
+      snackbarError: false,
+      snackbarSuccess: false,
+      snackbarPostRatingError: false,
+      snackbarPostRatingSuccess: false,
     };
 
     this.saveAnnotation = this.saveAnnotation.bind(this);
@@ -23,126 +21,54 @@ class ProductView extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(getAProduct(this.props.match.params.id, this.props.auth.token));
-    dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
+    this.props.getAProduct(this.props.match.params.id, this.props.auth.token);
+    this.props.getAnnotations(this.props.auth.token, this.props.match.params.id);
   }
 
   saveAnnotation(annotation, materialId) {
-    const { dispatch } = this.props;
-
     if (annotation !== '') {
-      dispatch(uploadAnnotation(annotation, materialId, this.props.auth.token))
+      this.props.uploadAnnotation(annotation, materialId, this.props.auth.token)
         .then(() => {
           if (this.props.errorUploadAnnotation) {
             this.setState({ snackbarError: true });
           } else {
             this.setState({ snackbarSuccess: true });
-            dispatch(getAnnotations(this.props.auth.token, this.props.match.params.id));
+            this.props.getAnnotations(this.props.auth.token, this.props.match.params.id);
           }
         });
     }
   }
 
   saveRating(rating, materialId) {
-    const { dispatch } = this.props;
-
-    dispatch(postRating(rating, materialId, this.props.auth.token))
+    this.props.postRating(rating, materialId, this.props.auth.token)
       .then(() => {
         if (this.props.errorPostRating) {
           this.setState({ snackbarPostRatingError: true });
         } else {
           this.setState({ snackbarPostRatingSuccess: true });
         }
-        dispatch(getAProduct(this.props.match.params.id, this.props.auth.token));
+        this.props.getAProduct(this.props.match.params.id, this.props.auth.token);
       });
   }
 
   render() {
-    const { auth, error, isWaiting } = this.props;
-    let productHeadline = null;
-    let materials = [];
-
-    if (this.props.product) {
-      materials = this.props.product.materials;
-      productHeadline =
-            (<div>
-              <h1>Product: {this.props.product.name}</h1>
-              <h3>Company: {this.props.product.company.name}</h3>
-              {
-                (auth.role === null || auth.role === 'consumer' || this.props.product.company._id !== auth.company) ? undefined : <Link to={`/material/${this.props.product._id}`}><RaisedButton primary label="Upload Material" /></Link>
-              }
-            </div>);
-    } else { productHeadline = <h1>No product selected</h1>; }
     return (
-      <div className="product">
-        {productHeadline}
-        {isWaiting && materials.length === 0 && <h2>Loading...</h2>}
-        {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
-        {!isWaiting && error && <h2>Error. {error} </h2>}
-        {materials.length > 0 &&
-        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
-          {materials.map((material, key) => <MaterialCard key={key} material={material} saveRating={this.saveRating} showRateStars={(auth.role === 'consumer')} saveAnnotation={this.saveAnnotation} annotation={this.props.annotations.find(a => a.material === material._id)} />)}
-        </div>}
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.errorUploadAnnotation || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
-        <Snackbar
-          open={this.state.snackbarSuccess}
-          message={'Notes saved'}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-        <Snackbar
-          open={this.state.snackbarPostRatingError}
-          message={this.props.errorPostRating || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
-        <Snackbar
-          open={this.state.snackbarPostRatingSuccess}
-          message={'Material was rated'}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-      </div>
+      <ProductView
+        saveRating={this.saveRating}
+        saveAnnotation={this.saveAnnotation}
+        {...this.state}
+        {...this.props}
+      />
     );
   }
 }
-ProductView.propTypes = {
-  product: PropTypes.object, // eslint-disable-line
-  error: PropTypes.string,
-  isWaiting: PropTypes.bool,
-  dispatch: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired, // eslint-disable-line
-  waitingUploadAnnotation: PropTypes.bool, // eslint-disable-line
-  errorUploadAnnotation: PropTypes.string,
-  waitingPostRating: PropTypes.bool, // eslint-disable-line
-  errorPostRating: PropTypes.string,
-  annotations: PropTypes.array, // eslint-disable-line
-};
 
-ProductView.defaultProps = {
-  product: null,
-  error: null,
-  isWaiting: false,
-  snackbarError: false, // eslint-disable-line
-  snackbarSuccess: false, // eslint-disable-line
-  snackbarPostRatingError: false, // eslint-disable-line
-  snackbarPostRatingSuccess: false, // eslint-disable-line
-  waitingUploadAnnotation: false,
-  errorUploadAnnotation: null,
-  errorPostRating: null,
-  waitingPostRating: null,
-  annotations: [],
-};
+const mapDispatchToProps = dispatch => ({
+  getAProduct: (id, token) => dispatch(getAProduct(id, token)),
+  getAnnotations: (token, id) => dispatch(getAnnotations(token, id)),
+  uploadAnnotation: (annotation, materialId, token) => dispatch(uploadAnnotation(annotation, materialId, token)),
+  postRating: (rating, materialId, token) => dispatch(postRating(rating, materialId, token)),
+});
 
 const mapStateToProps = state => ({
   error: state.productView.error,
@@ -156,8 +82,7 @@ const mapStateToProps = state => ({
   waitingPostRating: state.productView.waitingPostRating,
 });
 
-const ProductViewContainer = connect(
+export default connect(
   mapStateToProps,
-)(ProductView);
-
-export default ProductViewContainer;
+  mapDispatchToProps,
+)(ProductViewContainer);

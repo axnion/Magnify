@@ -3,7 +3,13 @@ import * as types from '../constants';
 export default (state = {
   error: null,
   isWaiting: false,
-  product: null,
+  product: {
+    materials: [],
+    name: '',
+    company: {
+      name: '',
+    },
+  },
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
   annotations: [],
