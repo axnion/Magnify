@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Snackbar from 'material-ui/Snackbar';
@@ -89,30 +89,40 @@ const ProductView = ({
 );
 
 ProductView.propTypes = {
-  product: PropTypes.object, // eslint-disable-line
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    company: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
-  dispatch: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired, // eslint-disable-line
-  waitingUploadAnnotation: PropTypes.bool, // eslint-disable-line
+  auth: PropTypes.shape({
+    role: PropTypes.string,
+    company: PropTypes.string,
+  }).isRequired,
   errorUploadAnnotation: PropTypes.string,
-  waitingPostRating: PropTypes.bool, // eslint-disable-line
   errorPostRating: PropTypes.string,
-  annotations: PropTypes.array, // eslint-disable-line
+  annotations: PropTypes.arrayOf(PropTypes.any),
+  snackbarError: PropTypes.bool,
+  snackbarSuccess: PropTypes.bool,
+  snackbarPostRatingError: PropTypes.bool,
+  snackbarPostRatingSuccess: PropTypes.bool,
+  saveRating: PropTypes.func.isRequired,
+  saveAnnotation: PropTypes.func.isRequired,
+  handleRequestClose: PropTypes.func.isRequired,
 };
 
 ProductView.defaultProps = {
   product: null,
   error: null,
   isWaiting: false,
-  snackbarError: false, // eslint-disable-line
-  snackbarSuccess: false, // eslint-disable-line
-  snackbarPostRatingError: false, // eslint-disable-line
-  snackbarPostRatingSuccess: false, // eslint-disable-line
-  waitingUploadAnnotation: false,
+  snackbarError: false,
+  snackbarSuccess: false,
+  snackbarPostRatingError: false,
+  snackbarPostRatingSuccess: false,
   errorUploadAnnotation: null,
   errorPostRating: null,
-  waitingPostRating: null,
   annotations: [],
 };
 

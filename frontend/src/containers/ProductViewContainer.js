@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ProductView from '../components/ProductView';
 import { getAProduct } from '../actions/product';
 import { postRating } from '../actions/rating';
@@ -80,6 +81,28 @@ const mapStateToProps = state => ({
   annotations: state.productView.annotations,
   errorPostRating: state.productView.errorPostRating,
   waitingPostRating: state.productView.waitingPostRating,
+});
+
+ProductViewContainer.propTypes = ({
+  getAnnotations: PropTypes.func.isRequired,
+  getAProduct: PropTypes.func.isRequired,
+  postRating: PropTypes.func.isRequired,
+  uploadAnnotation: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    token: PropTypes.string,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+  errorUploadAnnotation: PropTypes.string,
+  errorPostRating: PropTypes.string,
+});
+
+ProductViewContainer.defaultProps = ({
+  errorUploadAnnotation: null,
+  errorPostRating: null,
 });
 
 export default connect(
