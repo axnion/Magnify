@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 
@@ -21,7 +23,7 @@ function createPostErrorr(payload) {
   };
 }
 
-export function createPost(data, token) {
+export function sendPost(data, token) {
   return (dispatch) => {
     dispatch(beginCreatePost());
 
@@ -35,7 +37,7 @@ export function createPost(data, token) {
   };
 }
 
-export function mockCreatePost(data, token) {
+export function mockSendPost(data, token) {
   return (dispatch) => {
     dispatch(beginCreatePost());
 
@@ -46,7 +48,6 @@ export function mockCreatePost(data, token) {
 
       const post = data;
 
-      post.posts = [];
       post.author = {
         _id: 'User1Id',
       };
@@ -55,14 +56,14 @@ export function mockCreatePost(data, token) {
       post._id = crypto.randomBytes(16).toString('hex');
 
       return resolve(post);
-    }, 500)
+    }, 2000)
     ))
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         dispatch(createPostSucccess(response));
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
         dispatch(createPostErrorr(error));
       });
   };

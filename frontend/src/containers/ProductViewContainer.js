@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProductView from '../components/ProductView';
 import { getAProduct } from '../actions/product';
-import { postRating } from '../actions/rating';
+import postRating from '../actions/rating';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
 
 class ProductViewContainer extends Component {

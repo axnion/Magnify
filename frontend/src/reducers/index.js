@@ -8,6 +8,8 @@ import product from './product';
 import category from './category';
 import auth from './auth';
 import material from './material';
+import thread from './thread';
+import post from './post';
 
 export default combineReducers({
   example,
@@ -18,5 +20,7 @@ export default combineReducers({
   product,
   category,
   material,
+  thread,
+  post,
   routing: routerReducer,
 });
