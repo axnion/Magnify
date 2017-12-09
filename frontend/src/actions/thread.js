@@ -88,6 +88,8 @@ export function mockGetThreads() {
             role: 'consumer',
             company: null,
           },
+          createdAt: '2016-05-18T16:00:00Z',
+          updatedAt: '2016-05-18T16:00:00Z',
         },
         {
           _id: 'TestThread2id',
@@ -100,6 +102,8 @@ export function mockGetThreads() {
             role: 'consumer',
             company: null,
           },
+          createdAt: '2016-05-18T16:00:00Z',
+          updatedAt: '2016-05-18T16:00:00Z',
         },
         {
           _id: 'TestThread3id',
@@ -112,6 +116,8 @@ export function mockGetThreads() {
             role: 'consumer',
             company: null,
           },
+          createdAt: '2016-05-18T16:00:00Z',
+          updatedAt: '2016-05-18T16:00:00Z',
         },
       ];
 
@@ -183,6 +189,8 @@ export function mockGetAThread(id) {
           role: 'consumer',
           company: null,
         },
+        createdAt: '2016-05-18T16:00:00Z',
+        updatedAt: '2016-05-18T16:00:00Z',
       };
 
       return resolve(threads);
@@ -228,6 +236,8 @@ export function mockCreateThread(data, token) {
         role: 'role',
         company: 'company',
       };
+      thread.createdAt = new Date().toDateString();
+      thread.updatedAt = new Date().toDateString();
 
       thread._id = crypto.randomBytes(16).toString('hex');
 

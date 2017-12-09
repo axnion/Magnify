@@ -3,6 +3,19 @@ import * as types from '../constants';
 export default (state = {
   isWaiting: false,
   threads: [],
+  currentThread: {
+    _id: '',
+    title: '',
+    body: '',
+    posts: [],
+    author: {
+      username: '',
+      role: '',
+      company: '',
+    },
+    createdAt: '',
+    updatedAt: '',
+  },
   error: null,
 }, action) => {
   switch (action.type) {
@@ -33,6 +46,7 @@ export default (state = {
       return {
         ...state,
         threads: [...state.threads, action.payload],
+        currentThread: action.payload,
         isWaiting: false,
         error: null,
       };
@@ -52,6 +66,7 @@ export default (state = {
         ...state,
         isWaiting: false,
         threads: [...state.threads, action.payload],
+        currentThread: action.payload,
         error: null,
       };
     case types.CREATE_THREAD_ERROR:
