@@ -6,8 +6,6 @@ import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import MaterialCard from '../components/MaterialCard';
 
-import CreatePostContainer from '../containers/CreatePostContainer';
-
 const ProductView = ({
   isWaiting,
   error,
@@ -59,7 +57,6 @@ const ProductView = ({
         ))}
       </div>
     }
-    <CreatePostContainer threadId="{product._id}" />
     <Snackbar
       open={snackbarError}
       message={errorUploadAnnotation || ''}

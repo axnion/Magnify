@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CreatePost from '../components/CreatePost';
-import { mockSendPost } from '../actions/post';
+import { mockSendPost } from '../actions/post'; // change here to use non mock action
 
-const sendPost = mockSendPost;
+const sendPost = mockSendPost; // change here to use non mock action
 
+// use like this:     <CreatePostContainer threadId="{thread._id}" />
 class CreatePostContainer extends Component {
   constructor(props) {
     super(props);
