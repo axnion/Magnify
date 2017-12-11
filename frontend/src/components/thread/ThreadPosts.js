@@ -17,7 +17,7 @@ const ThreadPosts = ({ posts }) => {
   if (posts.length > 0) {
     toReturn = (
       <StyledDiv>
-        <List style={{ maxHeight: '100%', overFlow: 'auto', marginTop: '-5px' }} >
+        <List style={{ maxHeight: '400px', overFlow: 'auto', marginTop: '-5px' }} >
           {posts.map(post => (
             <ThreadPost
               key={post._id}
