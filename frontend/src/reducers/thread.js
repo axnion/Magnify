@@ -3,7 +3,7 @@ import * as types from '../constants';
 export default (state = {
   isWaiting: false,
   threads: [],
-  currentThread: {
+  currentThread: null,/*{
     _id: '',
     title: '',
     body: '',
@@ -11,11 +11,11 @@ export default (state = {
     author: {
       username: '',
       role: '',
-      company: '',
+      company: null,
     },
     createdAt: '',
     updatedAt: '',
-  },
+  },*/
   error: null,
 }, action) => {
   switch (action.type) {

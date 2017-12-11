@@ -7,7 +7,7 @@ import { mockSendPost } from '../actions/post'; // change here to use non mock a
 
 const sendPost = mockSendPost; // change here to use non mock action
 
-// use like this:     <CreatePostContainer threadId="{thread._id}" />
+// use like this:     <CreatePostContainer threadId="{thread._id}" /> ? I changed to get id from current thread instead /Henrik
 class CreatePostContainer extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +54,7 @@ const mapStateToProps = state => ({
   error: state.post.error,
   isWaiting: state.post.isWaiting,
   auth: state.auth,
+  threadId: state.thread.currentThread._id,
 });
 
 CreatePostContainer.propTypes = ({

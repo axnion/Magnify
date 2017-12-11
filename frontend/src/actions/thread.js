@@ -152,7 +152,6 @@ export function getAThread(id) {
 export function mockGetAThread(id) {
   return (dispatch) => {
     dispatch(beginGetAThread());
-
     return new Promise(resolve => (setTimeout(() => {
       const threads = {
         _id: id,
@@ -168,6 +167,7 @@ export function mockGetAThread(id) {
               role: 'consumer',
               company: null,
             },
+            createdAt: '2016-05-18T16:00:00Z',
           },
           {
             _id: 'Post2id',
@@ -181,6 +181,7 @@ export function mockGetAThread(id) {
                 name: 'evilCorp',
               },
             },
+            createdAt: '2016-05-23T16:00:00Z',
           },
         ],
         author: {
@@ -197,7 +198,7 @@ export function mockGetAThread(id) {
     }, 500)
     ))
       .then((response) => {
-        dispatch(getAThreadSuccess(response.data));
+        dispatch(getAThreadSuccess(response));
       })
       .catch((response) => {
         dispatch(getAThreadError(response.message));
