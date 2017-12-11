@@ -14,7 +14,6 @@ background-color: #BBDEFB;
 `;
 
 const StyledCardText = styled(CardText)`
-fontWeight: bold;
 `;
 
 const ThreadHead = (props) => {
@@ -33,7 +32,7 @@ const ThreadHead = (props) => {
         subtitle={subtitle}
       />
       { body ?
-        <StyledCardText >
+        <StyledCardText style={{ fontWeight: 'bold' }} >
           {body}
         </StyledCardText> :
         undefined }

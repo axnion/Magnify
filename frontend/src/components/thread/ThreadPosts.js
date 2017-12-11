@@ -1,27 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 // Material-ui
-import Divider from 'material-ui/Divider';
-
+import List from 'material-ui/List';
 import ThreadPost from './ThreadPost';
+
+const StyledDiv = styled('div')`
+max-height: 480px;
+overflow: auto;
+`;
 
 const ThreadPosts = ({ posts }) => {
   let toReturn = null;
 
   if (posts.length > 0) {
     toReturn = (
-      <div>
-        {posts.map(post => (
-          <ThreadPost
-            key={post._id}
-            body={post.body}
-            author={post.author}
-            createdAt={post.createdAt}
-          />
+      <StyledDiv>
+        <List style={{ maxHeight: '100%', overFlow: 'auto', marginTop: '-5px' }} >
+          {posts.map(post => (
+            <ThreadPost
+              key={post._id}
+              body={post.body}
+              author={post.author}
+              createdAt={post.createdAt}
+            />
         ))
         }
-      </div>
+        </List>
+      </StyledDiv>
     );
   }
   return toReturn;

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Divider from 'material-ui/Divider';
-
 import ThreadHead from './ThreadHead';
 import ThreadPosts from './ThreadPosts';
 import CreatePostContainer from '../../containers/CreatePostContainer';
@@ -11,7 +9,6 @@ const ThreadView = (props) => {
   const {
     thread,
   } = props;
-  console.log(thread);
   return thread ? (
     <div>
       <ThreadHead
