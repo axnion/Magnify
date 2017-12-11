@@ -36,3 +36,8 @@ h1 {
   margin-top: 0px;
   padding-top: 10px;
 }
+
+.product {
+  overflow-y: scroll;
+  height: 671px;
+}
