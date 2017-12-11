@@ -45,7 +45,6 @@ export default (state = {
     case types.GET_A_THREAD_SUCCESS:
       return {
         ...state,
-        threads: [...state.threads, action.payload],
         currentThread: action.payload,
         isWaiting: false,
         error: null,

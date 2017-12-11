@@ -32,9 +32,11 @@ const ThreadHead = (props) => {
         title={title}
         subtitle={subtitle}
       />
-      <StyledCardText >
-        {body}
-      </StyledCardText>
+      { body ?
+        <StyledCardText >
+          {body}
+        </StyledCardText> :
+        undefined }
     </StyledCard>
   );
 };
@@ -53,7 +55,7 @@ ThreadHead.propTypes = {
 
 ThreadHead.defaultProps = {
   title: '',
-  body: '',
+  body: null,
   author: null,
   createdAt: '',
 };
