@@ -183,6 +183,76 @@ export function mockGetAThread(id) {
             },
             createdAt: '2016-05-23T16:00:00Z',
           },
+          {
+            _id: 'Post2id',
+            body: 'Post2',
+            author: {
+              _id: 'TestUserId2',
+              username: 'Testuser2',
+              role: 'companyRep',
+              company: {
+                _id: 'TestCompany1',
+                name: 'evilCorp',
+              },
+            },
+            createdAt: '2016-05-23T16:00:00Z',
+          },
+          {
+            _id: 'Post2id',
+            body: 'Post2',
+            author: {
+              _id: 'TestUserId2',
+              username: 'Testuser2',
+              role: 'companyRep',
+              company: {
+                _id: 'TestCompany1',
+                name: 'evilCorp',
+              },
+            },
+            createdAt: '2016-05-23T16:00:00Z',
+          },
+          {
+            _id: 'Post2id',
+            body: 'Post2',
+            author: {
+              _id: 'TestUserId2',
+              username: 'Testuser2',
+              role: 'companyRep',
+              company: {
+                _id: 'TestCompany1',
+                name: 'evilCorp',
+              },
+            },
+            createdAt: '2016-05-23T16:00:00Z',
+          },
+          {
+            _id: 'Post2id',
+            body: 'Post2',
+            author: {
+              _id: 'TestUserId2',
+              username: 'Testuser2',
+              role: 'companyRep',
+              company: {
+                _id: 'TestCompany1',
+                name: 'evilCorp',
+              },
+            },
+            createdAt: '2016-05-23T16:00:00Z',
+          },
+          {
+            _id: 'Post2id',
+            body: 'Post2',
+            author: {
+              _id: 'TestUserId2',
+              username: 'Testuser2',
+              role: 'companyRep',
+              company: {
+                _id: 'TestCompany1',
+                name: 'evilCorp',
+              },
+            },
+            createdAt: '2016-05-23T16:00:00Z',
+          },
         ],
         author: {
           _id: 'TestUserId1',
