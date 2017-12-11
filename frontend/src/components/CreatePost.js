@@ -16,7 +16,6 @@ const CreatePost = ({
 }) => (
   <div className="create-post">
     <TextField
-      style={{ display: 'block' }}
       disabled={isWaiting}
       hintText="Say something witty!"
       floatingLabelText="Create a post"

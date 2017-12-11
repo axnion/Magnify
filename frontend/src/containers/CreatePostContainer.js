@@ -54,7 +54,7 @@ const mapStateToProps = state => ({
   error: state.post.error,
   isWaiting: state.post.isWaiting,
   auth: state.auth,
-  threadId: state.thread.currentThread._id,
+  threadId: state.thread.currentThread._id, // I changed this. Will it work? Henrik
 });
 
 CreatePostContainer.propTypes = ({

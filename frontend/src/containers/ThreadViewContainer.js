@@ -7,13 +7,6 @@ import ThreadView from '../components/thread/ThreadView';
 
 
 class ThreadViewContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-    };
-  }
 
   componentDidMount() {
     this.props.getAThread('543fdsfs');
@@ -23,7 +16,6 @@ class ThreadViewContainer extends Component {
     return (
       <ThreadView
         {...this.props}
-        {...this.state}
       />
     );
   }

@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 // Material-ui
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+
+const StyledCard = styled(Card)`
+`;
 
 const ThreadPost = (props) => {
   const {
@@ -15,7 +19,7 @@ const ThreadPost = (props) => {
   const subtitle = `${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;
 
   return (
-    <Card>
+    <StyledCard>
       <CardHeader
         title={title}
         subtitle={subtitle}
@@ -23,7 +27,7 @@ const ThreadPost = (props) => {
       <CardText>
         {body}
       </CardText>
-    </Card>
+    </StyledCard>
   );
 };
 
