@@ -7,6 +7,6 @@ router.route('/')
   .post((...args) => controller.createThread(...args));
 
 router.route('/:id')
-  .get((...args) => controller.findById(...args));
+  .get((...args) => controller.getThread(...args));
 
 module.exports = router;

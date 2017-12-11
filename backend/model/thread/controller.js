@@ -27,6 +27,14 @@ class ThreadController extends Controller {
       });
     })(req, res, next);
   }
+
+  getThread(req, res, next) {
+    return this.facade
+    .findByIdPopulateAuthorAndPosts(req.params.id)
+    .then((thread) => {
+      console.log(thread);
+    })
+  }
 }
 
 module.exports = new ThreadController(threadFacade);

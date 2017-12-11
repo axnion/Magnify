@@ -5,6 +5,10 @@ class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
     return this.Schema.findById(id).populate('author');
   }
+
+  findByIdPopulateAuthorAndPosts(id) {
+    return this.Schema.findById(id).populate('author');
+  }
 }
 
 module.exports = new ThreadFacade(threadSchema);
