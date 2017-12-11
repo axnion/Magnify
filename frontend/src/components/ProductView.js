@@ -31,7 +31,7 @@ const ProductView = ({
         <h1>Product: {product.name}</h1>
         <h3>Company: {product.company.name}</h3>
         {
-          (auth.role === null || auth.role === 'consumer' || product.company._id !== auth.company) ?
+          (isWaiting || auth.role === null || auth.role === 'consumer' || product.company._id !== auth.company) ?
           undefined :
           <Link to={`/material/${product._id}`}>
             <RaisedButton primary label="Upload Material" />
