@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Material-ui
-import List from 'material-ui/List';
 import ThreadPost from './ThreadPost';
 
 const StyledDiv = styled('div')`
-max-height: 480px;
-overflow: auto;
+max-height: 450px;
+overflow-y: auto;
+padding-left: 0px;
+margin-left: -10px;
 `;
 
 const ThreadPosts = ({ posts }) => {
@@ -17,17 +18,15 @@ const ThreadPosts = ({ posts }) => {
   if (posts.length > 0) {
     toReturn = (
       <StyledDiv>
-        <List style={{ maxHeight: '400px', overFlow: 'auto', marginTop: '-5px' }} >
-          {posts.map(post => (
-            <ThreadPost
-              key={post._id}
-              body={post.body}
-              author={post.author}
-              createdAt={post.createdAt}
-            />
+        {posts.map(post => (
+          <ThreadPost
+            key={post._id}
+            body={post.body}
+            author={post.author}
+            createdAt={post.createdAt}
+          />
         ))
         }
-        </List>
       </StyledDiv>
     );
   }
