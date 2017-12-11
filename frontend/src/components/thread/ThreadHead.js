@@ -31,9 +31,11 @@ const ThreadHead = (props) => {
         title={title}
         subtitle={subtitle}
       />
-      <StyledCardText style={{ fontWeight: 'bold' }}>
-        {body}
-      </StyledCardText>
+      { body ?
+        <StyledCardText style={{ fontWeight: 'bold' }} >
+          {body}
+        </StyledCardText> :
+        undefined }
     </StyledCard>
   );
 };
@@ -52,7 +54,7 @@ ThreadHead.propTypes = {
 
 ThreadHead.defaultProps = {
   title: '',
-  body: '',
+  body: null,
   author: null,
   createdAt: '',
 };
