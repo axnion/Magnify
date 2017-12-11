@@ -6,14 +6,11 @@ import styled from 'styled-components';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 const StyledCard = styled(Card)`
-border-bottom: 2px solid black;
+  margin-bottom: 2px;
 `;
 
 const ColoredCardHeader = styled(CardHeader)`
-background-color: #BBDEFB;
-:hover {
-  background-color: #a7c8e2;
-}
+  // background-color: #BBDEFB;
 `;
 
 const StyledCardText = styled(CardText)`
@@ -21,7 +18,7 @@ const StyledCardText = styled(CardText)`
 
 const ThreadHead = (props) => {
   const {
-    title, body, author, createdAt,
+    title, body, author, createdAt, customStyle,
   } = props;
 
   const date = new Date(createdAt);
@@ -29,10 +26,12 @@ const ThreadHead = (props) => {
   const subtitle = `${author.username} ${companyName} ${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;
 
   return (
-    <StyledCard>
+    <StyledCard
+      style={customStyle}
+    >
       <ColoredCardHeader
         title={title}
-        subtitle={subtitle}
+        subtitle={subtitle}  
       />
       { body ?
         <StyledCardText style={{ fontWeight: 'bold' }} >

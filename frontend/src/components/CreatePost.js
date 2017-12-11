@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 function callback() {
   document.getElementById('CreatePostField').value = '';
@@ -16,7 +17,7 @@ const CreatePost = ({
 }) => (
   <div className="create-post">
     <TextField
-      style={{ display: 'block', marginLeft: '22px' }}
+      style={{ display: 'block', marginLeft: '22px', maxWidth: '800px' }}
       textareaStyle={{ display: 'block', position: 'absolute' }}
       disabled={isWaiting}
       hintText="Say something witty!"
@@ -27,7 +28,7 @@ const CreatePost = ({
       rowsMax={6}
       id="CreatePostField"
     />
-    <button onClick={() => sendPostOnClick(document.getElementById('CreatePostField').value, callback)}>Send</button>
+    <RaisedButton primary label="Send" onClick={() => sendPostOnClick(document.getElementById('CreatePostField').value, callback)} />
     <Snackbar
       open={snackbarError}
       message={error || ''}

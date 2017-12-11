@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import ThreadPost from './ThreadPost';
 
 const StyledDiv = styled('div')`
-max-height: 450px;
-overflow-y: auto;
-padding-left: 0px;
-margin-left: -10px;
+  max-height: 430px;
+  overflow-y: auto;
+  padding-left: 0px;
+  margin-left: -10px;
 `;
 
 const ThreadPosts = ({ posts }) => {

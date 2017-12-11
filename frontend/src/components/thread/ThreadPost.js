@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 const StyledCard = styled(Card)`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 5px;
 `;
 
 const ThreadPost = (props) => {
