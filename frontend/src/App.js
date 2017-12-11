@@ -21,6 +21,7 @@ import ProductView from './containers/ProductViewContainer';
 import Snackbar from './containers/SnackbarContainer';
 import ThreadView from './containers/ThreadViewContainer';
 import Forum from './containers/ForumContainer';
+import CreateThread from './containers/CreateThreadContainer'
 
 export default () => (
   <MuiThemeProvider>
@@ -41,6 +42,7 @@ export default () => (
         <Route path="/ProductView/:id" component={ProductView} />
         <Route path="/threadView" component={ThreadView} />
         <Route path="/forum" component={Forum} />
+        <Route path="/createThread" component={CreateThread} />
       </div>
       <Snackbar />
     </div>
