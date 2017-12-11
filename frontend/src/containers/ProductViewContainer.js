@@ -21,7 +21,7 @@ class ProductViewContainer extends Component {
     this.saveRating = this.saveRating.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getAProduct(this.props.match.params.id, this.props.auth.token);
     this.props.getAnnotations(this.props.auth.token, this.props.match.params.id);
   }

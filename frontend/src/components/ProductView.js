@@ -40,10 +40,10 @@ const ProductView = ({
       </div> :
       <h1>No product selected</h1>
     }
-    {isWaiting && materials.length === 0 && <h2>Loading...</h2>}
+    {isWaiting && <h2>Loading...</h2>}
     {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
     {!isWaiting && error && <h2>Error. {error} </h2>}
-    {materials.length > 0 &&
+    {!isWaiting && materials.length > 0 &&
       <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
         {materials.map(material => (
           <MaterialCard

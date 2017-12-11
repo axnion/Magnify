@@ -11,6 +11,7 @@ export default (state = {
       name: '',
     },
   },
+  waitingGetAnnotations: false,
   waitingUploadAnnotation: false,
   errorUploadAnnotation: null,
   annotations: [],
@@ -44,7 +45,6 @@ export default (state = {
     case types.GET_A_PRODUCT_SUCCESS:
       return {
         ...state,
-        products: [...state.products, action.payload],
         currentProduct: action.payload,
         isWaiting: false,
         error: null,
@@ -110,19 +110,19 @@ export default (state = {
     case types.GET_ANNOTATIONS:
       return {
         ...state,
-        isWaiting: true,
+        waitingGetAnnotations: true,
       };
     case types.GET_ANNOTATIONS_SUCCESS:
       return {
         ...state,
         annotations: action.payload,
-        isWaiting: false,
+        waitingGetAnnotations: false,
         error: null,
       };
     case types.GET_ANNOTATIONS_ERROR:
       return {
         ...state,
-        isWaiting: false,
+        waitingGetAnnotations: false,
         error: action.payload,
       };
     default:
