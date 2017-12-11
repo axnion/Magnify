@@ -14,8 +14,11 @@ class ThreadController extends Controller {
       const thread = req.body;
       thread.author = user.id;
 
-      return threadFacade.create(thread)
+      return this.facade
+      .create(thread)
+      .then(createdThread => this.facade.findByIdPopulateAuthor(createdThread.id))
       .then((result) => {
+        console.log(result);
         res.status(201).json(result);
         next();
       })

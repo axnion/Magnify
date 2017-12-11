@@ -13,11 +13,11 @@ const threadSchema = new Schema({
   },
   posts: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Post'
+    ref: 'post'
   }],
   author: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Account',
+    ref: 'account',
     required: true
   }
   // tags: [{ type: mongoose.Schema.ObjectId, ref: 'Tag' }]
