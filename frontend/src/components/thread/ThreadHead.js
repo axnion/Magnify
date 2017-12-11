@@ -11,6 +11,9 @@ border-bottom: 2px solid black;
 
 const ColoredCardHeader = styled(CardHeader)`
 background-color: #BBDEFB;
+:hover {
+  background-color: #a7c8e2;
+}
 `;
 
 const StyledCardText = styled(CardText)`
