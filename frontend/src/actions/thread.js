@@ -185,8 +185,8 @@ export function mockGetAThread(id) {
             createdAt: '2016-05-23T16:00:00Z',
           },
           {
-            _id: 'Post2id',
-            body: 'Post2',
+            _id: 'Post3id',
+            body: 'Post3',
             author: {
               _id: 'TestUserId2',
               username: 'Testuser2',
@@ -199,8 +199,8 @@ export function mockGetAThread(id) {
             createdAt: '2016-05-23T16:00:00Z',
           },
           {
-            _id: 'Post2id',
-            body: 'Post2',
+            _id: 'Post4id',
+            body: 'Post4',
             author: {
               _id: 'TestUserId2',
               username: 'Testuser2',
@@ -213,8 +213,8 @@ export function mockGetAThread(id) {
             createdAt: '2016-05-23T16:00:00Z',
           },
           {
-            _id: 'Post2id',
-            body: 'Post2',
+            _id: 'Post5id',
+            body: 'Post5',
             author: {
               _id: 'TestUserId2',
               username: 'Testuser2',
@@ -227,8 +227,8 @@ export function mockGetAThread(id) {
             createdAt: '2016-05-23T16:00:00Z',
           },
           {
-            _id: 'Post2id',
-            body: 'Post2',
+            _id: 'Post6id',
+            body: 'Post6',
             author: {
               _id: 'TestUserId2',
               username: 'Testuser2',
@@ -241,8 +241,8 @@ export function mockGetAThread(id) {
             createdAt: '2016-05-23T16:00:00Z',
           },
           {
-            _id: 'Post2id',
-            body: 'Post2',
+            _id: 'Post7id',
+            body: 'Post8',
             author: {
               _id: 'TestUserId2',
               username: 'Testuser2',
