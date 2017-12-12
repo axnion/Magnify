@@ -46,7 +46,7 @@ class CreateThreadContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  SubmitOnClick: (data, token) => dispatch(sendThread(data, token)),
+  sendThread: (data, token) => dispatch(sendThread(data, token)),
 });
 
 const mapStateToProps = state => ({
@@ -58,8 +58,7 @@ const mapStateToProps = state => ({
 CreateThreadContainer.propTypes = ({
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
-  SubmitOnClick: PropTypes.func.isRequired,
-  sendThread: PropTypes.func.isRequired,
+  sendThread: PropTypes.func,
   auth: PropTypes.shape({
     token: PropTypes.string,
   }).isRequired,
