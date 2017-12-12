@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const timestamps = require('mongoose-timestamp');
 const Schema = mongoose.Schema;
 
 const threadSchema = new Schema({
@@ -21,10 +20,9 @@ const threadSchema = new Schema({
     required: true
   }
   // tags: [{ type: mongoose.Schema.ObjectId, ref: 'Tag' }]
+}, {
+  timestamps: true
 });
-
-// Adds createdAt and updatedAt automatically
-threadSchema.plugin(timestamps);
 
 let thread;
 
