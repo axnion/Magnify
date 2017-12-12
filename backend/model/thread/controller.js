@@ -36,6 +36,12 @@ class ThreadController extends Controller {
       return res.status(200).json(thread);
     });
   }
+
+  getThreads(req, res, next) {
+    return this.facade
+    .find()
+    .then(threads => threads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+  }
 }
 
 module.exports = new ThreadController(threadFacade);
