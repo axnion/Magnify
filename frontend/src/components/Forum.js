@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import List from 'material-ui/List';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,8 +8,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 import ThreadHead from './thread/ThreadHead';
 
 const style = {
-  margin: '20px'
-}
+  margin: '20px',
+};
 
 const Forum = ({
   threads,
@@ -21,10 +20,10 @@ const Forum = ({
     <List>
       {
       threads.length <= 0 ?
-      <CircularProgress /> :
+        <CircularProgress /> :
         threads.map(thread => (
           // TODO: replace with link to correct thread ID
-          <Link to={`/threadView`}>
+          <Link to="/threadView">
             <ThreadHead
               customStyle={style}
               key={thread._id}

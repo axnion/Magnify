@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 

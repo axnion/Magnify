@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CreateThread from '../components/CreateThread';
 import { mockCreateThread } from '../actions/thread'; // change here to use non mock action
 
-const createThread = mockCreateThread; // change here to use non mock action
+const sendThread = mockCreateThread; // change here to use non mock action
 
 class CreateThreadContainer extends Component {
   constructor(props) {
@@ -16,11 +16,28 @@ class CreateThreadContainer extends Component {
       snackbarError: false,
       snackbarSuccess: false,
     };
+
+    this.SubmitOnClick = this.SubmitOnClick.bind(this);
+  }
+
+  SubmitOnClick(payload, callback) {
+    if (payload.title !== '' && payload.body !== '') {
+      this.props.sendThread(payload, this.props.auth.token)
+        .then(() => {
+          if (this.props.error) {
+            this.setState({ snackbarError: true });
+          } else {
+            callback();
+            this.setState({ snackbarSuccess: true });
+          }
+        });
+    }
   }
 
   render() {
     return (
       <CreateThread
+        SubmitOnClick={this.SubmitOnClick}
         {...this.state}
         {...this.props}
       />
@@ -28,7 +45,8 @@ class CreateThreadContainer extends Component {
   }
 }
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = dispatch => ({
+  SubmitOnClick: (data, token) => dispatch(sendThread(data, token)),
 });
 
 const mapStateToProps = state => ({
@@ -40,8 +58,8 @@ const mapStateToProps = state => ({
 CreateThreadContainer.propTypes = ({
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
+  SubmitOnClick: PropTypes.func.isRequired,
   sendThread: PropTypes.func.isRequired,
-  threadId: PropTypes.string.isRequired,
   auth: PropTypes.shape({
     token: PropTypes.string,
   }).isRequired,

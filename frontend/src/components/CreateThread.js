@@ -2,22 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const actions = [
-  <FlatButton
-    label="Cancel"
-    primary={true}
-    onClick={console.log(this)}
-  />,
-  <FlatButton
-    label="Submit"
-    primary={true}
-    onClick={console.log(this)}
-  />,
-];
+function callback() {
+  document.getElementById('TitleField').value = '';
+  document.getElementById('BodyField').value = '';
+}
+
+const payload = {
+  title: document.getElementById('TitleField'),
+  body: document.getElementById('BodyField'),
+};
 
 const CreateThread = ({
   error,
@@ -27,7 +22,23 @@ const CreateThread = ({
   SubmitOnClick,
 }) => (
   <div className="create-thread">
-  Yo
+    <TextField
+      style={{ width: '95%' }}
+      disabled={isWaiting}
+      floatingLabelText="Title"
+      rows={1}
+      id="TitleField"
+    />
+    <TextField
+      style={{ width: '95%', marginBottom: '20px' }}
+      disabled={isWaiting}
+      floatingLabelText="Body"
+      multiLine
+      rows={8}
+      rowsMax={16}
+      id="BodyField"
+    />
+    <RaisedButton primary label="Create" onClick={() => SubmitOnClick(payload, callback)} />
     <Snackbar
       open={snackbarError}
       message={error || ''}
@@ -35,7 +46,7 @@ const CreateThread = ({
     />
     <Snackbar
       open={snackbarSuccess}
-      message="Post saved"
+      message="Thread successfully created!"
       autoHideDuration={4000}
       bodyStyle={{ backgroundColor: '#21ba45' }}
       contentStyle={{ color: '#fff', fontWeight: 'bold' }}
@@ -45,16 +56,14 @@ const CreateThread = ({
 
 
 CreateThread.propTypes = {
-  open: PropTypes.bool,
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
   snackbarError: PropTypes.bool,
   snackbarSuccess: PropTypes.bool,
-  sendPostOnClick: PropTypes.func.isRequired,
+  SubmitOnClick: PropTypes.func.isRequired,
 };
 
 CreateThread.defaultProps = {
-  open: false,
   error: null,
   snackbarError: false,
   snackbarSuccess: false,

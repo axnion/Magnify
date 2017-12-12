@@ -21,7 +21,7 @@ import ProductView from './containers/ProductViewContainer';
 import Snackbar from './containers/SnackbarContainer';
 import ThreadView from './containers/ThreadViewContainer';
 import Forum from './containers/ForumContainer';
-import CreateThread from './containers/CreateThreadContainer'
+import CreateThread from './containers/CreateThreadContainer';
 
 export default () => (
   <MuiThemeProvider>
