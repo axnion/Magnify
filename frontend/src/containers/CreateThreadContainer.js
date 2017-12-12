@@ -12,7 +12,7 @@ class CreateThreadContainer extends Component {
     super(props);
 
     this.state = {
-      open: false,
+      errorText: '',
       snackbarError: false,
       snackbarSuccess: false,
     };
@@ -21,16 +21,19 @@ class CreateThreadContainer extends Component {
   }
 
   SubmitOnClick(payload, callback) {
-    if (payload.title !== '' && payload.body !== '') {
+    if (payload.title.length > 0 && payload.body.length > 0) {
+      this.setState({ snackbarError: false });
       this.props.sendThread(payload, this.props.auth.token)
         .then(() => {
           if (this.props.error) {
-            this.setState({ snackbarError: true });
+            this.setState({ snackbarSuccess: false, snackbarError: true });
           } else {
+            this.setState({ snackbarSuccess: true, snackbarError: false, });
             callback();
-            this.setState({ snackbarSuccess: true });
           }
         });
+    } else {
+      this.setState({ snackbarSuccess: false, snackbarError: true, errorText: "Thread needs both a title and body!" });
     }
   }
 

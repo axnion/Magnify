@@ -9,14 +9,10 @@ function callback() {
   document.getElementById('BodyField').value = '';
 }
 
-const payload = {
-  title: document.getElementById('TitleField'),
-  body: document.getElementById('BodyField'),
-};
-
 const CreateThread = ({
   error,
   isWaiting,
+  errorText,
   snackbarError,
   snackbarSuccess,
   SubmitOnClick,
@@ -38,10 +34,13 @@ const CreateThread = ({
       rowsMax={16}
       id="BodyField"
     />
-    <RaisedButton primary label="Create" onClick={() => SubmitOnClick(payload, callback)} />
+    <RaisedButton primary label="Create" onClick={() => SubmitOnClick({
+      title: document.getElementById('TitleField').value,
+      body: document.getElementById('BodyField').value,
+    }, callback)} />
     <Snackbar
       open={snackbarError}
-      message={error || ''}
+      message={error || errorText}
       autoHideDuration={4000}
     />
     <Snackbar
@@ -58,6 +57,7 @@ const CreateThread = ({
 CreateThread.propTypes = {
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
+  errorText: PropTypes.string,
   snackbarError: PropTypes.bool,
   snackbarSuccess: PropTypes.bool,
   SubmitOnClick: PropTypes.func.isRequired,
@@ -65,6 +65,7 @@ CreateThread.propTypes = {
 
 CreateThread.defaultProps = {
   error: null,
+  errorText: '',
   snackbarError: false,
   snackbarSuccess: false,
 };
