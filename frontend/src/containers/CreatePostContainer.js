@@ -51,8 +51,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  error: state.post.error,
-  isWaiting: state.post.isWaiting,
+  error: state.thread.postError,
+  isWaiting: state.thread.isWaiting,
   auth: state.auth,
   threadId: state.thread.currentThread._id, // I changed this. Will it work? Henrik
 });

@@ -33,7 +33,8 @@ class ThreadController extends Controller {
     .findByIdPopulateAuthorAndPosts(req.params.id)
     .then((thread) => {
       console.log(thread);
-    })
+      return res.status(200).json(thread);
+    });
   }
 }
 

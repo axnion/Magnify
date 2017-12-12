@@ -48,9 +48,13 @@ export function mockSendPost(data, token) {
 
       const post = data;
 
+      console.log(data);
+
       post.author = {
         _id: 'User1Id',
+        username: 'cool poster',
       };
+
       post.createdAt = new Date().toDateString();
 
       post._id = crypto.randomBytes(16).toString('hex');

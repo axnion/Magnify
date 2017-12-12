@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { mockGetAThread } from '../actions/thread';
+import { getAThread } from '../actions/thread';
 
 import ThreadView from '../components/thread/ThreadView';
 
 
 class ThreadViewContainer extends Component {
-
-  componentDidMount() {
-    this.props.getAThread('543fdsfs');
+  componentWillMount() {
+    this.props.getAThread(this.props.match.params.id);
   }
 
   render() {
@@ -23,10 +22,15 @@ class ThreadViewContainer extends Component {
 
 ThreadViewContainer.propTypes = ({
   getAThread: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAThread: id => dispatch(mockGetAThread(id)),
+  getAThread: id => dispatch(getAThread(id)),
 });
 
 const mapStateToProps = state => ({

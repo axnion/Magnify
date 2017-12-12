@@ -40,7 +40,7 @@ export default () => (
         <LoggedInRoute path="/addProduct"><AddProduct /></LoggedInRoute>
         <Route path="/material/:id" component={AddMaterial} />
         <Route path="/ProductView/:id" component={ProductView} />
-        <Route path="/threadView" component={ThreadView} />
+        <Route path="/thread/:id" component={ThreadView} />
         <Route path="/forum" component={Forum} />
         <Route path="/createThread" component={CreateThread} />
       </div>

@@ -1,4 +1,4 @@
-import * as types from '../constants';
+/*import * as types from '../constants';
 
 export default (state = {
   isWaiting: false,
@@ -25,4 +25,4 @@ export default (state = {
     default:
       return state;
   }
-};
+};*/

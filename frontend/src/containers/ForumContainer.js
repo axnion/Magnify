@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { mockGetThreads } from '../actions/thread';
+import { getThreads } from '../actions/thread';
 
 import Forum from '../components/Forum';
 
@@ -30,7 +30,7 @@ ForumContainer.defaultProps = ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getThreads: () => dispatch(mockGetThreads()),
+  getThreads: () => dispatch(getThreads()),
 });
 
 const mapStateToProps = state => ({

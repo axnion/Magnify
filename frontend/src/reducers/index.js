@@ -9,7 +9,7 @@ import category from './category';
 import auth from './auth';
 import material from './material';
 import thread from './thread';
-import post from './post';
+//import post from './post';
 
 export default combineReducers({
   example,
@@ -21,6 +21,6 @@ export default combineReducers({
   category,
   material,
   thread,
-  post,
+  //post,
   routing: routerReducer,
 });

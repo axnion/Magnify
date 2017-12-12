@@ -31,7 +31,7 @@ ThreadView.propTypes = {
       body: PropTypes.string,
       author: PropTypes.shape({
         username: PropTypes.string,
-        roel: PropTypes.string,
+        role: PropTypes.string,
         company: PropTypes.shape({
           name: PropTypes.string,
         }),
@@ -40,7 +40,7 @@ ThreadView.propTypes = {
     })),
     author: PropTypes.shape({
       username: PropTypes.string,
-      roel: PropTypes.string,
+      role: PropTypes.string,
       company: PropTypes.shape({
         name: PropTypes.string,
       }),
