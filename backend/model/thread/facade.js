@@ -19,6 +19,11 @@ class ThreadFacade extends Facade {
       }
     });
   }
+
+  findAndPopulateAuthor() {
+    return this.Schema.find()
+    .populate('author');
+  }
 }
 
 module.exports = new ThreadFacade(threadSchema);

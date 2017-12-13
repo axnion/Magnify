@@ -38,7 +38,7 @@ class ThreadController extends Controller {
 
   getThreads(req, res, next) {
     return this.facade
-    .find()
+    .findAndPopulateAuthor()
     .then(threads => threads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
   }
 }
