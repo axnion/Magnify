@@ -28,12 +28,13 @@ class CreateThreadContainer extends Component {
           if (this.props.error) {
             this.setState({ snackbarSuccess: false, snackbarError: true });
           } else {
-            this.setState({ snackbarSuccess: true, snackbarError: false, });
+            this.setState({ snackbarSuccess: true, snackbarError: false });
             callback();
+            this.props.history.push('/forum');
           }
         });
     } else {
-      this.setState({ snackbarSuccess: false, snackbarError: true, errorText: "Thread needs both a title and body!" });
+      this.setState({ snackbarSuccess: false, snackbarError: true, errorText: 'Thread needs both a title and body!' });
     }
   }
 
@@ -61,9 +62,12 @@ const mapStateToProps = state => ({
 CreateThreadContainer.propTypes = ({
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
-  sendThread: PropTypes.func,
+  sendThread: PropTypes.func.isRequired,
   auth: PropTypes.shape({
     token: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 });
 
