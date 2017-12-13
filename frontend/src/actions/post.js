@@ -29,6 +29,7 @@ export function sendPost(data, token) {
 
     return apiRequest('post', data, endpoint, token)
       .then((response) => {
+        console.log(response);
         dispatch(createPostSucccess(response.data));
       })
       .catch((response) => {

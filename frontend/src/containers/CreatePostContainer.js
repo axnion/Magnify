@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CreatePost from '../components/CreatePost';
-import { mockSendPost } from '../actions/post'; // change here to use non mock action
-
-const sendPost = mockSendPost; // change here to use non mock action
+import { sendPost } from '../actions/post'; // change here to use non mock action
 
 // use like this:     <CreatePostContainer threadId="{thread._id}" /> ? I changed to get id from current thread instead /Henrik
 class CreatePostContainer extends Component {
