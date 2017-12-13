@@ -164,6 +164,16 @@ function addCompanyToThread(companies, thread) {
   return newThread;
 }
 
+function addCompanyToPosts(companies, posts) {
+  const newPosts = posts.map((post) => {
+    const { author } = post;
+    const companyObj = companies.find(c => c._id === author.company);
+    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author; 
+    const newPost = { ...post, author: newAuthor };
+    return newPost;
+  });
+  return newPosts;
+}
 
 export function getAThread(id) {
   return (dispatch) => {
@@ -178,7 +188,9 @@ export function getAThread(id) {
       const companies = response[0].data;
       const thread = response[1].data;
 
-      const newThread = addCompanyToThread(companies, thread);
+      let newThread = addCompanyToThread(companies, thread);
+      const newPosts = addCompanyToPosts(companies, newThread.posts);
+      newThread = { ...newThread, posts: newPosts };
       dispatch(getAThreadSuccess(newThread));
     })
       .catch((response) => {
