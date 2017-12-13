@@ -1,7 +1,6 @@
 const passport = require('passport');
 const Controller = require('../../lib/controller');
 const postFacade = require('./facade');
-const mongoose = require('mongoose');
 
 class PostController extends Controller {
   createPost(req, res, next) {
