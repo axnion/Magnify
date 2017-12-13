@@ -26,11 +26,22 @@ function createPostErrorr(payload) {
 export function sendPost(data, token) {
   return (dispatch) => {
     dispatch(beginCreatePost());
-
+    let result = null;
     return apiRequest('post', data, endpoint, token)
       .then((response) => {
-        console.log(response);
-        dispatch(createPostSucccess(response.data));
+        result = response.data.post;
+        let toReturn;
+        if (result.author.company !== undefined) {
+          toReturn = apiRequest('get', {}, `/company/${result.author.company}`);
+        }
+
+        return toReturn;
+      })
+      .then((response) => {
+        const { author } = result;
+        const newAuthor = response !== undefined ? { ...author, company: response.data } : author;
+        result = { ...result, author: newAuthor };
+        dispatch(createPostSucccess(result));
       })
       .catch((response) => {
         dispatch(createPostErrorr(response.message));
