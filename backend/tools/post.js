@@ -1,9 +1,9 @@
-const annotationFacade = require('../model/annotation/facade');
+const postFacade = require('../model/post/facade');
 const mongoose      = require('mongoose');
 const Promise       = require('bluebird');
 
 exports.list = function() {
-  annotationFacade.find()
+  postFacade.find()
   .then((results) => {
     results.forEach((account) => {
       console.log(JSON.stringify(account, null, 4));
@@ -15,15 +15,15 @@ exports.list = function() {
 };
 
 /**
-* Function to delete the annotations collection. Destroying all data of accounts
+* Function to delete the posts collection. Destroying all data of accounts
 * in the database.
 */
 exports.drop = function(connection) {
   const promise = new Promise((resolve, reject) => {
-    connection.dropCollection('annotations', (err, result) => {
+    connection.dropCollection('posts', (err, result) => {
       if (err) reject(err);
       else {
-        console.log('Annotations collection dropped');
+        console.log('Posts collection dropped');
         resolve(result);
       }
     });
