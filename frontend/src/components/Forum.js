@@ -1,5 +1,6 @@
 import React from 'react';
 import List from 'material-ui/List';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -11,13 +12,18 @@ const style = {
   margin: '20px',
 };
 
+const StyledList = styled(List)`
+  max-height: 520px;
+  overflow-y: auto;
+`;
+
 const Forum = ({
   threads,
 }) => (
   <div>
     <h1>Forum</h1>
     <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
-    <List>
+    <StyledList>
       {
       threads.length <= 0 ?
         <CircularProgress /> :
@@ -33,7 +39,7 @@ const Forum = ({
           </Link>
         ))
       }
-    </List>
+    </StyledList>
   </div>
 );
 
