@@ -22,7 +22,7 @@ const ThreadHead = (props) => {
   } = props;
   const date = new Date(createdAt);
   const companyName = (!author.company) ? '' : author.company.name;
-  const subtitle = `${author.username} ${companyName} ${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;
+  const subtitle = `${author.username} ${companyName}, ${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;
 
   return (
     <StyledCard

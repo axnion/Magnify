@@ -17,8 +17,8 @@ const ThreadPost = (props) => {
   } = props;
 
   const date = new Date(createdAt);
-  const companyName = (!author.company) ? '' : author.company.name;
-  const title = `${author.username} ${companyName}`;
+  const companyName = (!author.company) ? '' : `, ${author.company.name}`;
+  const title = `${author.username}${companyName}`;
   const subtitle = `${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;
 
   return (
