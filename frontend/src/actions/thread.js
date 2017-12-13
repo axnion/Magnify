@@ -58,14 +58,34 @@ function createThreadErrorr(payload) {
   };
 }
 
+function addCompaniesToThreads(companies, threads) {
+  const newThreads = threads.map((thread) => {
+    const { author } = thread;
+    const companyObj = companies.find(c => c._id === author.company);
+    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
+    const newThread = { ...thread, author: newAuthor };
+    return newThread;
+  });
+  return newThreads;
+}
+
 export function getThreads() {
   return (dispatch) => {
     dispatch(beginGetThreads());
 
-    return apiRequest('get', {}, endpoint)
-      .then((response) => {
-        dispatch(getThreadsSuccess(response.data));
-      })
+    const threadsRequest = apiRequest('get', {}, endpoint);
+    const companiesRequest = apiRequest('get', {}, '/company');
+
+    Promise.all([
+      threadsRequest,
+      companiesRequest,
+    ]).then((response) => {
+      const threads = response[0].data;
+      const companies = response[1].data;
+
+      const result = addCompaniesToThreads(companies, threads);
+      dispatch(getThreadsSuccess(result));
+    })
       .catch((response) => {
         dispatch(getThreadsError(response.message));
       });
