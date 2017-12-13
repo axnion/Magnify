@@ -1,6 +1,7 @@
 const passport = require('passport');
 const Controller = require('../../lib/controller');
 const postFacade = require('./facade');
+const mongoose = require('mongoose');
 
 class PostController extends Controller {
   createPost(req, res, next) {
@@ -13,8 +14,7 @@ class PostController extends Controller {
 
       const threadId = req.body.threadId;
       const post = req.body;
-      user.password = undefined; // TODO: fix this mess
-      post.author = user;
+      post.author = user.id;
 
       return this.facade
       .create(post)

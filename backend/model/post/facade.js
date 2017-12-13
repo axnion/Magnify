@@ -9,10 +9,19 @@ class PostFacade extends Facade {
     return threadSchema.findOneAndUpdate(
       { _id: threadId },
       { $push: { posts: post } }
-    ).populate('author')
-    .then(() => ({
-      post
-    }));
+    )
+    .then(() => (
+      postSchema
+      .findById(post.id)
+      .populate({
+        path: 'author',
+        select: 'username company role',
+        populate: { path: 'company' }
+      })
+    ))
+    .then(populatedPost => (
+      populatedPost
+    ));
   }
 }
 
