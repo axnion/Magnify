@@ -13,7 +13,8 @@ class PostController extends Controller {
 
       const threadId = req.body.threadId;
       const post = req.body;
-      post.author = user.id;
+      user.password = undefined; // TODO: fix this mess
+      post.author = user;
 
       return this.facade
       .create(post)

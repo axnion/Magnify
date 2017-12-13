@@ -1,14 +1,16 @@
 const Facade = require('../../lib/facade');
 const threadSchema = require('../thread/schema');
+const companySchema = require('../company/schema');
 const postSchema = require('./schema');
 
 class PostFacade extends Facade {
   // TODO: improve
-  findThreadByIdAndInsertPost(threadId, post) {
+  findThreadByIdAndInsertPost(threadId, post) {    
     return threadSchema.findOneAndUpdate(
       { _id: threadId },
       { $push: { posts: post } }
-    ).then(() => ({
+    ).populate('author')
+    .then(() => ({
       post
     }));
   }
