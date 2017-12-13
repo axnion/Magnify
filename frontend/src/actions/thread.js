@@ -138,7 +138,7 @@ export function mockGetThreads() {
 
 function addCompanyToThread(companies, thread) {
   const companyObj = companies.find(c => c._id === thread.author.company);
-  const author = thread.author;
+  const { author } = thread;
   const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
   const newThread = { ...thread, author: newAuthor };
   return newThread;
