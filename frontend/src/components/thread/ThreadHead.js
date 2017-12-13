@@ -20,7 +20,6 @@ const ThreadHead = (props) => {
   const {
     title, body, author, createdAt, customStyle,
   } = props;
-
   const date = new Date(createdAt);
   const companyName = (!author.company) ? '' : author.company.name;
   const subtitle = `${author.username} ${companyName} ${date.getDate()} ${date.toLocaleString('en-us', { month: 'long' })} ${date.getFullYear()} `;

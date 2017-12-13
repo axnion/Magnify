@@ -136,14 +136,31 @@ export function mockGetThreads() {
   };
 }
 
+function addCompanyToThread(companies, thread) {
+  const companyObj = companies.find(c => c._id === thread.author.company);
+  const author = thread.author;
+  const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
+  const newThread = { ...thread, author: newAuthor };
+  return newThread;
+}
+
+
 export function getAThread(id) {
   return (dispatch) => {
     dispatch(beginGetAThread());
+    const companiesRequest = apiRequest('get', {}, '/company');
+    const getThreadRequest = apiRequest('get', {}, `${endpoint}/${id}`);
 
-    return apiRequest('get', {}, `${endpoint}/${id}`)
-      .then((response) => {
-        dispatch(getAThreadSuccess(response.data));
-      })
+    Promise.all([
+      companiesRequest,
+      getThreadRequest,
+    ]).then((response) => {
+      const companies = response[0].data;
+      const thread = response[1].data;
+
+      const newThread = addCompanyToThread(companies, thread);
+      dispatch(getAThreadSuccess(newThread));
+    })
       .catch((response) => {
         dispatch(getAThreadError(response.message));
       });
