@@ -3,11 +3,21 @@ const threadSchema = require('./schema');
 
 class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
-    return this.Schema.findById(id).populate('author');
+    return this.Schema.findById(id)
+    .populate('author');
   }
 
   findByIdPopulateAuthorAndPosts(id) {
-    return this.Schema.findById(id).populate('author').populate('posts');
+    return this.Schema.findById(id)
+    .populate('posts')
+    .populate('author')
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'author',
+        model: 'account'
+      }
+    });
   }
 }
 
