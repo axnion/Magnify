@@ -32,14 +32,19 @@ class ThreadController extends Controller {
     .findByIdPopulateAuthorAndPosts(req.params.id)
     .then((thread) => {
       thread.posts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      return res.status(200).json(thread);
+      res.status(200).json(thread);
+      next();
     });
   }
 
   getThreads(req, res, next) {
     return this.facade
     .findAndPopulateAuthor()
-    .then(threads => threads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+    .then((threads) => {
+      threads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      res.status(200).json(threads);
+      next();
+    });
   }
 }
 

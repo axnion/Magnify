@@ -3,7 +3,7 @@ const Router = require('express').Router;
 const router = new Router();
 
 router.route('/')
-  .get((...args) => controller.find(...args))
+  .get((...args) => controller.getThreads(...args))
   .post((...args) => controller.createThread(...args));
 
 router.route('/:id')
