@@ -8,6 +8,7 @@ import CreatePostContainer from '../../containers/CreatePostContainer';
 const ThreadView = (props) => {
   const {
     thread,
+    username,
   } = props;
   return thread ? (
     <div>
@@ -18,7 +19,9 @@ const ThreadView = (props) => {
         createdAt={thread.createdAt}
       />
       <ThreadPosts posts={thread.posts} />
-      <CreatePostContainer />
+      {
+        username === null ? undefined : <CreatePostContainer />
+      }
     </div>
   ) : null;
 };
@@ -47,10 +50,12 @@ ThreadView.propTypes = {
     }),
     createdAt: PropTypes.string,
   }),
+  username: PropTypes.string,
 };
 
 ThreadView.defaultProps = {
   thread: null,
+  username: null,
 };
 
 

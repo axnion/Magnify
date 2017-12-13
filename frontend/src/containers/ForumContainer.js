@@ -35,6 +35,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   threads: state.thread.threads,
+  username: state.auth.username,
 });
 
 export default connect(

@@ -4,6 +4,12 @@ import { apiRequest } from './helpers';
 
 const endpoint = '/thread';
 
+export function resetCurrentThread() {
+  return {
+    type: types.RESET_CURRENT_THREAD,
+  };
+}
+
 function beginGetThreads() {
   return { type: types.GET_THREADS };
 }
@@ -332,6 +338,7 @@ export function createThread(data, token) {
 
     return apiRequest('post', data, endpoint, token)
       .then((response) => {
+        console.log(response.data);
         dispatch(createThreadSucccess(response.data));
       })
       .catch((response) => {

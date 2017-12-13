@@ -19,10 +19,13 @@ const StyledList = styled(List)`
 
 const Forum = ({
   threads,
+  username,
 }) => (
   <div>
     <h1>Forum</h1>
-    <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
+    {
+     username === null ? undefined : <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
+    }
     <StyledList>
       {
       threads.length <= 0 ?
@@ -50,10 +53,12 @@ Forum.propTypes = ({
     author: PropTypes.any,
     createdAt: PropTypes.string,
   })),
+  username: PropTypes.string,
 });
 
 Forum.defaultProps = ({
   threads: [],
+  username: null,
 });
 
 export default Forum;

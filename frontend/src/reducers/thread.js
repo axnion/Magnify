@@ -66,7 +66,7 @@ export default (state = {
         ...state,
         isWaiting: false,
         threads: [...state.threads, action.payload],
-        currentThread: action.payload,
+        //currentThread: action.payload,
         error: null,
       };
     case types.CREATE_THREAD_ERROR:
@@ -95,6 +95,11 @@ export default (state = {
         ...state,
         isWaiting: false,
         postError: action.payload,
+      };
+    case types.RESET_CURRENT_THREAD:
+      return {
+        ...state,
+        currentThread: null,
       };
     default:
       return state;

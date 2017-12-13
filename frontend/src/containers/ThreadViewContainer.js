@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAThread } from '../actions/thread';
+import { getAThread, resetCurrentThread } from '../actions/thread';
 
 import ThreadView from '../components/thread/ThreadView';
 
@@ -9,6 +9,10 @@ import ThreadView from '../components/thread/ThreadView';
 class ThreadViewContainer extends Component {
   componentWillMount() {
     this.props.getAThread(this.props.match.params.id);
+  }
+
+  componentWillUnmount() {
+    this.props.resetCurrentThread();
   }
 
   render() {
@@ -22,6 +26,7 @@ class ThreadViewContainer extends Component {
 
 ThreadViewContainer.propTypes = ({
   getAThread: PropTypes.func.isRequired,
+  resetCurrentThread: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -31,10 +36,12 @@ ThreadViewContainer.propTypes = ({
 
 const mapDispatchToProps = dispatch => ({
   getAThread: id => dispatch(getAThread(id)),
+  resetCurrentThread: () => dispatch(resetCurrentThread()),
 });
 
 const mapStateToProps = state => ({
   thread: state.thread.currentThread,
+  username: state.auth.username,
 });
 
 export default connect(
