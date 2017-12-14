@@ -86,14 +86,27 @@ h1 {
   grid-row: 1;
 }
 
-@media only screen and (min-width: 200px) {
+@media only screen and (max-width: 600px) {
   .App {
-    grid-template-columns: 20% auto;
+    grid-template-columns: auto;
     grid-template-areas:
-      'header header'
-      'sidebar sidebar'
-      'content content'
-      'footer footer';
+      'header'
+      'sidebar'
+      'content'
+      'footer';
+    width: calc(100% - 10px);
+  }
+  .sidebar {
+    grid-row: 2;
+    justify-self: stretch;
+    max-width: 600px;
+  }
+  .App-content {
+    grid-row: 3;
+  }
+
+  .footer {
+    grid-row: 4;
   }
 }
 
@@ -106,5 +119,21 @@ h1 {
       'sidebar content content'
       'footer  footer  footer';
     max-width: 1022px;
+  }
+
+  .sidebar {
+    grid-row: 2 / span 5;
+    /* align-self: start;*/
+    justify-self: start;
+  }
+
+  .footer {
+    grid-row: span 3 / 5;
+    grid-column: 2;
+  }
+  .App-content {
+    grid-row: 2 / 7;
+    position: relative;
+    justify-self: stretch;
   }
 }
