@@ -7,7 +7,7 @@ class SnackbarContainer extends React.Component {
   render() {
     const { loginSuccess, registerSuccess } = this.props;
     return (
-      <div>
+      <div className="footer">
         <Snackbar
           open={loginSuccess}
           message="Successfully logged in"
@@ -31,19 +31,17 @@ class SnackbarContainer extends React.Component {
 
 SnackbarContainer.propTypes = {
   loginSuccess: PropTypes.bool,
-  registerSuccess: PropTypes.bool,
+  registerSuccess: PropTypes.bool
 };
 
 SnackbarContainer.defaultProps = {
   loginSuccess: false,
-  registerSuccess: false,
+  registerSuccess: false
 };
 
 const mapStateToProps = state => ({
   loginSuccess: !!state.auth.username,
-  registerSuccess: false,
+  registerSuccess: false
 });
 
-export default connect(
-  mapStateToProps,
-)(SnackbarContainer);
+export default connect(mapStateToProps)(SnackbarContainer);
