@@ -29,13 +29,16 @@ const ProductView = ({
     {product ?
       <div>
         <h1>Product: {product.name}</h1>
-        <h3>Company: {product.company.name}</h3>
+        <h3>Company: {product.company.name}</h3>  
         {
           (isWaiting || auth.role === null || auth.role === 'consumer' || product.company._id !== auth.company) ?
-          undefined :
-          <Link to={`/material/${product._id}`}>
-            <RaisedButton primary label="Upload Material" />
-          </Link>
+            <Link to={`/createThread/${product._id}`}>
+              <RaisedButton primary label="Create forum thread" />
+            </Link>
+          :
+            <Link to={`/material/${product._id}`}>
+              <RaisedButton primary label="Upload Material" />
+            </Link>
         }
       </div> :
       <h1>No product selected</h1>

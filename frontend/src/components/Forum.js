@@ -31,7 +31,6 @@ const Forum = ({
       threads.length <= 0 ?
         <CircularProgress /> :
         threads.map(thread => (
-          // TODO: replace with link to correct thread ID
           <Link to={`/thread/${thread._id}`} key={thread._id}>
             <ThreadHead
               customStyle={style}

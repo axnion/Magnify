@@ -338,7 +338,6 @@ export function createThread(data, token) {
 
     return apiRequest('post', data, endpoint, token)
       .then((response) => {
-        console.log(response.data);
         dispatch(createThreadSucccess(response.data));
       })
       .catch((response) => {
@@ -347,7 +346,7 @@ export function createThread(data, token) {
   };
 }
 
-export function mockCreateThread(data, token) {
+export function mockCreateThread(data, productId, token) {
   return (dispatch) => {
     dispatch(beginCreateThread());
 
@@ -359,6 +358,15 @@ export function mockCreateThread(data, token) {
       const thread = data;
 
       thread.posts = [];
+      if (productId) {
+        thread.product = {
+          _id: productId,
+          name: 'prod',
+          company: {
+            name: 'company',
+          },
+        };
+      }
       thread.author = {
         username: 'username',
         role: 'role',
@@ -368,6 +376,7 @@ export function mockCreateThread(data, token) {
       thread.updatedAt = new Date().toDateString();
 
       thread._id = crypto.randomBytes(16).toString('hex');
+      thread.product.company._id = crypto.randomBytes(16).toString('hex');
 
       return resolve(thread);
     }, 500)

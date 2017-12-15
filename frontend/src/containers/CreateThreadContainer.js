@@ -30,7 +30,7 @@ class CreateThreadContainer extends Component {
           } else {
             this.setState({ snackbarSuccess: true, snackbarError: false });
             callback();
-            this.props.history.push('/forum');
+            this.props.history.goBack();
           }
         });
     } else {
@@ -67,7 +67,7 @@ CreateThreadContainer.propTypes = ({
     token: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func,
+    goBack: PropTypes.func,
   }).isRequired,
 });
 
