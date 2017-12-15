@@ -33,6 +33,7 @@ const SideBar = ({ username, logout, role }) => (
     {
       role === 'companyAdmin' ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
     }
+    <SideBarItem><Link to="/forum"><button className="sidebar-btn">Forum</button></Link></SideBarItem>
     {
       username === null ? <SideBarItem><Link to="/login"><button className="sidebar-btn">Log in</button></Link></SideBarItem> :
       <SideBarItem><button className="sidebar-btn" onClick={() => logout()}>Log out</button></SideBarItem>
@@ -40,7 +41,6 @@ const SideBar = ({ username, logout, role }) => (
     {
       username === null ? <SideBarItem><Link to="/register"><button className="sidebar-btn">Create an account</button></Link></SideBarItem> : undefined
     }
-    <SideBarItem><Link to="/forum"><button className="sidebar-btn">Forum</button></Link></SideBarItem>
   </SideBarDivider>
 );
 
