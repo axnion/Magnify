@@ -23,8 +23,8 @@ const CreatePost = ({
       id="SearchField"
     />
     <RaisedButton primary label="Search" onClick={() => search(document.getElementById('SearchField').value, callback)} />
-    <RaisedButton primary label="Clear Search" onClick={() => clearSearch()} />
     {filterBy ? <p>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
+    {filterBy ? <RaisedButton primary label="Clear Search" onClick={() => clearSearch()} /> : ''}
   </div>
 );
 
