@@ -19,7 +19,7 @@ const CreatePost = ({
       hintText="Search here!"
       floatingLabelText="Search"
       fullWidth
-      multiLine="false"
+      multiLine={false}
       id="SearchField"
     />
     <RaisedButton primary label="Search" onClick={() => search(document.getElementById('SearchField').value, callback)} />
