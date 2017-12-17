@@ -64,6 +64,17 @@ function createThreadErrorr(payload) {
   };
 }
 
+export function setThreadFilter(payload) {
+  return {
+    type: types.SET_THREAD_FILTER,
+    payload,
+  };
+}
+
+export function clearThreadFilter() {
+  return { type: types.CLEAR_THREAD_FILTER };
+}
+
 function addCompaniesToThreads(companies, threads) {
   const newThreads = threads.map((thread) => {
     const { author } = thread;
@@ -174,7 +185,7 @@ function addCompanyToPosts(companies, posts) {
   const newPosts = posts.map((post) => {
     const { author } = post;
     const companyObj = companies.find(c => c._id === author.company);
-    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author; 
+    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
     const newPost = { ...post, author: newAuthor };
     return newPost;
   });

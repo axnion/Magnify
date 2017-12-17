@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CreatePost from '../components/CreatePost';
-import { sendPost } from '../actions/post'; // change here to use non mock action
+import { sendPost } from '../actions/post';
 
-// use like this:     <CreatePostContainer threadId="{thread._id}" /> ? I changed to get id from current thread instead /Henrik
 class CreatePostContainer extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +51,7 @@ const mapStateToProps = state => ({
   error: state.thread.postError,
   isWaiting: state.thread.isWaiting,
   auth: state.auth,
-  threadId: state.thread.currentThread._id, // I changed this. Will it work? Henrik
+  threadId: state.thread.currentThread._id,
 });
 
 CreatePostContainer.propTypes = ({

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 
+import SearchContainer from '../containers/SearchContainer';
 import ThreadHead from './thread/ThreadHead';
 
 const style = {
@@ -20,15 +21,17 @@ const StyledList = styled(List)`
 const Forum = ({
   threads,
   username,
+  isWaiting,
 }) => (
   <div>
     <h1>Forum</h1>
     {
      username === null ? undefined : <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
     }
+    <SearchContainer />
     <StyledList>
       {
-      threads.length <= 0 ?
+      threads.length <= 0 && isWaiting ?
         <CircularProgress /> :
         threads.map(thread => (
           <Link to={`/thread/${thread._id}`} key={thread._id}>
@@ -53,6 +56,7 @@ Forum.propTypes = ({
     createdAt: PropTypes.string,
   })),
   username: PropTypes.string,
+  isWaiting: PropTypes.bool.isRequired,
 });
 
 Forum.defaultProps = ({
