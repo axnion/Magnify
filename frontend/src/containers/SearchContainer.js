@@ -10,6 +10,7 @@ class SearchContainer extends Component {
     super(props);
 
     this.doSearch = this.doSearch.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
 
   componentWillUnmount() {
@@ -21,11 +22,16 @@ class SearchContainer extends Component {
     callback();
   }
 
+  clearSearch() {
+    this.props.clearThreadFilter();
+  }
+
   render() {
     return (
       <Search
         search={this.doSearch}
         filterBy={this.props.filterBy}
+        clearSearch={this.clearSearch}
       />
     );
   }

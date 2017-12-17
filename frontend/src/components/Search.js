@@ -10,6 +10,7 @@ function callback() {
 const CreatePost = ({
   search,
   filterBy,
+  clearSearch,
 }) => (
   <div className="search">
     <TextField
@@ -22,6 +23,7 @@ const CreatePost = ({
       id="SearchField"
     />
     <RaisedButton primary label="Search" onClick={() => search(document.getElementById('SearchField').value, callback)} />
+    <RaisedButton primary label="Clear Search" onClick={() => clearSearch()} />
     {filterBy ? <p>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
   </div>
 );
@@ -29,6 +31,7 @@ const CreatePost = ({
 
 CreatePost.propTypes = {
   search: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
   filterBy: PropTypes.string.isRequired,
 };
 
