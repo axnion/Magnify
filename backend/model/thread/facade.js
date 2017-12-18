@@ -11,6 +11,7 @@ class ThreadFacade extends Facade {
     return this.Schema.findById(id)
       .populate('posts')
       .populate('author')
+      .populate('product')
       .populate({
         path: 'posts',
         populate: {
