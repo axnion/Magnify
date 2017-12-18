@@ -6,9 +6,7 @@ import { getThreads } from '../actions/thread';
 import Forum from '../components/Forum';
 
 function threadPostsHasFilterTerm(posts, filterTerm) {
-  return posts.reduce((accumulatedResult, post) => {
-    return accumulatedResult && post.body.includes(filterTerm);
-  }, false);
+  return posts.reduce((accumulatedResult, post) => accumulatedResult && post.body.includes(filterTerm), false);
 }
 
 function filterThreads(filterBy, threads) {
