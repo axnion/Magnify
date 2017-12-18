@@ -89,7 +89,9 @@ Profile.propTypes = {
   username: PropTypes.string,
   role: PropTypes.string,
   companyId: PropTypes.string,
-  company: PropTypes.object,
+  company: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   getCompany: PropTypes.func.isRequired,
 };
 
