@@ -21,6 +21,10 @@ class ThreadFacade extends Facade {
           select: 'username company role',
           populate: { path: 'company' }
         }
+      })
+      .populate({
+        path: 'product',
+        select: 'company'
       });
   }
 
@@ -44,9 +48,8 @@ class ThreadFacade extends Facade {
   removeFromUnseenThreads(companyId, threadId) {
     return companySchema.update(
       { _id: companyId },
-      { $pull: { unseenThreads: { _id: threadId } } },
-      { upsert: true }
-    );
+      { $pull: { unseenThreads: threadId } }
+    ).exec();
   }
 }
 
