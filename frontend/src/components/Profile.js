@@ -67,10 +67,12 @@ class Profile extends React.Component {
             subtitle={this.roleToString()}
             avatar={<Avatar>{this.avatarLetter()}</Avatar>}
           />
+          {(!this.props.companyId || !this.props.company) ? undefined :
           <CenteredCardText>
             <ActionWork style={iconStyles} />
-            {(!this.props.companyId || !this.props.company) ? undefined : this.props.company.name}
+            {this.props.company.name}
           </CenteredCardText>
+          }
         </StyledCard>
         <div className="threadContainer">
           <HeaderText>Active threads</HeaderText>
