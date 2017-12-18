@@ -21,7 +21,7 @@ const ProductView = ({
   snackbarPostRatingSuccess,
   saveRating,
   saveAnnotation,
-  handleRequestClose
+  handleRequestClose,
 }) => (
   <div className="product">
     {product ? (

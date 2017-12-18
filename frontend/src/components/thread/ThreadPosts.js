@@ -12,18 +12,33 @@ const StyledDiv = styled('div')`
   margin-left: -10px;
 `;
 
-const ThreadPosts = ({ posts }) => {
+const ThreadPosts = ({ posts, product }) => {
   let toReturn = null;
+
+  const postSet = new Set();
+
+  posts.forEach((post) => {
+    if (post.author.company && product && post.author.company._id === product.company._id) {
+      postSet.add(post);
+    }
+  });
+
+  posts.forEach((post) => {
+    postSet.add(post);
+  });
+
+  const postArray = Array.from(postSet);
 
   if (posts.length > 0) {
     toReturn = (
       <StyledDiv>
-        {posts.map(post => (
+        {postArray.map(post => (
           <ThreadPost
             key={post._id}
             body={post.body}
             author={post.author}
             createdAt={post.createdAt}
+            marked={post.author.company && product && post.author.company._id === product.company._id}
           />
         ))
         }
@@ -42,6 +57,13 @@ ThreadPosts.propTypes = {
       role: PropTypes.string,
       company: PropTypes.shape({
         name: PropTypes.string,
+      }),
+    }),
+    product: PropTypes.shape({
+      name: PropTypes.string,
+      _id: PropTypes.string,
+      company: PropTypes.shape({
+        _id: PropTypes.string,
       }),
     }),
     createdAt: PropTypes.string,
