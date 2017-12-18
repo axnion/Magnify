@@ -5,7 +5,7 @@ const config = require('../../config');
 
 class CompanyController extends Controller {
   getProducts() {
-    return CompanyFacade.getProducts();
+    return CompanyFacade.getProducts().populate('unseenThreads');
   }
 }
 
