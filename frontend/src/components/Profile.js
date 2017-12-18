@@ -10,9 +10,7 @@ import ActionWork from 'material-ui/svg-icons/action/work';
 import ThreadList from '../components/thread/ThreadList';
 
 const StyledCard = styled(Card)`
-  padding: 0px;
-  margin: 0px;
-  min-height: 155px;
+  margin: 10px;
 `;
 
 const MainDiv = styled('div')`
