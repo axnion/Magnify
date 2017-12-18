@@ -13,6 +13,11 @@ export default (state = {
       role: '',
       company: null,
     },
+    product: {
+      name: '',
+      _id: '',
+      company: null,
+    },
     createdAt: '',
     updatedAt: '',
   },

@@ -1,22 +1,10 @@
 import React from 'react';
-import List from 'material-ui/List';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-import CircularProgress from 'material-ui/CircularProgress';
 
 import SearchContainer from '../containers/SearchContainer';
-import ThreadHead from './thread/ThreadHead';
-
-const style = {
-  margin: '20px',
-};
-
-const StyledList = styled(List)`
-  max-height: 520px;
-  overflow-y: auto;
-`;
+import ThreadList from '../components/thread/ThreadList';
 
 const Forum = ({
   threads,
@@ -29,22 +17,10 @@ const Forum = ({
      username === null ? undefined : <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
     }
     <SearchContainer />
-    <StyledList>
-      {
-      threads.length <= 0 && isWaiting ?
-        <CircularProgress /> :
-        threads.map(thread => (
-          <Link to={`/thread/${thread._id}`} key={thread._id}>
-            <ThreadHead
-              customStyle={style}
-              title={thread.title}
-              author={thread.author}
-              createdAt={thread.createdAt}
-            />
-          </Link>
-        ))
-      }
-    </StyledList>
+    <ThreadList
+      threads={threads}
+      isWaiting={isWaiting}
+    />
   </div>
 );
 

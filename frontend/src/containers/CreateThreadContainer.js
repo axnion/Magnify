@@ -23,7 +23,7 @@ class CreateThreadContainer extends Component {
   SubmitOnClick(payload, callback) {
     if (payload.title.length > 0 && payload.body.length > 0) {
       this.setState({ snackbarError: false });
-      this.props.sendThread(payload, this.props.auth.token)
+      this.props.sendThread(payload, this.props.match.params.id, this.props.auth.token)
         .then(() => {
           if (this.props.error) {
             this.setState({ snackbarSuccess: false, snackbarError: true });
@@ -50,7 +50,7 @@ class CreateThreadContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  sendThread: (data, token) => dispatch(sendThread(data, token)),
+  sendThread: (data, productId, token) => dispatch(sendThread(data, productId, token)),
 });
 
 const mapStateToProps = state => ({
@@ -68,6 +68,11 @@ CreateThreadContainer.propTypes = ({
   }).isRequired,
   history: PropTypes.shape({
     goBack: PropTypes.func,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   }).isRequired,
 });
 

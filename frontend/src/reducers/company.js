@@ -4,7 +4,9 @@ export default (state = {
   isWaiting: false,
   companies: [],
   error: null,
-  currentCompany: null,
+  currentCompany: {
+    unseenThreads: [],
+  },
 }, action) => {
   switch (action.type) {
     case types.GET_COMPANIES:

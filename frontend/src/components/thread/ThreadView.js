@@ -17,8 +17,9 @@ const ThreadView = (props) => {
         body={thread.body}
         author={thread.author}
         createdAt={thread.createdAt}
+        product={thread.product}
       />
-      <ThreadPosts posts={thread.posts} />
+      <ThreadPosts posts={thread.posts} product={thread.product} />
       {
         username === null ? undefined : <CreatePostContainer />
       }

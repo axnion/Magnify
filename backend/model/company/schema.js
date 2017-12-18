@@ -3,7 +3,13 @@ const Schema = mongoose.Schema;
 
 
 const companySchema = new Schema({
-  name: { type: String, required: true, unique: true }
+  name: { type: String, required: true, unique: true },
+  unseenThreads: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Thread'
+    }
+  ]
 });
 
 let company;
