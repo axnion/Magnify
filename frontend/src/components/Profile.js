@@ -55,7 +55,7 @@ class Profile extends React.Component {
   }
 
   avatarLetter() {
-    return this.roleToString().substring(0, 1);
+    return this.props.username.substring(0, 1).toUpperCase();
   }
 
   render() {
