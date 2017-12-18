@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 // Material-ui
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 
 const StyledCard = styled(Card)`

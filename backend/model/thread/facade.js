@@ -25,7 +25,7 @@ class ThreadFacade extends Facade {
       })
       .populate({
         path: 'product',
-        select: 'company',
+        select: 'company name',
         populate: {
           path: 'company'
         }
