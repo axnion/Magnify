@@ -33,7 +33,8 @@ class ThreadFacade extends Facade {
   findAndPopulateAuthorAndProduct() {
     return this.Schema.find()
       .populate('author')
-      .populate('product');
+      .populate('product')
+      .populate('posts');
   }
 
   removeFromUnseenThreads(companyId, threadId) {
