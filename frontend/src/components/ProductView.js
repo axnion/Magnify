@@ -97,14 +97,14 @@ ProductView.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
     company: PropTypes.shape({
-      name: PropTypes.string
-    })
+      name: PropTypes.string,
+    }),
   }),
   error: PropTypes.string,
   isWaiting: PropTypes.bool,
   auth: PropTypes.shape({
     role: PropTypes.string,
-    company: PropTypes.string
+    company: PropTypes.string,
   }).isRequired,
   errorUploadAnnotation: PropTypes.string,
   errorPostRating: PropTypes.string,
@@ -115,7 +115,7 @@ ProductView.propTypes = {
   snackbarPostRatingSuccess: PropTypes.bool,
   saveRating: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
-  handleRequestClose: PropTypes.func.isRequired
+  handleRequestClose: PropTypes.func.isRequired,
 };
 
 ProductView.defaultProps = {
