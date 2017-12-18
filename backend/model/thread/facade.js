@@ -55,7 +55,7 @@ class ThreadFacade extends Facade {
 
   addToUnseenThreads(productId, threadId) {
     productSchema.findById(productId).then((product) => {
-      return companySchema.update(
+      companySchema.update(
         { _id: product.company },
         { $push: { unseenThreads: threadId } }
       ).exec();
