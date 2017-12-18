@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CreateThread from '../components/CreateThread';
-import { mockCreateThread } from '../actions/thread'; // change here to use non mock action
+import { createThread } from '../actions/thread'; // change here to use non mock action
 
-const sendThread = mockCreateThread; // change here to use non mock action
+const sendThread = createThread; // change here to use non mock action
 
 class CreateThreadContainer extends Component {
   constructor(props) {
