@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 // Material-ui
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import Chip from 'material-ui/Chip';
 
 const StyledCard = styled(Card)`
   margin-bottom: 2px;
@@ -20,6 +21,7 @@ const StyledCardText = styled(CardText)`
 
 const StyledLink = styled(Link)`
   float: right;
+  text-decoration: none;
 `;
 
 const ThreadHead = (props) => {
@@ -40,7 +42,13 @@ const ThreadHead = (props) => {
       >
         { product ?
           <StyledLink to={`/productView/${product._id}`}>
-            <RaisedButton primary label={`${product.name}`} />
+            <Chip
+              style={{ cursor: 'pointer' }}
+              onClick={() => {}}
+              backgroundColor="#B3E5FC"
+            >
+              {`${product.name}`}
+            </Chip>
           </StyledLink> :
        undefined }
       </ColoredCardHeader>
