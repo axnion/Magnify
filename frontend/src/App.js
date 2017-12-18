@@ -27,17 +27,25 @@ export default () => (
   <MuiThemeProvider>
     <div className="App">
       <header className="App-header">
-        <Link to="/"><img src={topBanner} className="App-top-banner" alt="Top banner" /></Link>
+        <Link to="/">
+          <img src={topBanner} className="App-top-banner" alt="Top banner" />
+        </Link>
       </header>
       <SideBar />
       <div className="App-content">
         <Route path="/" exact component={Index} />
-        <AdminRoute path="/addRep"><AddRepForm /></AdminRoute>
+        <AdminRoute path="/addRep">
+          <AddRepForm />
+        </AdminRoute>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/products" component={ProductsList} />
-        <LoggedInRoute path="/profile"><Profile /></LoggedInRoute>
-        <LoggedInRoute path="/addProduct"><AddProduct /></LoggedInRoute>
+        <LoggedInRoute path="/profile">
+          <Profile />
+        </LoggedInRoute>
+        <LoggedInRoute path="/addProduct">
+          <AddProduct />
+        </LoggedInRoute>
         <Route path="/material/:id" component={AddMaterial} />
         <Route path="/ProductView/:id" component={ProductView} />
         <Route path="/thread/:id" component={ThreadView} />

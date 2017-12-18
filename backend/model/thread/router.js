@@ -2,11 +2,11 @@ const controller = require('./controller');
 const Router = require('express').Router;
 const router = new Router();
 
-router.route('/')
+router
+  .route('/')
   .get((...args) => controller.getThreads(...args))
-  .post((...args) => controller.createThread(...args));
+  .post((...args) => controller.createThreadForProduct(...args));
 
-router.route('/:id')
-  .get((...args) => controller.getThread(...args));
+router.route('/:id').get((...args) => controller.getThread(...args));
 
 module.exports = router;
