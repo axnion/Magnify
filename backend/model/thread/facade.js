@@ -1,5 +1,6 @@
 const Facade = require('../../lib/facade');
 const threadSchema = require('./schema');
+const companySchema = require('../company/schema');
 
 class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
@@ -33,6 +34,14 @@ class ThreadFacade extends Facade {
     return this.Schema.find()
       .populate('author')
       .populate('product');
+  }
+
+  removeFromUnseenThreads(companyId, threadId) {
+    return companySchema.update(
+      { _id: companyId },
+      { $pull: { unseenThreads: { _id: threadId } } },
+      { upsert: true }
+    );
   }
 }
 

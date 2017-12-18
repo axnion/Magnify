@@ -32,15 +32,25 @@ class ThreadController extends Controller {
   }
 
   getThread(req, res, next) {
-    return this.facade
-      .findByIdPopulateAuthorAndPosts(req.params.id)
-      .then(thread => {
-        thread.posts.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
-        res.status(200).json(thread);
-        next();
-      });
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) return res.status(500).json({ message: info });
+
+      return this.facade
+        .findByIdPopulateAuthorAndPosts(req.params.id)
+        .then((thread) => {
+
+          // Mark thread as read if rep or admin reads it
+          if (thread.product && user.company && user.company === thread.product.company) {
+            this.facade.removeFromUnseenThreads(user.company, thread.id);
+          }
+
+          thread.posts.sort(
+            (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+          );
+          res.status(200).json(thread);
+          next();
+        });
+    })(req, res, next);
   }
 
   getThreads(req, res, next) {
