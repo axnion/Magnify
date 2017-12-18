@@ -14,17 +14,21 @@ const CreatePost = ({
 }) => (
   <div className="search">
     <TextField
-      style={{ display: 'block', marginLeft: '22px', maxWidth: '800px' }}
+      style={{ display: 'inline-block', marginLeft: '22px', maxWidth: '600px' }}
       textareaStyle={{ display: 'block', position: 'absolute' }}
       hintText="Search here!"
-      floatingLabelText="Search"
       fullWidth
       multiLine={false}
       id="SearchField"
     />
-    <RaisedButton primary label="Search" onClick={() => search(document.getElementById('SearchField').value, callback)} />
-    {filterBy ? <p>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
-    {filterBy ? <RaisedButton primary label="Clear Search" onClick={() => clearSearch()} /> : ''}
+    <RaisedButton
+      style={{ marginLeft: '22px' }}
+      primary
+      label="Search"
+      onClick={() => search(document.getElementById('SearchField').value, callback)}
+    />
+    {filterBy ? <p style={{ display: 'inline-block', marginLeft: '22px' }}>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
+    {filterBy ? <RaisedButton style={{ marginLeft: '22px' }} primary label="Clear Search" onClick={() => clearSearch()} /> : ''}
   </div>
 );
 

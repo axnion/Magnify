@@ -14,9 +14,9 @@ const Forum = ({
   <div>
     <h1>Forum</h1>
     {
-     username === null ? undefined : <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
+    username === null ? undefined : <Link to="/createThread"><RaisedButton label="Create new thread" primary /></Link>
     }
-    <SearchContainer />
+    <SearchContainer style={{ display: 'inline-block' }} />
     <ThreadList
       threads={threads}
       isWaiting={isWaiting}
