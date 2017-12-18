@@ -3,21 +3,35 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Material-ui
-import { Card, CardHeader } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
+import ActionWork from 'material-ui/svg-icons/action/work';
 
-const ColoredCardHeader = styled(CardHeader)`
-  background-color: #BBDEFB;
-`;
+import ThreadList from '../components/thread/ThreadList';
 
 const StyledCard = styled(Card)`
-padding: 0px;
-margin: 0px;
-min-height: 155px;
+  padding: 0px;
+  margin: 0px;
+  min-height: 155px;
 `;
 
 const MainDiv = styled('div')`
-padding: 10px;
+  padding: 10px;
 `;
+
+const HeaderText = styled('h2')`
+  padding-top: 20px;
+`;
+
+const CenteredCardText = styled(CardText)`
+  display: flex;
+  align-items: center;
+`;
+
+const iconStyles = {
+  marginRight: 15,
+  color: 'rgb(188, 188, 188)',
+};
 
 class Profile extends React.Component {
   constructor(props) {
@@ -35,23 +49,37 @@ class Profile extends React.Component {
 
   roleToString() {
     if (this.props.role === 'companyAdmin') {
-      return 'Admin';
+      return 'Administrator';
     } else if (this.props.role === 'companyRep') {
       return 'Company Representative';
     }
     return 'User';
   }
 
+  avatarLetter() {
+    return this.roleToString().substring(0, 1);
+  }
+
   render() {
     return (
       <MainDiv>
         <StyledCard className="profile">
-          <ColoredCardHeader
-            title={`Username: ${this.props.username}`}
-            subtitle={(!this.props.companyId || !this.props.company) ? undefined : `Company: ${this.props.company.name}`}
+          <CardHeader
+            title={this.props.username}
+            subtitle={this.roleToString()}
+            avatar={<Avatar>{this.avatarLetter()}</Avatar>}
           />
-          <h3>Type of user: { this.roleToString()}</h3>
+          <CenteredCardText>
+            <ActionWork style={iconStyles} />
+            {(!this.props.companyId || !this.props.company) ? undefined : this.props.company.name}
+          </CenteredCardText>
         </StyledCard>
+        <div className="threadContainer">
+          <HeaderText>Active threads</HeaderText>
+          <ThreadList
+            {...this.props}
+          />
+        </div>
       </MainDiv>
     );
   }
@@ -61,7 +89,9 @@ Profile.propTypes = {
   username: PropTypes.string,
   role: PropTypes.string,
   companyId: PropTypes.string,
-  company: PropTypes.object,
+  company: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   getCompany: PropTypes.func.isRequired,
 };
 

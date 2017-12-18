@@ -18,6 +18,7 @@ export default (state = {
   },
   error: null,
   postError: null,
+  filterBy: '',
 }, action) => {
   switch (action.type) {
     case types.GET_THREADS:
@@ -66,7 +67,7 @@ export default (state = {
         ...state,
         isWaiting: false,
         threads: [...state.threads, action.payload],
-        //currentThread: action.payload,
+        // currentThread: action.payload,
         error: null,
       };
     case types.CREATE_THREAD_ERROR:
@@ -100,6 +101,16 @@ export default (state = {
       return {
         ...state,
         currentThread: null,
+      };
+    case types.SET_THREAD_FILTER:
+      return {
+        ...state,
+        filterBy: action.payload,
+      };
+    case types.CLEAR_THREAD_FILTER:
+      return {
+        ...state,
+        filterBy: '',
       };
     default:
       return state;
