@@ -29,7 +29,7 @@ const ProductView = ({
     {product ?
       <div>
         <h1>Product: {product.name}</h1>
-        <h3>Company: {product.company.name}</h3>  
+        <h3>Company: {product.company.name}</h3>
         {
           (isWaiting || auth.role === null || auth.role === 'consumer' || product.company._id !== auth.company) ?
             <Link to={`/createThread/${product._id}`}>

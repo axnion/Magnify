@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAThread, resetCurrentThread } from '../actions/thread';
+import { resetCurrentThread, mockGetAThread } from '../actions/thread';
 
 import ThreadView from '../components/thread/ThreadView';
 
+const getAThread = mockGetAThread;
 
 class ThreadViewContainer extends Component {
   componentWillMount() {

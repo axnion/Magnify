@@ -42,7 +42,8 @@ export default () => (
         <Route path="/ProductView/:id" component={ProductView} />
         <Route path="/thread/:id" component={ThreadView} />
         <Route path="/forum" component={Forum} />
-        <Route path="/createThread" component={CreateThread} />
+        <Route exact path="/createThread" component={CreateThread} />
+        <Route path="/createThread/:id" component={CreateThread} />
       </div>
       <Snackbar />
     </div>

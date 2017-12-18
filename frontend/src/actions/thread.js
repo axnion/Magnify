@@ -289,8 +289,8 @@ export function mockGetAThread(id) {
               username: 'Testuser2',
               role: 'companyRep',
               company: {
-                _id: 'TestCompany1',
-                name: 'evilCorp',
+                _id: 'TestCompany2',
+                name: 'awesomeCorp',
               },
             },
             createdAt: '2016-05-23T16:00:00Z',
@@ -316,6 +316,16 @@ export function mockGetAThread(id) {
           role: 'consumer',
           company: null,
         },
+        product: {
+          _id: 'productId1',
+          name: 'testProduct',
+          company: {
+            _id: 'TestCompany2',
+            name: 'awesomeCorp',
+          },
+          category: 'categoryId',
+          material: [],
+        },
         createdAt: '2016-05-18T16:00:00Z',
         updatedAt: '2016-05-18T16:00:00Z',
       };
@@ -332,11 +342,16 @@ export function mockGetAThread(id) {
   };
 }
 
-export function createThread(data, token) {
+export function createThread(data, productId, token) {
   return (dispatch) => {
     dispatch(beginCreateThread());
 
-    return apiRequest('post', data, endpoint, token)
+    const dataToSend = data;
+    if (productId) {
+      dataToSend.product = productId;
+    }
+
+    return apiRequest('post', dataToSend, endpoint, token)
       .then((response) => {
         dispatch(createThreadSucccess(response.data));
       })
@@ -359,14 +374,9 @@ export function mockCreateThread(data, productId, token) {
 
       thread.posts = [];
       if (productId) {
-        thread.product = {
-          _id: productId,
-          name: 'prod',
-          company: {
-            name: 'company',
-          },
-        };
+        thread.product = productId;
       }
+
       thread.author = {
         username: 'username',
         role: 'role',
@@ -376,13 +386,12 @@ export function mockCreateThread(data, productId, token) {
       thread.updatedAt = new Date().toDateString();
 
       thread._id = crypto.randomBytes(16).toString('hex');
-      thread.product.company._id = crypto.randomBytes(16).toString('hex');
 
       return resolve(thread);
     }, 500)
     ))
       .then((response) => {
-        // console.log(response);
+        //console.log(response);
         dispatch(createThreadSucccess(response));
       })
       .catch((error) => {
