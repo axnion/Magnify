@@ -34,6 +34,7 @@ const Forum = ({
               title={thread.title}
               author={thread.author}
               createdAt={thread.createdAt}
+              product={thread.product}
             />
           </Link>
         ))
@@ -48,6 +49,10 @@ Forum.propTypes = ({
     title: PropTypes.string,
     author: PropTypes.any,
     createdAt: PropTypes.string,
+    product: PropTypes.shape({
+      name: PropTypes.string,
+      _id: PropTypes.string,
+    }),
   })),
   isWaiting: PropTypes.bool.isRequired,
 });

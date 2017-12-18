@@ -18,6 +18,10 @@ const ColoredCardHeader = styled(CardHeader)`
 const StyledCardText = styled(CardText)`
 `;
 
+const StyledLink = styled(Link)`
+  float: right;
+`;
+
 const ThreadHead = (props) => {
   const {
     title, body, author, createdAt, customStyle, product,
@@ -33,17 +37,18 @@ const ThreadHead = (props) => {
       <ColoredCardHeader
         title={title}
         subtitle={subtitle}
-      />
+      >
+        { product ?
+          <StyledLink to={`/productView/${product._id}`}>
+            <RaisedButton primary label={`${product.name}`} />
+          </StyledLink> :
+       undefined }
+      </ColoredCardHeader>
       { body ?
         <StyledCardText >
           {body}
         </StyledCardText> :
         undefined }
-      { product ?
-        <Link to={`/productView/${product._id}`}>
-          <RaisedButton primary label={`${product.name}`} />
-        </Link> :
-       undefined }
     </StyledCard>
   );
 };
