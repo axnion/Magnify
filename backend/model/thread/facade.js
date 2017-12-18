@@ -9,11 +9,17 @@ class ThreadFacade extends Facade {
 
   findByIdPopulateAuthorAndPosts(id) {
     return this.Schema.findById(id)
+<<<<<<< HEAD
       .populate({
         path: 'author',
         select: 'username company role',
         populate: { path: 'company' }
       })
+=======
+      .populate('posts')
+      .populate('author')
+      .populate('product')
+>>>>>>> c388bde8606425224d2a89078f1546ba232b6954
       .populate({
         path: 'posts',
         populate: {
