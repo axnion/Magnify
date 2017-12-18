@@ -1,6 +1,7 @@
 const Facade = require('../../lib/facade');
 const threadSchema = require('./schema');
 const companySchema = require('../company/schema');
+const productSchema = require('../product/schema');
 
 class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
@@ -50,6 +51,15 @@ class ThreadFacade extends Facade {
       { _id: companyId },
       { $pull: { unseenThreads: threadId } }
     ).exec();
+  }
+
+  addToUnseenThreads(productId, threadId) {
+    productSchema.findById(productId).then((product) => {
+      return companySchema.update(
+        { _id: product.company },
+        { $push: { unseenThreads: threadId } }
+      ).exec();
+    });
   }
 }
 

@@ -18,6 +18,11 @@ class ThreadController extends Controller {
       return this.facade
         .create(thread)
         .then(createdThread => {
+
+          if (req.body.product) {
+            this.facade.addToUnseenThreads(req.body.product, createdThread.id);
+          }
+
           // return this.facade.findByIdPopulateAuthor(createdThread.id); replaced by →
           return this.facade.findByIdPopulateAuthorAndProduct(createdThread.id);
         })
