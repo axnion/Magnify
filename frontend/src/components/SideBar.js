@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Badge from 'material-ui/Badge';
 
 import leftside from '../leftside.jpg';
 
@@ -19,21 +20,28 @@ const SideBarDivider = styled('div')`
   margin-right: 20px;
 `;
 
-const SideBar = ({ username, logout, role }) => (
+/* const ForumBadge = styled(Badge)`
+  padding: 0px 12px 0px 0px;
+`; */
+
+const SideBar = ({ username, logout, role, unseenThreads, updateUnseen }) => (
   <SideBarDivider>
     {
-      username === null ? undefined : <SideBarItem><Link to="/profile"><button className="sidebar-btn">Profile</button></Link></SideBarItem>
+      username === null ? undefined : <SideBarItem><Link to="/profile" onClick={updateUnseen}><button className="sidebar-btn">Profile</button></Link></SideBarItem>
     }
     {
-      username === null ? undefined : <SideBarItem><Link to="/products"><button className="sidebar-btn">Products</button></Link></SideBarItem>
+      username === null ? undefined : <SideBarItem><Link to="/products" onClick={updateUnseen}><button className="sidebar-btn">Products</button></Link></SideBarItem>
     }
     {
-      (username === null || role === 'consumer') ? undefined : <SideBarItem><Link to="/addProduct"><button className="sidebar-btn">Add product</button></Link></SideBarItem>
+      (username === null || role === 'consumer') ? undefined : <SideBarItem><Link to="/addProduct" onClick={updateUnseen}><button className="sidebar-btn">Add product</button></Link></SideBarItem>
     }
     {
-      role === 'companyAdmin' ? <SideBarItem><Link to="/addRep"><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
+      role === 'companyAdmin' ? <SideBarItem><Link to="/addRep" onClick={updateUnseen}><button className="sidebar-btn">Add representative</button></Link></SideBarItem> : undefined
     }
-    <SideBarItem><Link to="/forum"><button className="sidebar-btn">Forum</button></Link></SideBarItem>
+    <SideBarItem>
+      <Link to="/forum" onClick={updateUnseen}><button className="sidebar-btn">Forum</button></Link>
+      { role === 'companyRep' ? <Badge badgeContent={unseenThreads.length} secondary style={{ padding: '0px 24px 18px 12px' }} /> : undefined }
+    </SideBarItem>
     {
       username === null ? <SideBarItem><Link to="/login"><button className="sidebar-btn">Log in</button></Link></SideBarItem> :
       <SideBarItem><button className="sidebar-btn" onClick={() => logout()}>Log out</button></SideBarItem>
@@ -48,6 +56,7 @@ SideBar.propTypes = {
   username: PropTypes.string,
   logout: PropTypes.func.isRequired,
   role: PropTypes.string,
+  unseenThreads: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 SideBar.defaultProps = {
