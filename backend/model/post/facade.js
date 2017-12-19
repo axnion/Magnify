@@ -14,7 +14,7 @@ class PostFacade extends Facade {
       .populate({
         path: 'author',
         select: 'username company role',
-        populate: { path: 'company' }
+        populate: { path: 'company', model: 'Company' }
       })
     ))
     .then(populatedPost => (

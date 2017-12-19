@@ -10,6 +10,7 @@ const ThreadView = (props) => {
     thread,
     username,
   } = props;
+
   return thread ? (
     <div>
       <ThreadHead

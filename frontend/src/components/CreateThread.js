@@ -34,10 +34,14 @@ const CreateThread = ({
       rowsMax={16}
       id="BodyField"
     />
-    <RaisedButton primary label="Create" onClick={() => SubmitOnClick({
+    <RaisedButton
+      primary
+      label="Create"
+      onClick={() => SubmitOnClick({
       title: document.getElementById('TitleField').value,
       body: document.getElementById('BodyField').value,
-    }, callback)} />
+    }, callback)}
+    />
     <Snackbar
       open={snackbarError}
       message={error || errorText}

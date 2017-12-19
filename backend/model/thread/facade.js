@@ -2,6 +2,7 @@ const Facade = require('../../lib/facade');
 const threadSchema = require('./schema');
 const companySchema = require('../company/schema');
 const productSchema = require('../product/schema');
+const accountSchema = require('../account/schema');
 
 class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
@@ -13,21 +14,22 @@ class ThreadFacade extends Facade {
       .populate({
         path: 'author',
         select: 'username company role',
-        populate: { path: 'company' }
+        populate: { path: 'company', model: 'Company' }
       })
       .populate({
         path: 'posts',
         populate: {
           path: 'author',
           select: 'username company role',
-          populate: { path: 'company' }
+          populate: { path: 'company', model: 'Company' }
         }
       })
       .populate({
         path: 'product',
-        select: 'company',
+        select: 'company name',
         populate: {
-          path: 'company'
+          path: 'company',
+          model: 'Company'
         }
       });
   }
@@ -44,8 +46,8 @@ class ThreadFacade extends Facade {
 
   findAndPopulateAuthorAndProduct() {
     return this.Schema.find()
-      .populate({ path: 'author', select: 'username company role', populate: { path: 'company' } } )
-      .populate({ path: 'product', populate: { path: 'company' } })
+      .populate({ path: 'author', select: 'username company role', populate: { path: 'company', model: 'Company' } } )
+      .populate({ path: 'product', populate: { path: 'company', model: 'Company' } })
       .populate('posts');
   }
 
@@ -60,9 +62,16 @@ class ThreadFacade extends Facade {
     productSchema.findById(productId).then((product) => {
       companySchema.update(
         { _id: product.company },
-        { $push: { unseenThreads: threadId } }
+        { $addToSet: { unseenThreads: threadId } }
       ).exec();
     });
+  }
+
+  addToActiveThreads(userId, threadId) {
+    accountSchema.update(
+      { _id: userId },
+      { $addToSet: { activeThreads: threadId } }
+    ).exec();
   }
 }
 

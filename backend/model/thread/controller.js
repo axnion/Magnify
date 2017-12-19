@@ -17,20 +17,21 @@ class ThreadController extends Controller {
 
       return this.facade
         .create(thread)
-        .then(createdThread => {
+        .then((createdThread) => {
 
           if (req.body.product) {
             this.facade.addToUnseenThreads(req.body.product, createdThread.id);
           }
 
-          // return this.facade.findByIdPopulateAuthor(createdThread.id); replaced by →
+          this.facade.addToActiveThreads(user.id, createdThread.id);
+
           return this.facade.findByIdPopulateAuthorAndProduct(createdThread.id);
         })
-        .then(result => {
+        .then((result) => {
           res.status(201).json(result);
           next();
         })
-        .catch(err => {
+        .catch((err) => {
           next(err);
         });
     })(req, res, next);
@@ -59,7 +60,7 @@ class ThreadController extends Controller {
   }
 
   getThreads(req, res, next) {
-    return this.facade.findAndPopulateAuthorAndProduct().then(threads => {
+    return this.facade.findAndPopulateAuthorAndProduct().then((threads) => {
       threads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       res.status(200).json(threads);
       next();

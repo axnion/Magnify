@@ -26,7 +26,6 @@ const threadSchema = new Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'product'
     }
-    // tags: [{ type: mongoose.Schema.ObjectId, ref: 'Tag' }]
   },
   {
     timestamps: true
