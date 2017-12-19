@@ -45,10 +45,8 @@ class ThreadController extends Controller {
         .findByIdPopulateAuthorAndPosts(req.params.id)
         .then((thread) => {
 
-          console.log(user.company);
           // Mark thread as read if rep or admin reads it
           if (thread.product && user.company && user.company.equals(thread.product.company._id)) {
-            console.log('ha');
             this.facade.removeFromUnseenThreads(user.company, thread.id);
           }
 
