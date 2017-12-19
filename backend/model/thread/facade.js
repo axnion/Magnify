@@ -2,6 +2,7 @@ const Facade = require('../../lib/facade');
 const threadSchema = require('./schema');
 const companySchema = require('../company/schema');
 const productSchema = require('../product/schema');
+const accountSchema = require('../account/schema');
 
 class ThreadFacade extends Facade {
   findByIdPopulateAuthor(id) {
@@ -63,6 +64,13 @@ class ThreadFacade extends Facade {
         { $push: { unseenThreads: threadId } }
       ).exec();
     });
+  }
+
+  addToActiveThreads(userId, threadId) {
+    accountSchema.update(
+      { _id: userId },
+      { $push: { activeThreads: threadId } }
+    ).exec();
   }
 }
 
