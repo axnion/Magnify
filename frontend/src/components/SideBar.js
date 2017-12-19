@@ -16,8 +16,11 @@ const SideBarItem = styled('div')
 const SideBarDivider = styled('div')
 `
   background-image: url(${leftside});
+
+  background-repeat: no-repeat;
+  background-size: cover;
   border-right: 1px solid black;
-  float: left;
+  
   text-align: center;
   margin-right: 20px;
 `;
@@ -79,10 +82,10 @@ const SideBar = ({
           padding: '0px 24px 18px 12px'
         }
       }
-      /> : undefined } <
-      /SideBarItem> {
+      /> : undefined } < /
+      SideBarItem > {
         username === null ? < SideBarItem > < Link to = "/login" > < button className = "sidebar-btn" > Log in < /button></Link > < /SideBarItem> : <
-          SideBarItem > < button className = "sidebar-btn"
+        SideBarItem > < button className = "sidebar-btn"
         onClick = {
           () => logout()
         } > Log out < /button></SideBarItem >
