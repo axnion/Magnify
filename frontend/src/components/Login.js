@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false };
+    this.state = { username: '', password: '' };
 
     this.sendForm = props.sendForm;
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,13 +21,13 @@ class Login extends React.Component {
       password: this.state.password,
     };
 
-    this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
 
     this.sendForm(data).then(() => {
       if (this.props.error) {
-        this.setState({ snackbarError: true });
+        this.props.showError(this.props.error);
       } else {
+        this.props.showSuccess('Login successful');
         this.props.history.push('/');
       }
     });
@@ -48,24 +47,18 @@ class Login extends React.Component {
           <TextField
             hintText="Username"
             value={this.state.username}
-            onChange={(event, value) => this.setState({ username: value, error: false })}
+            onChange={(event, value) => this.setState({ username: value })}
             disabled={this.props.isWaiting}
           /><br />
           <TextField
             hintText="Password"
             type="password"
             value={this.state.password}
-            onChange={(event, value) => this.setState({ password: value, error: false })}
+            onChange={(event, value) => this.setState({ password: value })}
             disabled={this.props.isWaiting}
           /><br />
           <RaisedButton type="submit" onClick={this.handleSubmit} label="Login" primary />
         </form>
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.error || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
       </div>
     );
   }
@@ -81,11 +74,12 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
   error: null,
-  snackbarError: false,
   isWaiting: false,
   location: {
     message: null,
