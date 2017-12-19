@@ -93,7 +93,7 @@ class AddMaterial extends React.Component {
             </ul>
           </aside>
         </section>
-        { this.state.files[0] ? (<RaisedButton label="Upload" primary onClick={this.handleSubmit} />) : (null) }
+        { this.state.files[0] && this.state.title !== '' ? (<RaisedButton label="Upload" primary onClick={this.handleSubmit} />) : (null) }
         {this.printSubmitMessage()}
       </div>
     );
