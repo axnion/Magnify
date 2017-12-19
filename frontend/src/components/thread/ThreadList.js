@@ -47,7 +47,7 @@ Forum.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
-    author: PropTypes.any,
+    author: PropTypes.string,
     createdAt: PropTypes.string,
     product: PropTypes.shape({
       name: PropTypes.string,

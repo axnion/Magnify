@@ -36,10 +36,12 @@ class Profile extends React.Component {
     super(props);
     this.state = { };
 
+    this.getAccount = props.getAccount;
     this.getCompany = props.getCompany;
   }
 
   componentWillMount() {
+    this.getAccount(this.props.userID);
     if (this.props.companyId) {
       this.getCompany(this.props.companyId);
     }
@@ -55,7 +57,7 @@ class Profile extends React.Component {
   }
 
   avatarLetter() {
-    return this.roleToString().substring(0, 1);
+    return this.props.username.substring(0, 1).toUpperCase();
   }
 
   render() {
@@ -87,16 +89,19 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   username: PropTypes.string,
+  userID: PropTypes.string,
   role: PropTypes.string,
   companyId: PropTypes.string,
   company: PropTypes.shape({
     name: PropTypes.string,
   }),
   getCompany: PropTypes.func.isRequired,
+  getAccount: PropTypes.func.isRequired,
 };
 
 Profile.defaultProps = {
   username: null,
+  userID: null,
   role: null,
   company: null,
   companyId: null,

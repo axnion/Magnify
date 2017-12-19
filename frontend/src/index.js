@@ -49,6 +49,7 @@ store.subscribe(throttle(() => {
     auth: {
       token: store.getState().auth.token,
       username: store.getState().auth.username,
+      id: store.getState().auth.id,
       role: store.getState().auth.role,
       company: store.getState().auth.company,
     },
