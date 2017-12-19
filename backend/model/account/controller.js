@@ -60,8 +60,17 @@ class AccountController extends Controller {
       .catch(message => res.status(500).json(message));
   }
 
-  getAccountThreads(req, res, next) {
+  getAccount(req, res, next) {
+    return this.facade.findAccountById(req.params.id)
+    .then((result) => {
+      res.status(200).json(result);
+      next();
+    })
+    .catch((err) => {
+      next(err);
+    });
   }
+
 }
 
 module.exports = new AccountController(AccountFacade);
