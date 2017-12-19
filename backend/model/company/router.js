@@ -9,6 +9,6 @@ router
 
 router
   .route('/:id')
-  .get((...args) => controller.findById(...args));
+  .get((...args) => controller.findCompanyById(...args));
 
 module.exports = router;

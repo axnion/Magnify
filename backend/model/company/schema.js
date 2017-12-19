@@ -7,7 +7,7 @@ const companySchema = new Schema({
   unseenThreads: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Thread'
+      ref: 'thread'
     }
   ]
 });
