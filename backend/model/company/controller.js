@@ -9,6 +9,7 @@ class CompanyController extends Controller {
   findCompanyById(req, res, next) {
     return this.facade.getCompanyById(req.params.id)
     .then((result) => {
+      result.unseenThreads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       res.status(200).json(result);
       next();
     })

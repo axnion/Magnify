@@ -30,12 +30,14 @@ class ForumContainer extends Component {
 
 ForumContainer.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.any),
+  unseenThreads: PropTypes.arrayOf(PropTypes.any),
   getThreads: PropTypes.func.isRequired,
   isWaiting: PropTypes.bool.isRequired,
 });
 
 ForumContainer.defaultProps = ({
   threads: [],
+  unseenThreads: [],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -44,6 +46,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   threads: filterThreads(state.thread.filterBy, state.thread.threads),
+  filterBy: state.thread.filterBy,
+  unseenThreads: state.company.currentCompany.unseenThreads,
   username: state.auth.username,
   isWaiting: state.thread.isWaiting,
 });

@@ -63,6 +63,14 @@ export default (state = {
         isWaiting: false,
         error: action.payload,
       };
+    case types.GET_A_THREAD_SUCCESS:
+      return {
+        ...state,
+        currentCompany: {
+          ...state.currentCompany,
+          unseenThreads: state.currentCompany.unseenThreads.filter(thread => thread._id !== action.payload._id),
+        },
+      };
     default:
       return state;
   }

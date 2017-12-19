@@ -74,7 +74,7 @@ const SideBar = ({
     onClick = {
       updateUnseen
     } > < button className = "sidebar-btn" > Forum < /button></Link > {
-      role === 'companyRep' ? < Badge badgeContent = {
+      role === 'companyRep' || role === 'companyAdmin' ? < Badge badgeContent = {
         unseenThreads.length
       }
       secondary style = {
