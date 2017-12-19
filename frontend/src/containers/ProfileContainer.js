@@ -4,20 +4,14 @@ import PropTypes from 'prop-types';
 
 import Profile from '../components/Profile';
 import { getACompany } from '../actions/company';
-import { getThreads } from '../actions/thread';
-
-function threadPostsHasFilterTerm(posts, filterTerm) {
-  return posts.reduce((accumulatedResult, post) => accumulatedResult && post.body.includes(filterTerm), false);
-}
-
-function filterThreads(filterBy, threads) {
-  return threads.filter(thread => thread.title.includes(filterBy) ||
-  thread.body.includes(filterBy) || threadPostsHasFilterTerm(thread.posts, filterBy));
-}
+import { getAccount } from '../actions/account';
 
 class ProfileContainer extends Component {
-  componentDidMount() {
-    this.props.getThreads();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
   }
 
   render() {
@@ -30,13 +24,13 @@ class ProfileContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getThreads: () => dispatch(getThreads()),
+  getAccount: id => dispatch(getAccount(id)),
   getCompany: id => dispatch(getACompany(id)),
 });
 
 ProfileContainer.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.any),
-  getThreads: PropTypes.func.isRequired,
+  getAccount: PropTypes.func.isRequired,
   isWaiting: PropTypes.bool.isRequired,
 });
 
@@ -45,8 +39,9 @@ ProfileContainer.defaultProps = ({
 });
 
 const mapStateToProps = state => ({
-  threads: filterThreads(state.thread.filterBy, state.thread.threads),
+  threads: state.account.activeThreads,
   username: state.auth.username,
+  userID: state.auth.id,
   role: state.auth.role,
   companyId: state.auth.company,
   company: state.company.currentCompany,

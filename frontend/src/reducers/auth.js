@@ -5,6 +5,7 @@ export default (state = {
   error: null,
   token: null,
   username: null,
+  id: null,
   role: null,
   company: null,
 }, action) => {
@@ -15,6 +16,7 @@ export default (state = {
         isWaiting: true,
         token: null,
         username: null,
+        id: null,
         role: null,
         company: null,
       };
@@ -25,6 +27,7 @@ export default (state = {
         error: null,
         token: action.payload.accessToken,
         username: action.payload.user.username,
+        id: action.payload.user.id,
         role: action.payload.user.role,
         company: action.payload.user.company,
       };
@@ -35,6 +38,7 @@ export default (state = {
         error: action.payload,
         token: null,
         username: null,
+        id: null,
         role: null,
         company: null,
       };
@@ -45,6 +49,7 @@ export default (state = {
         error: null,
         token: null,
         username: null,
+        id: null,
         role: null,
         company: null,
       };

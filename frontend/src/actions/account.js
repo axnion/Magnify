@@ -36,6 +36,38 @@ export function createAccount(data, token) {
   };
 }
 
+function beginGetAccount() {
+  return { type: types.GET_ACCOUNT };
+}
+
+function getAccountSuccess(payload) {
+  return {
+    type: types.GET_ACCOUNT_SUCCESS,
+    payload,
+  };
+}
+
+function getAccountError(payload) {
+  return {
+    type: types.GET_ACCOUNT_ERROR,
+    payload,
+  };
+}
+
+export function getAccount(id) {
+  return (dispatch) => {
+    dispatch(beginGetAccount());
+
+    return apiRequest('get', {}, `${endpoint}/${id}`)
+      .then((response) => {
+        dispatch(getAccountSuccess(response.data));
+      })
+      .catch((response) => {
+        dispatch(getAccountError(response.message));
+      });
+  };
+}
+
 export function mockCreateAccount(data) {
   return (dispatch) => {
     dispatch(beginCreateAccount());
