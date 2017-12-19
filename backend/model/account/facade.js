@@ -18,7 +18,12 @@ class AccountFacade extends Facade {
     .populate({
       path: 'activeThreads',
       populate: {
-        path: 'author product'
+        path: 'author product',
+        populate: {
+          path: 'company',
+          select: 'name',
+          model: 'Company'
+        }
       }
     });
   }

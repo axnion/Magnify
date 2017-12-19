@@ -9,7 +9,7 @@ const accountSchema = new Schema({
   password: { type: String, required: true },
   company: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Company',
+    ref: 'company',
     required() {
       return this.role === config.accountRole.companyAdmin ||
         this.role === config.accountRole.companyRep;
@@ -22,7 +22,7 @@ const accountSchema = new Schema({
   },
   activeThreads: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Thread'
+    ref: 'thread'
   }]
 });
 
