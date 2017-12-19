@@ -93,15 +93,18 @@ h1 {
   .sidebar {
     grid-row: 2;
     justify-self: stretch;
-    /*max-width: 600px; 
-    width: calc(100% - 10px); */
-    align-self: stretch;
+    /* align-self: stretch; */
+    padding-bottom: 1rem;
   }
   .App-content {
     grid-row: 3;
   }
   .footer {
     grid-row: 4;
+  }
+  .App-top-banner {
+    max-width: 600px;
+    object-fit: fill;
   }
 }
 
