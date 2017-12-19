@@ -4,6 +4,12 @@ import { apiRequest } from './helpers';
 
 const endpoint = '/thread';
 
+export function resetCurrentThread() {
+  return {
+    type: types.RESET_CURRENT_THREAD,
+  };
+}
+
 function beginGetThreads() {
   return { type: types.GET_THREADS };
 }
@@ -58,14 +64,45 @@ function createThreadErrorr(payload) {
   };
 }
 
+export function setThreadFilter(payload) {
+  return {
+    type: types.SET_THREAD_FILTER,
+    payload,
+  };
+}
+
+export function clearThreadFilter() {
+  return { type: types.CLEAR_THREAD_FILTER };
+}
+
+function addCompaniesToThreads(companies, threads) {
+  const newThreads = threads.map((thread) => {
+    const { author } = thread;
+    const companyObj = companies.find(c => c._id === author.company);
+    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
+    const newThread = { ...thread, author: newAuthor };
+    return newThread;
+  });
+  return newThreads;
+}
+
 export function getThreads() {
   return (dispatch) => {
     dispatch(beginGetThreads());
 
-    return apiRequest('get', {}, endpoint)
-      .then((response) => {
-        dispatch(getThreadsSuccess(response.data));
-      })
+    const threadsRequest = apiRequest('get', {}, endpoint);
+    const companiesRequest = apiRequest('get', {}, '/company');
+
+    Promise.all([
+      threadsRequest,
+      companiesRequest,
+    ]).then((response) => {
+      const threads = response[0].data;
+      const companies = response[1].data;
+
+      const result = addCompaniesToThreads(companies, threads);
+      dispatch(getThreadsSuccess(result));
+    })
       .catch((response) => {
         dispatch(getThreadsError(response.message));
       });
@@ -136,17 +173,53 @@ export function mockGetThreads() {
   };
 }
 
-export function getAThread(id) {
+function addCompanyToThread(companies, thread) {
+  const companyObj = companies.find(c => c._id === thread.author.company);
+  const { author } = thread;
+  const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
+  const newThread = { ...thread, author: newAuthor };
+  return newThread;
+}
+
+function addCompanyToPosts(companies, posts) {
+  const newPosts = posts.map((post) => {
+    const { author } = post;
+    const companyObj = companies.find(c => c._id === author.company);
+    const newAuthor = companyObj !== undefined ? { ...author, company: companyObj } : author;
+    const newPost = { ...post, author: newAuthor };
+    return newPost;
+  });
+  return newPosts;
+}
+
+export function getAThread(id, token) {
   return (dispatch) => {
     dispatch(beginGetAThread());
+    // const companiesRequest = apiRequest('get', {}, '/company');
+    // const getThreadRequest = apiRequest('get', {}, `${endpoint}/${id}`);
 
-    return apiRequest('get', {}, `${endpoint}/${id}`)
+    return apiRequest('get', {}, `${endpoint}/${id}`, token)
       .then((response) => {
         dispatch(getAThreadSuccess(response.data));
       })
       .catch((response) => {
         dispatch(getAThreadError(response.message));
       });
+    /* Promise.all([
+      companiesRequest,
+      getThreadRequest,
+    ]).then((response) => {
+      const companies = response[0].data;
+      const thread = response[1].data;
+
+      let newThread = addCompanyToThread(companies, thread);
+      const newPosts = addCompanyToPosts(companies, newThread.posts);
+      newThread = { ...newThread, posts: newPosts };
+      dispatch(getAThreadSuccess(newThread));
+    })
+      .catch((response) => {
+        dispatch(getAThreadError(response.message));
+      }); */
   };
 }
 
@@ -234,8 +307,8 @@ export function mockGetAThread(id) {
               username: 'Testuser2',
               role: 'companyRep',
               company: {
-                _id: 'TestCompany1',
-                name: 'evilCorp',
+                _id: 'TestCompany2',
+                name: 'awesomeCorp',
               },
             },
             createdAt: '2016-05-23T16:00:00Z',
@@ -261,6 +334,16 @@ export function mockGetAThread(id) {
           role: 'consumer',
           company: null,
         },
+        product: {
+          _id: 'productId1',
+          name: 'testProduct',
+          company: {
+            _id: 'TestCompany2',
+            name: 'awesomeCorp',
+          },
+          category: 'categoryId',
+          material: [],
+        },
         createdAt: '2016-05-18T16:00:00Z',
         updatedAt: '2016-05-18T16:00:00Z',
       };
@@ -277,11 +360,16 @@ export function mockGetAThread(id) {
   };
 }
 
-export function createThread(data, token) {
+export function createThread(data, productId, token) {
   return (dispatch) => {
     dispatch(beginCreateThread());
 
-    return apiRequest('post', data, endpoint, token)
+    const dataToSend = data;
+    if (productId) {
+      dataToSend.product = productId;
+    }
+
+    return apiRequest('post', dataToSend, endpoint, token)
       .then((response) => {
         dispatch(createThreadSucccess(response.data));
       })
@@ -291,7 +379,7 @@ export function createThread(data, token) {
   };
 }
 
-export function mockCreateThread(data, token) {
+export function mockCreateThread(data, productId, token) {
   return (dispatch) => {
     dispatch(beginCreateThread());
 
@@ -303,6 +391,10 @@ export function mockCreateThread(data, token) {
       const thread = data;
 
       thread.posts = [];
+      if (productId) {
+        thread.product = productId;
+      }
+
       thread.author = {
         username: 'username',
         role: 'role',
@@ -317,7 +409,7 @@ export function mockCreateThread(data, token) {
     }, 500)
     ))
       .then((response) => {
-        // console.log(response);
+        //console.log(response);
         dispatch(createThreadSucccess(response));
       })
       .catch((error) => {

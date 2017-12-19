@@ -5,6 +5,14 @@ import { getThreads } from '../actions/thread';
 
 import Forum from '../components/Forum';
 
+function threadPostsHasFilterTerm(posts, filterTerm) {
+  return posts.reduce((accumulatedResult, post) => accumulatedResult || post.body.includes(filterTerm), false);
+}
+
+function filterThreads(filterBy, threads) {
+  return threads.filter(thread => thread.title.includes(filterBy) ||
+  thread.body.includes(filterBy) || threadPostsHasFilterTerm(thread.posts, filterBy));
+}
 
 class ForumContainer extends Component {
   componentDidMount() {
@@ -23,6 +31,7 @@ class ForumContainer extends Component {
 ForumContainer.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.any),
   getThreads: PropTypes.func.isRequired,
+  isWaiting: PropTypes.bool.isRequired,
 });
 
 ForumContainer.defaultProps = ({
@@ -34,7 +43,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  threads: state.thread.threads,
+  threads: filterThreads(state.thread.filterBy, state.thread.threads),
+  username: state.auth.username,
+  isWaiting: state.thread.isWaiting,
 });
 
 export default connect(

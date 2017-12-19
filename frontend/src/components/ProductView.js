@@ -14,9 +14,7 @@ const ProductView = ({
   errorPostRating,
   errorUploadAnnotation,
   product,
-  product: {
-    materials,
-  },
+  product: { materials },
   snackbarError,
   snackbarSuccess,
   snackbarPostRatingError,
@@ -26,37 +24,44 @@ const ProductView = ({
   handleRequestClose,
 }) => (
   <div className="product">
-    {product ?
+    {product ? (
       <div>
         <h1>Product: {product.name}</h1>
         <h3>Company: {product.company.name}</h3>
-        {
-          (isWaiting || auth.role === null || auth.role === 'consumer' || product.company._id !== auth.company) ?
-          undefined :
+        {isWaiting ||
+        auth.role === null ||
+        auth.role === 'consumer' ||
+        product.company._id !== auth.company ? (
+          <Link to={`/createThread/${product._id}`}>
+            <RaisedButton primary label="Create forum thread" />
+          </Link>
+        ) : (
           <Link to={`/material/${product._id}`}>
             <RaisedButton primary label="Upload Material" />
           </Link>
-        }
-      </div> :
+        )}
+      </div>
+    ) : (
       <h1>No product selected</h1>
-    }
+    )}
     {isWaiting && <h2>Loading...</h2>}
     {!isWaiting && materials.length === 0 && <h2>Empty.</h2>}
     {!isWaiting && error && <h2>Error. {error} </h2>}
-    {!isWaiting && materials.length > 0 &&
-      <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }} >
-        {materials.map(material => (
-          <MaterialCard
-            key={material._id}
-            material={material}
-            saveRating={saveRating}
-            showRateStars={(auth.role === 'consumer')}
-            saveAnnotation={saveAnnotation}
-            annotation={annotations.find(a => a.material === material._id)}
-          />
-        ))}
-      </div>
-    }
+    {!isWaiting &&
+      materials.length > 0 && (
+        <div style={{ opacity: isWaiting ? 0.5 : 1, marginTop: '25px' }}>
+          {materials.map(material => (
+            <MaterialCard
+              key={material._id}
+              material={material}
+              saveRating={saveRating}
+              showRateStars={auth.role === 'consumer'}
+              saveAnnotation={saveAnnotation}
+              annotation={annotations.find(a => a.material === material._id)}
+            />
+          ))}
+        </div>
+      )}
     <Snackbar
       open={snackbarError}
       message={errorUploadAnnotation || ''}
@@ -123,7 +128,7 @@ ProductView.defaultProps = {
   snackbarPostRatingSuccess: false,
   errorUploadAnnotation: null,
   errorPostRating: null,
-  annotations: [],
+  annotations: []
 };
 
 export default ProductView;

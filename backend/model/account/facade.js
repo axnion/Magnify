@@ -13,6 +13,21 @@ class AccountFacade extends Facade {
     return schema.save();
   }
 
+  findAccountById(id) {
+    return this.Schema.findById(id)
+    .populate({
+      path: 'activeThreads',
+      populate: {
+        path: 'author product',
+        populate: {
+          path: 'company',
+          select: 'name',
+          model: 'Company'
+        }
+      }
+    });
+  }
+
 }
 
 module.exports = new AccountFacade(AccountSchema);

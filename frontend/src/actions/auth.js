@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { push } from 'react-router-redux';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
+import { getACompany } from './company';
 
 
 const endpoint = '/account/login';
@@ -43,8 +44,10 @@ export function login(data) {
 
     return apiRequest('post', data, endpoint)
       .then((response) => {
-        // console.log(response.data);
         dispatch(loginSuccess(response.data));
+        if (response.data.user.company) {
+          dispatch(getACompany(response.data.user.company));
+        }
       })
       .catch((response) => {
         dispatch(loginError(response.message));

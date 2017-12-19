@@ -1,28 +1,36 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const threadSchema = new Schema({
-  title: {
-    type: String,
-    required: true
+const threadSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true
+    },
+    body: {
+      type: String,
+      required: true
+    },
+    posts: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'post'
+      }
+    ],
+    author: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'account',
+      required: true
+    },
+    product: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'product'
+    }
   },
-  body: {
-    type: String,
-    required: true
-  },
-  posts: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'post'
-  }],
-  author: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'account',
-    required: true
+  {
+    timestamps: true
   }
-  // tags: [{ type: mongoose.Schema.ObjectId, ref: 'Tag' }]
-}, {
-  timestamps: true
-});
+);
 
 let thread;
 

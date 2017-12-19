@@ -98,7 +98,7 @@ export function getProducts() {
       const categories = response[1].data;
       const companies = response[2].data;
 
-      const result = combineAllProductsData(products, categories, companies);      
+      const result = combineAllProductsData(products, categories, companies);
       dispatch(getProductsSuccess(result));
     })
       .catch((response) => {
