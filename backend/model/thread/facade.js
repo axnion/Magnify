@@ -14,21 +14,22 @@ class ThreadFacade extends Facade {
       .populate({
         path: 'author',
         select: 'username company role',
-        populate: { path: 'company' }
+        populate: { path: 'company', model: 'Company' }
       })
       .populate({
         path: 'posts',
         populate: {
           path: 'author',
           select: 'username company role',
-          populate: { path: 'company' }
+          populate: { path: 'company', model: 'Company' }
         }
       })
       .populate({
         path: 'product',
         select: 'company name',
         populate: {
-          path: 'company'
+          path: 'company',
+          model: 'Company'
         }
       });
   }
@@ -61,7 +62,7 @@ class ThreadFacade extends Facade {
     productSchema.findById(productId).then((product) => {
       companySchema.update(
         { _id: product.company },
-        { $push: { unseenThreads: threadId } }
+        { $addToSet: { unseenThreads: threadId } }
       ).exec();
     });
   }
@@ -69,7 +70,7 @@ class ThreadFacade extends Facade {
   addToActiveThreads(userId, threadId) {
     accountSchema.update(
       { _id: userId },
-      { $push: { activeThreads: threadId } }
+      { $addToSet: { activeThreads: threadId } }
     ).exec();
   }
 }
