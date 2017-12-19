@@ -46,7 +46,7 @@ class ThreadController extends Controller {
         .then((thread) => {
 
           // Mark thread as read if rep or admin reads it
-          if (thread.product && user.company && user.company.equals(thread.product.company)) {
+          if (thread.product && user.company && user.company.equals(thread.product.company._id)) {
             this.facade.removeFromUnseenThreads(user.company, thread.id);
           }
 

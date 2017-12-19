@@ -13,7 +13,7 @@ class CompanyFacade extends Facade {
       populate: {
         path: 'author',
         select: 'username company role',
-        populate: { path: 'company' }
+        populate: { path: 'company', model: 'Company' }
       }
     })
     .populate({
@@ -22,7 +22,8 @@ class CompanyFacade extends Facade {
         path: 'product',
         populate: {
           path: 'company',
-          select: 'name'
+          select: 'name',
+          model: 'Company'
         }
       }
     });

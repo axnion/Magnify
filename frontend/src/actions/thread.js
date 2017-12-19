@@ -195,8 +195,6 @@ function addCompanyToPosts(companies, posts) {
 export function getAThread(id, token) {
   return (dispatch) => {
     dispatch(beginGetAThread());
-    // const companiesRequest = apiRequest('get', {}, '/company');
-    // const getThreadRequest = apiRequest('get', {}, `${endpoint}/${id}`);
 
     return apiRequest('get', {}, `${endpoint}/${id}`, token)
       .then((response) => {
@@ -205,21 +203,6 @@ export function getAThread(id, token) {
       .catch((response) => {
         dispatch(getAThreadError(response.message));
       });
-    /* Promise.all([
-      companiesRequest,
-      getThreadRequest,
-    ]).then((response) => {
-      const companies = response[0].data;
-      const thread = response[1].data;
-
-      let newThread = addCompanyToThread(companies, thread);
-      const newPosts = addCompanyToPosts(companies, newThread.posts);
-      newThread = { ...newThread, posts: newPosts };
-      dispatch(getAThreadSuccess(newThread));
-    })
-      .catch((response) => {
-        dispatch(getAThreadError(response.message));
-      }); */
   };
 }
 
