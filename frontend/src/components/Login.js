@@ -58,7 +58,7 @@ class Login extends React.Component {
             onChange={(event, value) => this.setState({ password: value, error: false })}
             disabled={this.props.isWaiting}
           /><br />
-          <RaisedButton onClick={this.handleSubmit} label="Login" primary />
+          <RaisedButton type="submit" onClick={this.handleSubmit} label="Login" primary />
         </form>
         <Snackbar
           open={this.state.snackbarError}
