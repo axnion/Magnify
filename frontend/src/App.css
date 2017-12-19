@@ -2,19 +2,26 @@
   border: 1px solid black;
   margin-left: auto;
   margin-right: auto;
-  width: 1022px;
+  /* width: 1022px; */
+  display: grid;
+  /* grid-gap: 10px; */
+  /*grid-template-columns: 341px 341px 341px; */
+  grid-template-rows: 148px auto auto;
+  grid-template-areas: 'header  header  header' 'sidebar content content' 'footer  footer  footer';
+  height: calc(100vh - 10px);
 }
 
 .App-top-banner {
   height: 148px;
   display: block;
+  grid-area: header;
 }
 
 .sidebar-btn {
-  background:none!important;
-  color:white;
-  border:none; 
-  padding:0!important;
+  background: none !important;
+  color: white;
+  border: none;
+  padding: 0 !important;
   margin-top: 10px;
   font: inherit;
   /*border is optional*/
@@ -27,9 +34,14 @@
 
 .App-content {
   background-color: #f2faf7;
-  height: 671px;
-  width: 844px;
-  margin-left: 179px;
+  /*height: 671px;
+  width: 844px; 
+  margin-left: 179px;*/
+  padding-left: 20px;
+  grid-area: content;
+  grid-row: 2 / 7;
+  position: relative;
+  justify-self: stretch;
 }
 
 h1 {
@@ -40,4 +52,81 @@ h1 {
 .product {
   overflow-y: scroll;
   height: 671px;
+}
+
+.header {
+  grid-area: header;
+  grid-row: 1;
+}
+
+.footer {
+  grid-area: footer;
+  grid-row: span 3 / 5;
+  grid-column: 2;
+}
+
+.content {
+  grid-area: content;
+  position: relative;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  grid-row: 2 / span 5;
+  /*align-self: stretch; */
+  justify-self: start;
+}
+
+.App-header {
+  grid-area: header;
+  grid-row: 1;
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    /*grid-template-columns: auto;*/
+    grid-template-areas: 'header' 'sidebar' 'content' 'footer';
+    width: calc(100% - 10px);
+    grid-auto-flow: column;
+    grid-auto-columns: 600px 1000px;
+  }
+  .sidebar {
+    grid-row: 2;
+    justify-self: stretch;
+    /* align-self: stretch; */
+    padding-bottom: 1rem;
+  }
+  .App-content {
+    grid-row: 3;
+  }
+  .footer {
+    grid-row: 4;
+  }
+  .App-top-banner {
+    max-width: 600px;
+    object-fit: fill;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .App {
+    grid-gap: 0px;
+    grid-template-columns: 179px auto 120px;
+    grid-template-areas: 'header  header  header' 'sidebar content content' 'footer  footer  footer';
+    max-width: 1022px;
+  }
+  .sidebar {
+    grid-row: 2 / span 5;
+    /* align-self: start;*/
+    justify-self: start;
+  }
+  .footer {
+    grid-row: span 3 / 5;
+    grid-column: 2;
+  }
+  .App-content {
+    grid-row: 2 / 7;
+    position: relative;
+    justify-self: stretch;
+  }
 }
