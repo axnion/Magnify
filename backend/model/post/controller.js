@@ -1,6 +1,7 @@
 const passport = require('passport');
 const Controller = require('../../lib/controller');
 const postFacade = require('./facade');
+const threadFacade = require('../thread/facade');
 
 class PostController extends Controller {
   createPost(req, res, next) {
@@ -19,6 +20,7 @@ class PostController extends Controller {
       .create(post)
       .then(createdPost => this.facade.findThreadByIdAndInsertPost(threadId, createdPost))
       .then((result) => {
+        threadFacade.addToActiveThreads(user.id, threadId);
         res.status(201).json(result);
         next();
       })

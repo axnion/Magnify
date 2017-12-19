@@ -45,8 +45,8 @@ class ThreadFacade extends Facade {
 
   findAndPopulateAuthorAndProduct() {
     return this.Schema.find()
-      .populate({ path: 'author', select: 'username company role', populate: { path: 'company' } } )
-      .populate({ path: 'product', populate: { path: 'company' } })
+      .populate({ path: 'author', select: 'username company role', populate: { path: 'company', model: 'Company' } } )
+      .populate({ path: 'product', populate: { path: 'company', model: 'Company' } })
       .populate('posts');
   }
 
