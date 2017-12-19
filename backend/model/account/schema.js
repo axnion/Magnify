@@ -11,14 +11,19 @@ const accountSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Company',
     required() {
-      return this.role === config.accountRole.companyAdmin || this.role === config.accountRole.companyRep;
+      return this.role === config.accountRole.companyAdmin ||
+        this.role === config.accountRole.companyRep;
     }
   },
   role: {
     type: String,
     required: true,
     enum: ['companyAdmin', 'companyRep', 'consumer']
-  }
+  },
+  activeThreads: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Thread'
+  }]
 });
 
 /**
