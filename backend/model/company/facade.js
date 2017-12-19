@@ -7,7 +7,25 @@ class CompanyFacade extends Facade {
 //  }
 
   getCompanyById(id) {
-    return this.Schema.findById(id).populate('unseenThreads');
+    return this.Schema.findById(id)
+    .populate({
+      path: 'unseenThreads',
+      populate: {
+        path: 'author',
+        select: 'username company role',
+        populate: { path: 'company' }
+      }
+    })
+    .populate({
+      path: 'unseenThreads',
+      populate: {
+        path: 'product',
+        populate: {
+          path: 'company',
+          select: 'name'
+        }
+      }
+    });
   }
 
 //  addCompany(company) {

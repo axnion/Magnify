@@ -10,6 +10,9 @@ router
 router
   .route('/companyRep')
   .post((...args) => controller.createAccount(...args));
+router
+  .route('/:id/threads')
+  .get((...args) => controller.getAccountThreads(...args));
 
 router.route('/login').post((...args) => controller.login(...args));
 

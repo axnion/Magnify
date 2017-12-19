@@ -59,6 +59,9 @@ class AccountController extends Controller {
       .then(resp => res.status(201).json({ username: resp.username }))
       .catch(message => res.status(500).json(message));
   }
+
+  getAccountThreads(req, res, next) {
+  }
 }
 
 module.exports = new AccountController(AccountFacade);
