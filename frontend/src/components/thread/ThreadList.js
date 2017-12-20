@@ -10,7 +10,8 @@ import ThreadHead from '../thread/ThreadHead';
 
 
 const style = {
-  margin: '20px',
+  marginBottom: '10px',
+  marginRight: '10px',
 };
 
 const StyledList = styled(List)`

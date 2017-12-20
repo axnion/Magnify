@@ -23,15 +23,15 @@ const SideBarDivider = styled('div')`
   margin-right: 20px;
 `;
 
-const SideBarDivider_old = styled('div')`
-  width: 178px;
-  height: 671px;
-  background-image: url(${leftside});
-  border-right: 1px solid black;
-  float: left;
-  text-align: center;
-  margin-right: 20px;
-`;
+// const SideBarDivider_old = styled('div')`
+//   width: 178px;
+//   height: 671px;
+//   background-image: url(${leftside});
+//   border-right: 1px solid black;
+//   float: left;
+//   text-align: center;
+//   margin-right: 20px;
+// `;
 
 /* const ForumBadge = styled(Badge)`
   padding: 0px 12px 0px 0px;
