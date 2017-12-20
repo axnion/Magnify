@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import CreateThread from '../components/CreateThread';
-import { createThread } from '../actions/thread'; // change here to use non mock action
+import { createThread } from '../actions/thread'; 
+import { snackbarSuccess, snackbarError } from '../actions/snackbar';
 
-const sendThread = createThread; // change here to use non mock action
+const sendThread = createThread;
 
 class CreateThreadContainer extends Component {
   constructor(props) {
@@ -13,8 +14,6 @@ class CreateThreadContainer extends Component {
 
     this.state = {
       errorText: '',
-      snackbarError: false,
-      snackbarSuccess: false,
     };
 
     this.SubmitOnClick = this.SubmitOnClick.bind(this);
@@ -26,9 +25,9 @@ class CreateThreadContainer extends Component {
       this.props.sendThread(payload, this.props.match.params.id, this.props.auth.token)
         .then(() => {
           if (this.props.error) {
-            this.setState({ snackbarSuccess: false, snackbarError: true });
+            this.props.showError(this.props.error);
           } else {
-            this.setState({ snackbarSuccess: true, snackbarError: false });
+            this.props.showSuccess('Thread created');
             callback();
             this.props.history.goBack();
           }
@@ -51,6 +50,8 @@ class CreateThreadContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   sendThread: (data, productId, token) => dispatch(sendThread(data, productId, token)),
+  showError: message => dispatch(snackbarError(message)),
+  showSuccess: message => dispatch(snackbarSuccess(message)),
 });
 
 const mapStateToProps = state => ({
@@ -74,6 +75,8 @@ CreateThreadContainer.propTypes = ({
       id: PropTypes.string,
     }),
   }).isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 });
 
 CreateThreadContainer.defaultProps = ({

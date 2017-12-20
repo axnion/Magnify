@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -10,12 +9,9 @@ function callback() {
 }
 
 const CreateThread = ({
-  error,
   isWaiting,
-  errorText,
-  snackbarError,
-  snackbarSuccess,
   SubmitOnClick,
+  errorText,
 }) => (
   <div className="create-thread">
     <TextField
@@ -24,6 +20,7 @@ const CreateThread = ({
       floatingLabelText="Title"
       rows={1}
       id="TitleField"
+      errorText={errorText}
     />
     <TextField
       style={{ width: '95%', marginBottom: '20px' }}
@@ -42,36 +39,18 @@ const CreateThread = ({
       body: document.getElementById('BodyField').value,
     }, callback)}
     />
-    <Snackbar
-      open={snackbarError}
-      message={error || errorText}
-      autoHideDuration={4000}
-    />
-    <Snackbar
-      open={snackbarSuccess}
-      message="Thread successfully created!"
-      autoHideDuration={4000}
-      bodyStyle={{ backgroundColor: '#21ba45' }}
-      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-    />
   </div>
 );
 
 
 CreateThread.propTypes = {
-  error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
-  errorText: PropTypes.string,
-  snackbarError: PropTypes.bool,
-  snackbarSuccess: PropTypes.bool,
   SubmitOnClick: PropTypes.func.isRequired,
+  errorText: PropTypes.string,
 };
 
 CreateThread.defaultProps = {
-  error: null,
   errorText: '',
-  snackbarError: false,
-  snackbarSuccess: false,
 };
 
 export default CreateThread;
