@@ -18,7 +18,7 @@ const StyledList = styled(List)`
   overflow-y: auto;
 `;
 
-const Forum = ({
+const ThreadList = ({
   threads,
   isWaiting,
 }) => (
@@ -43,11 +43,11 @@ const Forum = ({
   </div>
 );
 
-Forum.propTypes = ({
+ThreadList.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
-    author: PropTypes.string,
+    author: PropTypes.any,
     createdAt: PropTypes.string,
     product: PropTypes.shape({
       name: PropTypes.string,
@@ -57,8 +57,8 @@ Forum.propTypes = ({
   isWaiting: PropTypes.bool.isRequired,
 });
 
-Forum.defaultProps = ({
+ThreadList.defaultProps = ({
   threads: [],
 });
 
-export default Forum;
+export default ThreadList;
