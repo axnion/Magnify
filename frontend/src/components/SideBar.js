@@ -135,10 +135,9 @@ const SideBar = ({
         badgeContent={
         unseenThreads.length
       }
-        secondary
         style={
         {
-          padding: '0px 24px 18px 12px',
+          padding: '0px 18px 18px 12px',
         }
       }
       /> : undefined }
