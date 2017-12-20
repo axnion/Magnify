@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 class AddRepForm extends React.Component {
   constructor(props) {
     super(props);
-    // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false, snackbarSuccess: false };
+
+    this.state = {
+      username: '',
+      password: '',
+      usernameErrorText: '',
+      passwordErrorText: '',
+    };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -22,35 +26,47 @@ class AddRepForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const data = {
-      username: this.state.username,
-      password: this.state.password,
-      role: 'companyRep',
-    };
+    if (this.state.username !== '' && this.state.password !== '') {
+      const data = {
+        username: this.state.username,
+        password: this.state.password,
+        role: 'companyRep',
+      };
 
-    this.sendForm(data, this.props.token).then(() => {
-      if (this.props.error) {
-        this.setState({ snackbarError: true });
+      this.sendForm(data, this.props.token).then(() => {
+        if (this.props.error) {
+          this.props.showError(this.props.error);
+        } else {
+          this.props.showSuccess('Representative added');
+        }
+      });
+
+      this.setState({
+        username: '',
+        password: '',
+        usernameErrorText: '',
+        passwordErrorText: '',
+      });
+    } else {
+      if (this.state.username === '') {
+        this.setState({
+          usernameErrorText: 'Username is required',
+        });
       } else {
-        this.setState({ snackbarSuccess: true });
+        this.setState({
+          usernameErrorText: '',
+        });
       }
-    });
-    this.setState({ hasSubmitted: true });
-    this.setState({ username: '', password: '' });
-  }
-
-  printSubmitMessage() {
-    if (this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Could not add new representative. {this.props.error} </p>
-      );
-    } else if (!this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>representative added!</p>
-      );
+      if (this.state.password === '') {
+        this.setState({
+          passwordErrorText: 'Password is required',
+        });
+      } else {
+        this.setState({
+          passwordErrorText: '',
+        });
+      }
     }
-
-    return undefined;
   }
 
   render() {
@@ -60,31 +76,19 @@ class AddRepForm extends React.Component {
         <TextField
           hintText="Username"
           value={this.state.username}
-          onChange={(event, value) => this.setState({ username: value, error: false })}
+          onChange={(event, value) => this.setState({ username: value })}
           disabled={this.props.isWaiting}
+          errorText={this.state.usernameErrorText}
         /><br />
         <TextField
           hintText="Password"
           type="password"
           value={this.state.password}
-          onChange={(event, value) => this.setState({ password: value, error: false })}
+          onChange={(event, value) => this.setState({ password: value })}
           disabled={this.props.isWaiting}
+          errorText={this.state.passwordErrorText}
         /><br />
         <RaisedButton onClick={this.handleSubmit} label="Add" primary />
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.error || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
-        <Snackbar
-          open={this.state.snackbarSuccess}
-          message={'Representative added!'}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
       </form>
     );
   }
@@ -95,12 +99,12 @@ AddRepForm.propTypes = {
   isWaiting: PropTypes.bool,
   token: PropTypes.string,
   sendForm: PropTypes.func.isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 };
 
 AddRepForm.defaultProps = {
   error: null,
-  snackbarError: false,
-  snackbarSuccess: false,
   isWaiting: false,
   token: null,
 };
