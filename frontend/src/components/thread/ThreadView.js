@@ -5,6 +5,10 @@ import ThreadHead from './ThreadHead';
 import ThreadPosts from './ThreadPosts';
 import CreatePostContainer from '../../containers/CreatePostContainer';
 
+const style = {
+  marginLeft: '-20px',
+};
+
 const ThreadView = (props) => {
   const {
     thread,
@@ -19,6 +23,7 @@ const ThreadView = (props) => {
         author={thread.author}
         createdAt={thread.createdAt}
         product={thread.product}
+        customStyle={style}
       />
       <ThreadPosts posts={thread.posts} product={thread.product} />
       {

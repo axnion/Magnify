@@ -9,7 +9,6 @@ const StyledDiv = styled('div')`
   max-height: 430px;
   overflow-y: auto;
   padding-left: 0px;
-  margin-left: -10px;
 `;
 
 const ThreadPosts = ({ posts, product }) => {

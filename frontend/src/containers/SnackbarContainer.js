@@ -4,32 +4,30 @@ import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 import { resetSnackbar } from '../actions/snackbar';
 
-class SnackbarContainer extends React.Component {
-
-  render() {
-    const { success, error, message, handleRequestClose, 
-    } = this.props;
-    return (
-      <div className="footer">
-        <Snackbar
-          open={success}
-          message={message}
-          autoHideDuration={4000}
-          onRequestClose={handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-        <Snackbar
-          open={error}
-          message={message}
-          autoHideDuration={4000}
-          onRequestClose={handleRequestClose}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-      </div>
-    );
-  }
-}
+const SnackbarContainer = ({
+  success,
+  error,
+  message,
+  handleRequestClose,
+}) => (
+  <div className="footer">
+    <Snackbar
+      open={success}
+      message={message}
+      autoHideDuration={4000}
+      onRequestClose={handleRequestClose}
+      bodyStyle={{ backgroundColor: '#21ba45' }}
+      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+    />
+    <Snackbar
+      open={error}
+      message={message}
+      autoHideDuration={4000}
+      onRequestClose={handleRequestClose}
+      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+    />
+  </div>
+);
 
 SnackbarContainer.propTypes = {
   success: PropTypes.bool,
