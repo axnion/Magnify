@@ -63,6 +63,7 @@ class AccountController extends Controller {
   getAccount(req, res, next) {
     return this.facade.findAccountById(req.params.id)
     .then((result) => {
+      result.activeThreads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       res.status(200).json(result);
       next();
     })
