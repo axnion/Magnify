@@ -35,7 +35,7 @@ const StyledCardAction = styled('div')`
 `;
 
 const ColoredCardHeader = styled(CardHeader)`
-    background-color: #BBDEFB;
+  background-color: #BBDEFB;
 `;
 
 const SaveButton = styled(FloatingActionButton)`
@@ -72,10 +72,11 @@ const MaterialCardComponent = ({
         multiLine
         rows={1}
         rowsMax={6}
-        id="AnnotationTextField"
-        // onChange={(event, value) => this.setState({ annotation: value })}
+        id={`AnnotationTextField${material._id}`}
       />
-      <SaveButton onClick={() => saveAnnotation(document.getElementById('AnnotationTextField').value, material._id)}>
+      <SaveButton
+        onClick={() => saveAnnotation(document.getElementById(`AnnotationTextField${material._id}`).value, material._id)}
+      >
         <Save />
       </SaveButton>
     </CardText>
@@ -85,7 +86,7 @@ const MaterialCardComponent = ({
 MaterialCardComponent.propTypes = {
   material: PropTypes.object, // eslint-disable-line
   showRateStars: PropTypes.bool,
-  annotation: PropTypes.object,
+  annotation: PropTypes.object, // eslint-disable-line
   saveAnnotation: PropTypes.func.isRequired,
   saveRating: PropTypes.func.isRequired,
 };

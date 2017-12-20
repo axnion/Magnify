@@ -5,17 +5,11 @@ import ProductView from '../components/ProductView';
 import { getAProduct } from '../actions/product';
 import postRating from '../actions/rating';
 import { uploadAnnotation, getAnnotations } from '../actions/annotation';
+import { snackbarSuccess, snackbarError } from '../actions/snackbar';
 
 class ProductViewContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      snackbarError: false,
-      snackbarSuccess: false,
-      snackbarPostRatingError: false,
-      snackbarPostRatingSuccess: false,
-    };
 
     this.saveAnnotation = this.saveAnnotation.bind(this);
     this.saveRating = this.saveRating.bind(this);
@@ -27,26 +21,24 @@ class ProductViewContainer extends Component {
   }
 
   saveAnnotation(annotation, materialId) {
-    if (annotation !== '') {
-      this.props.uploadAnnotation(annotation, materialId, this.props.auth.token)
-        .then(() => {
-          if (this.props.errorUploadAnnotation) {
-            this.setState({ snackbarError: true });
-          } else {
-            this.setState({ snackbarSuccess: true });
-            this.props.getAnnotations(this.props.auth.token, this.props.match.params.id);
-          }
-        });
-    }
+    this.props.uploadAnnotation(annotation, materialId, this.props.auth.token)
+      .then(() => {
+        if (this.props.errorUploadAnnotation) {
+          this.props.showError(this.props.errorUploadAnnotation);
+        } else {
+          this.props.showSuccess('Notes saved');
+          this.props.getAnnotations(this.props.auth.token, this.props.match.params.id);
+        }
+      });
   }
 
   saveRating(rating, materialId) {
     this.props.postRating(rating, materialId, this.props.auth.token)
       .then(() => {
         if (this.props.errorPostRating) {
-          this.setState({ snackbarPostRatingError: true });
+          this.props.showError(this.props.errorPostRating);
         } else {
-          this.setState({ snackbarPostRatingSuccess: true });
+          this.props.showSuccess('Material rated');
         }
         this.props.getAProduct(this.props.match.params.id, this.props.auth.token);
       });
@@ -57,7 +49,6 @@ class ProductViewContainer extends Component {
       <ProductView
         saveRating={this.saveRating}
         saveAnnotation={this.saveAnnotation}
-        {...this.state}
         {...this.props}
       />
     );
@@ -69,6 +60,8 @@ const mapDispatchToProps = dispatch => ({
   getAnnotations: (token, id) => dispatch(getAnnotations(token, id)),
   uploadAnnotation: (annotation, materialId, token) => dispatch(uploadAnnotation(annotation, materialId, token)),
   postRating: (rating, materialId, token) => dispatch(postRating(rating, materialId, token)),
+  showError: message => dispatch(snackbarError(message)),
+  showSuccess: message => dispatch(snackbarSuccess(message)),
 });
 
 const mapStateToProps = state => ({
@@ -98,6 +91,8 @@ ProductViewContainer.propTypes = ({
   }).isRequired,
   errorUploadAnnotation: PropTypes.string,
   errorPostRating: PropTypes.string,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 });
 
 ProductViewContainer.defaultProps = ({
