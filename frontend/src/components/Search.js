@@ -27,7 +27,7 @@ const CreatePost = ({
       label="Search"
       onClick={() => search(document.getElementById('SearchField').value, callback)}
     />
-    {filterBy ? <p style={{ display: 'inline-block', marginLeft: '22px' }}>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
+    {filterBy ? <p style={{ display: 'inline-block' }}>Showing search results for: &quot;{filterBy}&quot;</p> : ''}
     {filterBy ? <RaisedButton style={{ marginLeft: '22px' }} primary label="Clear Search" onClick={() => clearSearch()} /> : ''}
   </div>
 );
