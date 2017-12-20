@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 import CategoryPickerContainer from '../containers/CategoryPickerContainer';
 
@@ -68,12 +67,6 @@ class AddProduct extends React.Component {
           <CategoryPickerContainer functionToRun={this.handleSubComponentChange} /> <br />
           <RaisedButton onClick={this.handleSubmit} label="Add" primary />
         </form>
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.error || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
       </div>
     );
   }
