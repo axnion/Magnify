@@ -122,6 +122,7 @@ const SideBar = ({
   unseenThreads,
   updateUnseen,
 }) => (
+<<<<<<< HEAD
     <SideBarDivider className="sidebar">
       {renderProfile(username, updateUnseen)}
       {renderProducts(username, updateUnseen)}
@@ -146,6 +147,32 @@ const SideBar = ({
       {renderLoginAndRegisterOrLogout(username, logout)}
     </SideBarDivider>
   );
+=======
+  <SideBarDivider className="sidebar">
+    {renderProfile(username, updateUnseen)}
+    {renderProducts(username, updateUnseen)}
+    {renderAddProduct(username, updateUnseen)}
+    {renderAddRep(role, updateUnseen)}
+    <SideBarItem >
+      <Link to="/forum" onClick={updateUnseen}>
+        <button className="sidebar-btn" > Forum </button>
+      </Link > {
+      role === 'companyRep' || role === 'companyAdmin' ? <Badge
+        badgeContent={
+        unseenThreads.length
+      }
+        style={
+        {
+          userSelect: 'none',
+          padding: '0px 18px 18px 12px',
+        }
+      }
+      /> : undefined }
+    </SideBarItem >
+    {renderLoginAndRegisterOrLogout(username, logout)}
+  </SideBarDivider>
+);
+>>>>>>> a28b2b2918f9ef9394c239278905822e3cb114d1
 
 SideBar.propTypes = {
   username: PropTypes.string,

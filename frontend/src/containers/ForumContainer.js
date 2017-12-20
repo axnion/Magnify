@@ -6,12 +6,13 @@ import { getThreads } from '../actions/thread';
 import Forum from '../components/Forum';
 
 function threadPostsHasFilterTerm(posts, filterTerm) {
-  return posts.reduce((accumulatedResult, post) => accumulatedResult || post.body.includes(filterTerm), false);
+  return posts.reduce((accumulatedResult, post) => accumulatedResult || post.body.toLowerCase().includes(filterTerm), false);
 }
 
 function filterThreads(filterBy, threads) {
-  return threads.filter(thread => thread.title.includes(filterBy) ||
-  thread.body.includes(filterBy) || threadPostsHasFilterTerm(thread.posts, filterBy));
+  const lowerCaseFilter = filterBy.toLowerCase();
+  return threads.filter(thread => thread.title.toLowerCase().includes(lowerCaseFilter) ||
+  thread.body.toLowerCase().includes(lowerCaseFilter) || threadPostsHasFilterTerm(thread.posts, lowerCaseFilter));
 }
 
 class ForumContainer extends Component {

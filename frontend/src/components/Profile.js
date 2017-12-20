@@ -11,6 +11,7 @@ import ThreadList from '../components/thread/ThreadList';
 
 const StyledCard = styled(Card)`
   margin: 10px;
+  margin-left: 0px;
 `;
 
 const MainDiv = styled('div')`
