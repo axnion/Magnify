@@ -88,7 +88,7 @@ h1 {
     grid-template-areas: 'header' 'sidebar' 'content' 'footer';
     /* width: calc(100% - 10px); */
     grid-auto-flow: column;
-    grid-auto-columns: 600px 1000px;
+    /*grid-auto-columns: 600px auto; */
     justify-self: stretch;
     align-self: stretch;
   }

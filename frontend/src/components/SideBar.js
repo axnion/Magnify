@@ -20,7 +20,7 @@ const SideBarDivider = styled('div') `
   border-right: 1px solid black;
   
   text-align: center;
-  margin-right: 20px;
+  
 `;
 
 // const SideBarDivider_old = styled('div')`
