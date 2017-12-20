@@ -32,23 +32,15 @@ class AddMaterial extends React.Component {
       files: this.state.files,
     };
 
-    this.sendForm(data, this.props.match.params.id, this.props.token);
-    this.setState({ hasSubmitted: true });
+    this.sendForm(data, this.props.match.params.id, this.props.token).then(() => {
+      if (this.props.error) {
+        this.props.showError(this.props.error);
+      } else {
+        this.props.showSuccess('Material added');
+      }
+    });
+
     this.setState({ title: '', description: '', files: [] });
-  }
-
-  printSubmitMessage() {
-    if (this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Could not upload material. {this.props.error} </p>
-      );
-    } else if (!this.props.error && !this.props.isWaiting && this.state.hasSubmitted) {
-      return (
-        <p>Material uploaded successfully!</p>
-      );
-    }
-
-    return undefined;
   }
 
   render() {
@@ -72,8 +64,9 @@ class AddMaterial extends React.Component {
         <section>
           <div className="dropzoneContainer">
             <Dropzone
+              multiple={false}
               accept=".pdf"
-              onDrop={this.onDrop.bind(this)}
+              onDrop={this.onDrop.bind(this)} // eslint-disable-line
               style={{
                 borderColor: '#afafaf',
                 borderRadius: '2px',
@@ -84,7 +77,7 @@ class AddMaterial extends React.Component {
                 padding: '25px',
               }}
             >
-              <p>Drag and drop some files here, or click to select files to upload.</p>
+              <p>Drag and drop a file here, or click to select file to upload.</p>
             </Dropzone>
           </div>
           <aside>
@@ -99,7 +92,6 @@ class AddMaterial extends React.Component {
           onClick={this.handleSubmit}
           disabled={!(this.state.title !== '' && this.state.files[0])}
         />
-        {this.printSubmitMessage()}
       </div>
     );
   }
@@ -107,14 +99,19 @@ class AddMaterial extends React.Component {
 
 AddMaterial.propTypes = {
   error: PropTypes.string,
-  isWaiting: PropTypes.bool,
   token: PropTypes.string,
   sendForm: PropTypes.func.isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 AddMaterial.defaultProps = {
   error: null,
-  isWaiting: false,
   token: null,
 };
 
