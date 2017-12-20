@@ -17,6 +17,7 @@ import ShowRating from './ShowRating';
 const StyledCard = styled(Card)`
   padding: 0px;
   margin: 10px;
+  margin-left: 0px;
   min-height: 155px;
 `;
 
@@ -47,10 +48,17 @@ const MaterialCardComponent = ({
   material, showRateStars, annotation, saveAnnotation, saveRating,
 }) => (
   <StyledCard>
-    <StyledFloatingActionButton download href={`${config.serverURI}${material.url}`}>
+    <StyledFloatingActionButton
+      download
+      href={`${config.serverURI}${material.url}`}
+    >
       <GetApp />
     </StyledFloatingActionButton>
-    <ColoredCardHeader actAsExpander showExpandableButton title={material.title} />
+    <ColoredCardHeader
+      actAsExpander
+      showExpandableButton
+      title={material.title}
+    />
     <StyledCardActions>
       <StyledCardAction>
         {
