@@ -124,9 +124,9 @@ const SideBar = ({
 }) => (
   <SideBarDivider className="sidebar">
     {renderProfile(username, updateUnseen)}
-    {renderProducts(username, unseenThreads)}
-    {renderAddProduct(username, unseenThreads)}
-    {renderAddRep(role, unseenThreads)}
+    {renderProducts(username, updateUnseen)}
+    {renderAddProduct(username, updateUnseen)}
+    {renderAddRep(role, updateUnseen)}
     <SideBarItem >
       <Link to="/forum" onClick={updateUnseen}>
         <button className="sidebar-btn" > Forum </button>
