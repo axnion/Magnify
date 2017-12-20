@@ -14,7 +14,7 @@ const CreatePost = ({
 }) => (
   <div className="search">
     <TextField
-      style={{ display: 'inline-block', maxWidth: '600px' }}
+      style={{ display: 'inline-block', maxWidth: '686px' }}
       textareaStyle={{ display: 'block', position: 'absolute' }}
       hintText="Search here!"
       fullWidth
