@@ -137,6 +137,7 @@ const SideBar = ({
       }
         style={
         {
+          userSelect: 'none',
           padding: '0px 18px 18px 12px',
         }
       }
