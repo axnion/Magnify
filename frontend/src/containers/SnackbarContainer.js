@@ -2,46 +2,54 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
+import { resetSnackbar } from '../actions/snackbar';
 
-class SnackbarContainer extends React.Component {
-  render() {
-    const { loginSuccess, registerSuccess } = this.props;
-    return (
-      <div className="footer">
-        <Snackbar
-          open={loginSuccess}
-          message="Successfully logged in"
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-        <Snackbar
-          open={registerSuccess}
-          message="Successfully registered"
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
-      </div>
-    );
-  }
-}
+const SnackbarContainer = ({
+  success,
+  error,
+  message,
+  handleRequestClose,
+}) => (
+  <div className="footer">
+    <Snackbar
+      open={success}
+      message={message}
+      autoHideDuration={4000}
+      onRequestClose={handleRequestClose}
+      bodyStyle={{ backgroundColor: '#21ba45' }}
+      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+    />
+    <Snackbar
+      open={error}
+      message={message}
+      autoHideDuration={4000}
+      onRequestClose={handleRequestClose}
+      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+    />
+  </div>
+);
 
 SnackbarContainer.propTypes = {
-  loginSuccess: PropTypes.bool,
-  registerSuccess: PropTypes.bool
+  success: PropTypes.bool,
+  error: PropTypes.bool,
+  message: PropTypes.string,
+  handleRequestClose: PropTypes.func.isRequired,
 };
 
 SnackbarContainer.defaultProps = {
-  loginSuccess: false,
-  registerSuccess: false
+  success: false,
+  error: false,
+  message: '',
 };
 
-const mapStateToProps = state => ({
-  loginSuccess: !!state.auth.username,
-  registerSuccess: false
+const mapDispatchToProps = dispatch => ({
+  handleRequestClose: () => dispatch(resetSnackbar()),
 });
 
-export default connect(mapStateToProps)(SnackbarContainer);
+const mapStateToProps = state => ({
+  success: state.snackbar.success,
+  error: state.snackbar.error,
+  message: state.snackbar.message,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SnackbarContainer);

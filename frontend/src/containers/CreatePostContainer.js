@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 import CreatePost from '../components/CreatePost';
 import { sendPost } from '../actions/post';
+import { snackbarSuccess, snackbarError } from '../actions/snackbar';
 
 class CreatePostContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      snackbarError: false,
-      snackbarSuccess: false,
+      errorText: '',
     };
 
     this.sendPostOnClick = this.sendPostOnClick.bind(this);
@@ -23,12 +23,15 @@ class CreatePostContainer extends Component {
       this.props.sendPost(data, this.props.auth.token)
         .then(() => {
           if (this.props.error) {
-            this.setState({ snackbarError: true });
+            this.props.showError(this.props.error);
           } else {
+            this.props.showSuccess('Post posted');
             callback();
-            this.setState({ snackbarSuccess: true });
+            this.setState({ errorText: '' });
           }
         });
+    } else {
+      this.setState({ errorText: 'Post cannot be empty' });
     }
   }
 
@@ -45,6 +48,8 @@ class CreatePostContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   sendPost: (data, token) => dispatch(sendPost(data, token)),
+  showError: message => dispatch(snackbarError(message)),
+  showSuccess: message => dispatch(snackbarSuccess(message)),
 });
 
 const mapStateToProps = state => ({
@@ -62,6 +67,8 @@ CreatePostContainer.propTypes = ({
   auth: PropTypes.shape({
     token: PropTypes.string,
   }).isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 });
 
 CreatePostContainer.defaultProps = ({

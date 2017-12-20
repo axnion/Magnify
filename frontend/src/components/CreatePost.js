@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -10,15 +9,12 @@ function callback() {
 
 const CreatePost = ({
   isWaiting,
-  error,
-  snackbarError,
-  snackbarSuccess,
+  errorText,
   sendPostOnClick,
 }) => (
   <div className="create-post">
     <TextField
-      style={{ display: 'block', marginLeft: '22px', maxWidth: '800px' }}
-      textareaStyle={{ display: 'block', position: 'absolute' }}
+      style={{ maxWidth: '800px' }}
       disabled={isWaiting}
       hintText="Say something witty!"
       floatingLabelText="Create a post"
@@ -27,36 +23,26 @@ const CreatePost = ({
       rows={1}
       rowsMax={6}
       id="CreatePostField"
+      errorText={errorText}
     />
-    <RaisedButton primary label="Send" onClick={() => sendPostOnClick(document.getElementById('CreatePostField').value, callback)} />
-    <Snackbar
-      open={snackbarError}
-      message={error || ''}
-      autoHideDuration={4000}
-    />
-    <Snackbar
-      open={snackbarSuccess}
-      message="Post saved"
-      autoHideDuration={4000}
-      bodyStyle={{ backgroundColor: '#21ba45' }}
-      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
+    <RaisedButton
+      primary
+      label="Send"
+      disabled={isWaiting}
+      onClick={() => sendPostOnClick(document.getElementById('CreatePostField').value, callback)}
     />
   </div>
 );
 
 
 CreatePost.propTypes = {
-  error: PropTypes.string,
+  errorText: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
-  snackbarError: PropTypes.bool,
-  snackbarSuccess: PropTypes.bool,
   sendPostOnClick: PropTypes.func.isRequired,
 };
 
 CreatePost.defaultProps = {
-  error: null,
-  snackbarError: false,
-  snackbarSuccess: false,
+  errorText: '',
 };
 
 export default CreatePost;

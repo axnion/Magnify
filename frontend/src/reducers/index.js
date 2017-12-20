@@ -8,6 +8,7 @@ import category from './category';
 import auth from './auth';
 import material from './material';
 import thread from './thread';
+import snackbar from './snackbar';
 
 export default combineReducers({
   company,
@@ -18,5 +19,6 @@ export default combineReducers({
   category,
   material,
   thread,
+  snackbar,
   routing: routerReducer,
 });

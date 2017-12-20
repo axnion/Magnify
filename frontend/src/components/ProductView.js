@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Snackbar from 'material-ui/Snackbar';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import MaterialCard from '../components/MaterialCard';
@@ -11,17 +10,10 @@ const ProductView = ({
   error,
   auth,
   annotations,
-  errorPostRating,
-  errorUploadAnnotation,
   product,
   product: { materials },
-  snackbarError,
-  snackbarSuccess,
-  snackbarPostRatingError,
-  snackbarPostRatingSuccess,
   saveRating,
   saveAnnotation,
-  handleRequestClose,
 }) => (
   <div className="product">
     {product ? (
@@ -62,34 +54,6 @@ const ProductView = ({
           ))}
         </div>
       )}
-    <Snackbar
-      open={snackbarError}
-      message={errorUploadAnnotation || ''}
-      autoHideDuration={4000}
-      onRequestClose={handleRequestClose}
-    />
-    <Snackbar
-      open={snackbarSuccess}
-      message="Notes saved"
-      autoHideDuration={4000}
-      onRequestClose={handleRequestClose}
-      bodyStyle={{ backgroundColor: '#21ba45' }}
-      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-    />
-    <Snackbar
-      open={snackbarPostRatingError}
-      message={errorPostRating || ''}
-      autoHideDuration={4000}
-      onRequestClose={handleRequestClose}
-    />
-    <Snackbar
-      open={snackbarPostRatingSuccess}
-      message="Material was rated"
-      autoHideDuration={4000}
-      onRequestClose={handleRequestClose}
-      bodyStyle={{ backgroundColor: '#21ba45' }}
-      contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-    />
   </div>
 );
 
@@ -106,29 +70,16 @@ ProductView.propTypes = {
     role: PropTypes.string,
     company: PropTypes.string,
   }).isRequired,
-  errorUploadAnnotation: PropTypes.string,
-  errorPostRating: PropTypes.string,
   annotations: PropTypes.arrayOf(PropTypes.any),
-  snackbarError: PropTypes.bool,
-  snackbarSuccess: PropTypes.bool,
-  snackbarPostRatingError: PropTypes.bool,
-  snackbarPostRatingSuccess: PropTypes.bool,
   saveRating: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
-  handleRequestClose: PropTypes.func.isRequired,
 };
 
 ProductView.defaultProps = {
   product: null,
   error: null,
   isWaiting: false,
-  snackbarError: false,
-  snackbarSuccess: false,
-  snackbarPostRatingError: false,
-  snackbarPostRatingSuccess: false,
-  errorUploadAnnotation: null,
-  errorPostRating: null,
-  annotations: []
+  annotations: [],
 };
 
 export default ProductView;

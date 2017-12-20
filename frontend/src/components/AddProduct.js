@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 import CategoryPickerContainer from '../containers/CategoryPickerContainer';
 
 class AddProduct extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: '', description: '', name: '', category: '', hasSubmitted: false, snackbarError: false, snackbarSuccess: false };
+    this.state = { name: '', category: '', errorText: '' };
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,22 +33,23 @@ class AddProduct extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const data = {
-      // title: this.state.title,
-      // description: this.state.description,
-      name: this.state.name,
-      category: this.state.category,
-    };
+    if (this.state.name !== '') {
+      const data = {
+        name: this.state.name,
+        category: this.state.category,
+      };
 
-    this.sendForm(data, this.props.token).then(() => {
-      if (this.props.error) {
-        this.setState({ snackbarError: true });
-      } else {
-        this.setState({ snackbarSuccess: true });
-      }
-    });
-    this.setState({ hasSubmitted: true });
-    this.setState({ title: '', description: '', name: '', category: '' });
+      this.sendForm(data, this.props.token).then(() => {
+        if (this.props.error) {
+          this.props.showError(this.props.error);
+        } else {
+          this.props.showSuccess('Product added');
+        }
+      });
+      this.setState({ name: '', category: '', errorText: '' });
+    } else {
+      this.setState({ errorText: 'Product needs a name' });
+    }
   }
 
   render() {
@@ -60,26 +60,13 @@ class AddProduct extends React.Component {
           <TextField
             hintText="Product name"
             value={this.state.name}
-            onChange={(event, value) => this.setState({ name: value, error: false })}
+            onChange={(event, value) => this.setState({ name: value })}
             disabled={this.props.isWaiting}
+            errorText={this.state.errorText}
           /><br />
           <CategoryPickerContainer functionToRun={this.handleSubComponentChange} /> <br />
           <RaisedButton onClick={this.handleSubmit} label="Add" primary />
         </form>
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.error || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
-        <Snackbar
-          open={this.state.snackbarSuccess}
-          message={'Product added!'}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-          bodyStyle={{ backgroundColor: '#21ba45' }}
-          contentStyle={{ color: '#fff', fontWeight: 'bold' }}
-        />
       </div>
     );
   }
@@ -90,12 +77,12 @@ AddProduct.propTypes = {
   isWaiting: PropTypes.bool,
   token: PropTypes.string,
   sendForm: PropTypes.func.isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 };
 
 AddProduct.defaultProps = {
   error: null,
-  snackbarError: false,
-  snackbarSuccess: false,
   isWaiting: false,
   token: null,
 };

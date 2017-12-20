@@ -10,12 +10,12 @@ import ThreadHead from '../thread/ThreadHead';
 
 
 const style = {
-  marginBottom: '10px',
-  marginRight: '10px',
+  margin: '20px',
+  backgroundColor: '#86C743',
 };
 
 const StyledList = styled(List)`
-  max-height: 520px;
+  max-height: 180px;
   overflow-y: auto;
 `;
 
@@ -48,7 +48,7 @@ Forum.propTypes = ({
   threads: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
-    author: PropTypes.string,
+    author: PropTypes.any,
     createdAt: PropTypes.string,
     product: PropTypes.shape({
       name: PropTypes.string,

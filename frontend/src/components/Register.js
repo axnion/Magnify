@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
     // hasSubmitted is used to make sure messages wont show before the first submition and is not the same as isWaiting
-    this.state = { username: '', password: '', hasSubmitted: false, snackbarError: false, snackbarSuccess: false };
+    this.state = { username: '', password: '' };
 
     this.sendForm = props.sendForm;
     this.handleChange = this.handleChange.bind(this);
@@ -29,13 +28,12 @@ class CreateAccount extends React.Component {
 
     this.sendForm(data).then(() => {
       if (this.props.error) {
-        this.setState({ snackbarError: true });
+        this.props.showError(this.props.error);
       } else {
-        this.setState({ snackbarSuccess: true });
+        this.props.showSuccess('Register successful');
         this.props.history.push('/login');
       }
     });
-    this.setState({ hasSubmitted: true });
     this.setState({ username: '', password: '' });
   }
 
@@ -47,24 +45,18 @@ class CreateAccount extends React.Component {
           <TextField
             hintText="Username"
             value={this.state.username}
-            onChange={(event, value) => this.setState({ username: value, error: false })}
+            onChange={(event, value) => this.setState({ username: value })}
             disabled={this.props.isWaiting}
           /><br />
           <TextField
             hintText="Password"
             type="password"
             value={this.state.password}
-            onChange={(event, value) => this.setState({ password: value, error: false })}
+            onChange={(event, value) => this.setState({ password: value })}
             disabled={this.props.isWaiting}
           /><br />
           <RaisedButton onClick={this.handleSubmit} label="Create" primary />
         </form>
-        <Snackbar
-          open={this.state.snackbarError}
-          message={this.props.error || ''}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
       </div>
     );
   }
@@ -77,10 +69,11 @@ CreateAccount.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  showError: PropTypes.func.isRequired,
+  showSuccess: PropTypes.func.isRequired,
 };
 
 CreateAccount.defaultProps = {
-  snackbarSuccess: false,
   error: null,
   isWaiting: false,
 };
