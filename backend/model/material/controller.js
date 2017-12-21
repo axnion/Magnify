@@ -67,45 +67,6 @@ class MaterialController extends Controller {
       });
     })(req, res, next);
   }
-
-  getRating(req, res, next) {
-    passport.authenticate('jwt', { session: false }, (err, user, info) => {
-      if (err) return res.status(500).json({ message: info });
-
-      if (!user) {
-        return res.status(401).json({ message: 'Not authorized' });
-      }
-
-      this.facade.findById(req.params.id).then((material) => {
-        const numberOfRatings = material.ratings.length;
-        let sumOfRatings = 0;
-        let consumerRating;
-
-        /* Iterate through the ratings, calculate the sum and check if
-           the consumer has rated the material */
-        material.ratings.forEach((rating) => {
-          sumOfRatings += rating.rating;
-          if (rating.account.equals(user.id)) {
-            consumerRating = rating.rating;
-          }
-        });
-
-        const response = {
-          materialId: req.params.id,
-          avgRating: parseFloat((sumOfRatings / numberOfRatings).toFixed(1)),
-          nrRates: numberOfRatings
-        };
-
-        // Return consumer rating only if the current user is a logged in consumer
-        if (user.role === config.accountRole.consumer) {
-          response.consumerRating = consumerRating;
-        }
-
-        return res.status(200).json(response);
-      })
-    .catch(err => next(err));
-    })(req, res, next);
-  }
 }
 
 module.exports = new MaterialController(materialFacade);

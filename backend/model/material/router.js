@@ -14,6 +14,5 @@ router.route('/:id/download')
 
 router.route('/:id/rating')
   .put((...args) => controller.setRating(...args))
-  .get((...args) => controller.getRating(...args));
 
 module.exports = router;
