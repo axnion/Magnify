@@ -63,8 +63,8 @@ function renderProducts(username, updateUnseen) {
   return undefined;
 }
 
-function renderAddProduct(username, updateUnseen) {
-  if (username !== null) {
+function renderAddProduct(role, username, updateUnseen) {
+  if (username !== null && role !== 'consumer') {
     return (
       <SideBarItem >
         <Link to="/addProduct" onClick={updateUnseen}>
@@ -125,7 +125,7 @@ const SideBar = ({
     <SideBarDivider className="sidebar">
       {renderProfile(username, updateUnseen)}
       {renderProducts(username, updateUnseen)}
-      {renderAddProduct(username, updateUnseen)}
+      {renderAddProduct(role, username, updateUnseen)}
       {renderAddRep(role, updateUnseen)}
       <SideBarItem >
         <Link to="/forum" onClick={updateUnseen}>
