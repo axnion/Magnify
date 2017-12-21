@@ -57,7 +57,7 @@ class MaterialController extends Controller {
       const account = user.id;
       const rating = req.body.rating;
 
-      materialFacade.setRating(material, account, rating)
+      this.facade.setRating(material, account, rating)
       .then(() => {
         res.status(200).end();
         next();
