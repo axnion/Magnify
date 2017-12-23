@@ -32,8 +32,8 @@ class ProductsListContainer extends React.Component {
     dispatch(getCategories());
   }
 
-  getFilteredProducts() {
-    const { products } = this.props;
+  getFilteredProducts(productsToShow) {
+    const products = productsToShow;
     const { selectedCompanyName, selectedSubCategory, selectedMainCategory } = this.state;
     let productsFilteredByCompany;
 
@@ -58,7 +58,7 @@ class ProductsListContainer extends React.Component {
 
     let productsFilteredBySubCat;
     if (selectedSubCategory !== 'All') {
-      productsFilteredBySubCat = productsFilteredByMainCat.filter(product => product.category ? product.category._id === selectedSubCategory : false);
+      productsFilteredBySubCat = productsFilteredByMainCat.filter(product => (product.category ? product.category._id === selectedSubCategory : false));
     } else {
       productsFilteredBySubCat = productsFilteredByMainCat;
     }
@@ -88,26 +88,31 @@ class ProductsListContainer extends React.Component {
       error,
       isWaiting,
       companies,
+      selectedProducts,
+      shouldShowSelectedProducts,
+      headerString,
     } = this.props;
 
+    console.log(selectedProducts);
+    const productsToShow = shouldShowSelectedProducts === true ? selectedProducts : products;
     const { selectedCompanyName } = this.state;
 
     return (
       <div>
+        <h2>{headerString}</h2>
         <Picker
           options={[{ name: 'All', _id: 'All' }].concat(companies)}
           value={selectedCompanyName}
           onChange={this.handleChange}
-          title={'Filter by company'}
+          title="Filter by company"
         />
         <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
-        <h1>Products</h1>
-        {isWaiting && products.length === 0 && <h2>Loading...</h2>}
-        {!isWaiting && products.length === 0 && <h2>Empty.</h2>}
+        {isWaiting && productsToShow.length === 0 && <h2>Loading...</h2>}
+        {!isWaiting && productsToShow.length === 0 && <h2>Empty.</h2>}
         {!isWaiting && error && <h2>Error. {error} </h2>}
-        {products.length > 0 &&
+        {productsToShow.length > 0 &&
           <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
-            <Products products={this.getFilteredProducts()} />
+            <Products products={this.getFilteredProducts(productsToShow)} />
           </div>}
       </div>
     );
@@ -120,15 +125,14 @@ ProductsListContainer.propTypes = {
   isWaiting: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   companies: PropTypes.array.isRequired, // eslint-disable-line
+  selectedProducts: PropTypes.bool.isRequired,
+  shouldShowSelectedProducts: PropTypes.bool.isRequired,
+  headerString: PropTypes.string,
 };
 
 ProductsListContainer.defaultProps = {
   error: null,
-  isWaiting: false,
-  products: [],
-  companies: [],
-  mainCategories: [],
-  subCategories: [],
+  headerString: 'Products',
 };
 
 const mapStateToProps = state => ({
@@ -136,8 +140,7 @@ const mapStateToProps = state => ({
   error: state.product.error,
   isWaiting: state.product.isWaiting,
   companies: state.company.companies,
+  selectedProducts: state.account.selectedProducts,
 });
 
-export default connect(
-  mapStateToProps,
-)(ProductsListContainer);
+export default connect(mapStateToProps)(ProductsListContainer);

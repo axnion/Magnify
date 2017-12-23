@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import ActionWork from 'material-ui/svg-icons/action/work';
 
 import ThreadList from '../components/thread/ThreadList';
+import ProductsListContainer from '../containers/ProductsListContainer';
 
 const StyledCard = styled(Card)`
   margin: 10px;
@@ -83,6 +84,7 @@ class Profile extends React.Component {
             {...this.props}
           />
         </div>
+        <ProductsListContainer shouldShowSelectedProducts headerString="Selected Products" />
       </MainDiv>
     );
   }

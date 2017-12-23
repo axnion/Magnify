@@ -4,6 +4,7 @@ export default (state = {
   activeThreads: [],
   isWaiting: false,
   error: null,
+  selectedProducts: [],
 }, action) => {
   switch (action.type) {
     case types.CREATE_ACCOUNT:
@@ -34,6 +35,7 @@ export default (state = {
         activeThreads: action.payload.activeThreads,
         isWaiting: false,
         error: null,
+        selectedProducts: action.payload.selectedProducts ? action.payload.selectedProducts : [],
       };
     case types.GET_ACCOUNT_ERROR:
       return {
