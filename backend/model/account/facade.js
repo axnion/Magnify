@@ -3,7 +3,6 @@ const AccountSchema = require('./schema');
 
 class AccountFacade extends Facade {
   createAccount(body, company) {
-
     const schema = new this.Schema({
       username: body.username,
       password: body.password,
@@ -14,8 +13,7 @@ class AccountFacade extends Facade {
   }
 
   findAccountById(id) {
-    return this.Schema.findById(id)
-    .populate({
+    return this.Schema.findById(id).populate({
       path: 'activeThreads',
       populate: {
         path: 'author product',
@@ -28,6 +26,12 @@ class AccountFacade extends Facade {
     });
   }
 
+  addToFavorites(id, product) {
+    return this.Schema.findByIdAndUpdate(
+      { _id: id },
+      { $push: { favorites: product } }
+    ).then(() => this.Schema.findById(id).populate('favorites'));
+  }
 }
 
 module.exports = new AccountFacade(AccountSchema);

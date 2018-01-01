@@ -11,8 +11,10 @@ const accountSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'company',
     required() {
-      return this.role === config.accountRole.companyAdmin ||
-        this.role === config.accountRole.companyRep;
+      return (
+        this.role === config.accountRole.companyAdmin ||
+        this.role === config.accountRole.companyRep
+      );
     }
   },
   role: {
@@ -20,15 +22,23 @@ const accountSchema = new Schema({
     required: true,
     enum: ['companyAdmin', 'companyRep', 'consumer']
   },
-  activeThreads: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'thread'
-  }]
+  activeThreads: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'thread'
+    }
+  ],
+  favorites: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'product'
+    }
+  ]
 });
 
 /**
-* Create hash of password when it is changed before saving to database.
-*/
+ * Create hash of password when it is changed before saving to database.
+ */
 accountSchema.pre('save', function(next) {
   const account = this;
 
@@ -57,15 +67,16 @@ accountSchema.pre('save', function(next) {
 
   Company.findOne({ _id: account.company }, (err, company) => {
     if (err) return next(err);
-    if (!company) return next(new Error(`Company with ID ${account.company} not found.`));
+    if (!company)
+      return next(new Error(`Company with ID ${account.company} not found.`));
 
     next();
   });
 });
 
 /**
-* Comparason method for comparing a candidate password to the saved hash
-*/
+ * Comparason method for comparing a candidate password to the saved hash
+ */
 accountSchema.methods.comparePassword = function(candidate, callback) {
   bcrypt.compare(candidate, this.password, (err, isMatch) => {
     if (err) return callback(err);

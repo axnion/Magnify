@@ -47,7 +47,7 @@ class AnnotationController extends Controller {
         .catch(err => next(err));
     })(req, res, next);
   }
-  findAnnotation(req) {}
+
   findAllAnnotationsByAccount(req, res, next) {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: info });
