@@ -13,24 +13,31 @@ class AccountFacade extends Facade {
   }
 
   findAccountById(id) {
-    return this.Schema.findById(id).populate({
-      path: 'activeThreads',
-      populate: {
-        path: 'author product',
+    return this.Schema.findById(id)
+      .populate({
+        path: 'activeThreads',
         populate: {
-          path: 'company',
-          select: 'name',
-          model: 'Company'
+          path: 'author product',
+          populate: {
+            path: 'company',
+            select: 'name',
+            model: 'Company'
+          }
         }
-      }
-    });
+      })
+      .populate({
+        path: 'selectedProducts',
+        populate: {
+          path: 'category company'
+        }
+      });
   }
 
   addToFavorites(id, product) {
     return this.Schema.findByIdAndUpdate(
       { _id: id },
-      { $push: { favorites: product } }
-    ).then(() => this.Schema.findById(id).populate('favorites'));
+      { $push: { selectedProducts: product } }
+    ).then(() => this.Schema.findById(id).populate('selectedProducts'));
   }
 }
 

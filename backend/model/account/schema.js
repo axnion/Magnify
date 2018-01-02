@@ -28,7 +28,7 @@ const accountSchema = new Schema({
       ref: 'thread'
     }
   ],
-  favorites: [
+  selectedProducts: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'product'

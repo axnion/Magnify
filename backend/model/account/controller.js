@@ -90,7 +90,7 @@ class AccountController extends Controller {
       return this.facade
         .findOne({
           _id: user.id,
-          favorites: productId
+          selectedProducts: productId
         })
         .then(response => {
           if (response === null) {
