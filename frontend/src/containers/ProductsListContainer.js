@@ -160,7 +160,7 @@ ProductsListContainer.propTypes = {
   isWaiting: PropTypes.bool.isRequired,
   companies: PropTypes.array.isRequired, // eslint-disable-line
   selectedProducts: PropTypes.bool.isRequired,
-  shouldShowSelectedProducts: PropTypes.bool.isRequired,
+  shouldShowSelectedProducts: PropTypes.bool,
   headerString: PropTypes.string,
   addToFavorites: PropTypes.func.isRequired,
   token: PropTypes.string,
@@ -173,6 +173,7 @@ ProductsListContainer.defaultProps = {
   error: null,
   token: null,
   headerString: 'Products',
+  shouldShowSelectedProducts: false,
 };
 
 const mapStateToProps = state => ({
