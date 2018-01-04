@@ -11,6 +11,7 @@ import { getCategories } from '../actions/category';
 import CategoryPickerContainer from './CategoryPickerContainer';
 import Products from '../components/Products';
 import Picker from '../components/Picker';
+import { addToFavorites } from '../actions/account';
 
 class ProductsListContainer extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ProductsListContainer extends React.Component {
     this.handleSubComponentChange = this.handleSubComponentChange.bind(this);
     this.getFilteredProducts = this.getFilteredProducts.bind(this);
     this.handleProductClick = this.handleProductClick.bind(this);
+    this.handleStarClick = this.handleStarClick.bind(this);
     this.state = {
       selectedCompanyName: 'All',
       selectedMainCategory: 'All',
@@ -30,10 +32,9 @@ class ProductsListContainer extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(getProducts());
-    dispatch(getCompanies());
-    dispatch(getCategories());
+    this.props.getProducts();
+    this.props.getCompanies();
+    this.props.getCategories();
   }
 
   getFilteredProducts(productsToShow) {
@@ -90,6 +91,11 @@ class ProductsListContainer extends React.Component {
     this.setState({ clickedProduct: productID });
   }
 
+  handleStarClick(product) {
+    if (product.isFavorite) return;
+    this.props.addToFavorites(product._id, this.props.token);
+  }
+
   render() {
     const {
       products,
@@ -102,7 +108,21 @@ class ProductsListContainer extends React.Component {
     } = this.props;
 
     // console.log(selectedProducts);
-    const productsToShow = shouldShowSelectedProducts === true ? selectedProducts : products;
+    let productsToShow = shouldShowSelectedProducts === true ? selectedProducts : products;
+    if (!shouldShowSelectedProducts) {
+      productsToShow = productsToShow.map((product) => {
+        for (let i = 0; i < selectedProducts.length; i += 1) {
+          if (product._id === selectedProducts[i]._id) {
+            return {
+              ...product,
+              isFavorite: true,
+            };
+          }
+        }
+
+        return product;
+      });
+    }
     const { selectedCompanyName } = this.state;
 
     return (
@@ -123,8 +143,10 @@ class ProductsListContainer extends React.Component {
           {productsToShow.length > 0 &&
             <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
               <Products
+                shouldShowSelectedProducts={shouldShowSelectedProducts}
                 products={this.getFilteredProducts(productsToShow)}
                 handleProductClick={this.handleProductClick}
+                handleStarClick={this.handleStarClick}
               />
             </div>}
         </div>
@@ -136,19 +158,25 @@ ProductsListContainer.propTypes = {
   products: PropTypes.array.isRequired, // eslint-disable-line
   error: PropTypes.string,
   isWaiting: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
   companies: PropTypes.array.isRequired, // eslint-disable-line
   selectedProducts: PropTypes.bool.isRequired,
   shouldShowSelectedProducts: PropTypes.bool.isRequired,
   headerString: PropTypes.string,
+  addToFavorites: PropTypes.func.isRequired,
+  token: PropTypes.string,
+  getProducts: PropTypes.func.isRequired,
+  getCompanies: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
 };
 
 ProductsListContainer.defaultProps = {
   error: null,
+  token: null,
   headerString: 'Products',
 };
 
 const mapStateToProps = state => ({
+  token: state.auth.token,
   products: state.product.products,
   error: state.product.error,
   isWaiting: state.product.isWaiting,
@@ -156,4 +184,11 @@ const mapStateToProps = state => ({
   selectedProducts: state.account.selectedProducts,
 });
 
-export default connect(mapStateToProps)(ProductsListContainer);
+const mapDispatchToProps = dispatch => ({
+  addToFavorites: (productId, token) => dispatch(addToFavorites(productId, token)),
+  getProducts: () => dispatch(getProducts()),
+  getCompanies: () => dispatch(getCompanies()),
+  getCategories: () => dispatch(getCategories()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsListContainer);

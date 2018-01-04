@@ -22,6 +22,24 @@ function createAccountError(payload) {
   };
 }
 
+function beginAddToFavorites() {
+  return { type: types.ADD_TO_FAVORITES };
+}
+
+function addToFavoritesSuccess(payload) {
+  return {
+    type: types.ADD_TO_FAVORITES_SUCCESS,
+    payload,
+  };
+}
+
+function addToFavoritesError(payload) {
+  return {
+    type: types.ADD_TO_FAVORITES_ERROR,
+    payload,
+  };
+}
+
 export function createAccount(data, token) {
   return (dispatch) => {
     dispatch(beginCreateAccount());
@@ -143,5 +161,19 @@ export function mockCreateAccount(data) {
         // console.log(error);
         dispatch(createAccountError(error));
       }));
+  };
+}
+
+export function addToFavorites(productId, token) {
+  return (dispatch) => {
+    dispatch(beginAddToFavorites());
+
+    return apiRequest('post', { productId }, `${endpoint}/product`, token)
+      .then((response) => {
+        dispatch(addToFavoritesSuccess(response.data));
+      })
+      .catch((response) => {
+        dispatch(addToFavoritesError(response.data));
+      });
   };
 }
