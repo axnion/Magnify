@@ -53,6 +53,9 @@ store.subscribe(throttle(() => {
       role: store.getState().auth.role,
       company: store.getState().auth.company,
     },
+    account: {
+      selectedProducts: store.getState().account.selectedProducts,
+    },
   });
 }, 1000));
 

@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import * as types from '../constants';
 import { apiRequest } from './helpers';
 import { getACompany } from './company';
+import { getAccount } from './account';
 
 
 const endpoint = '/account/login';
@@ -44,6 +45,7 @@ export function login(data) {
 
     return apiRequest('post', data, endpoint)
       .then((response) => {
+        dispatch(getAccount(response.data.user.id));
         dispatch(loginSuccess(response.data));
         if (response.data.user.company) {
           dispatch(getACompany(response.data.user.company));

@@ -24,6 +24,14 @@ export default (state = {
         isWaiting: false,
         error: action.payload,
       };
+    case types.LOG_OUT:
+      return {
+        ...state,
+        isWaiting: false,
+        error: null,
+        activeThreads: [],
+        selectedProducts: [],
+      };
     case types.GET_ACCOUNT:
       return {
         ...state,
@@ -35,7 +43,7 @@ export default (state = {
         activeThreads: action.payload.activeThreads,
         isWaiting: false,
         error: null,
-        selectedProducts: action.payload.selectedProducts ? action.payload.selectedProducts : [],
+        selectedProducts: action.payload.selectedProducts,
       };
     case types.GET_ACCOUNT_ERROR:
       return {
