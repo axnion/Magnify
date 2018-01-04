@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Redirect } from 'react-router-dom';
+
 import { getProducts } from '../actions/product';
 import { getCompanies } from '../actions/company';
 import { getCategories } from '../actions/category';
@@ -18,10 +20,12 @@ class ProductsListContainer extends React.Component {
     this.handleChangeSub = this.handleChangeSub.bind(this);
     this.handleSubComponentChange = this.handleSubComponentChange.bind(this);
     this.getFilteredProducts = this.getFilteredProducts.bind(this);
+    this.handleProductClick = this.handleProductClick.bind(this);
     this.state = {
       selectedCompanyName: 'All',
       selectedMainCategory: 'All',
       selectedSubCategory: 'All',
+      clickedProduct: null,
     };
   }
 
@@ -82,6 +86,10 @@ class ProductsListContainer extends React.Component {
     this.setState({ selectedSubCategory: value });
   }
 
+  handleProductClick(productID) {
+    this.setState({ clickedProduct: productID });
+  }
+
   render() {
     const {
       products,
@@ -93,28 +101,33 @@ class ProductsListContainer extends React.Component {
       headerString,
     } = this.props;
 
-    console.log(selectedProducts);
+    // console.log(selectedProducts);
     const productsToShow = shouldShowSelectedProducts === true ? selectedProducts : products;
     const { selectedCompanyName } = this.state;
 
     return (
-      <div>
-        <h2>{headerString}</h2>
-        <Picker
-          options={[{ name: 'All', _id: 'All' }].concat(companies)}
-          value={selectedCompanyName}
-          onChange={this.handleChange}
-          title="Filter by company"
-        />
-        <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
-        {isWaiting && productsToShow.length === 0 && <h2>Loading...</h2>}
-        {!isWaiting && productsToShow.length === 0 && <h2>Empty.</h2>}
-        {!isWaiting && error && <h2>Error. {error} </h2>}
-        {productsToShow.length > 0 &&
-          <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
-            <Products products={this.getFilteredProducts(productsToShow)} />
-          </div>}
-      </div>
+      this.state.clickedProduct ?
+        <Redirect to={`/ProductView/${this.state.clickedProduct}`} /> :
+        <div>
+          <h2>{headerString}</h2>
+          <Picker
+            options={[{ name: 'All', _id: 'All' }].concat(companies)}
+            value={selectedCompanyName}
+            onChange={this.handleChange}
+            title="Filter by company"
+          />
+          <CategoryPickerContainer functionToRun={this.handleSubComponentChange} />
+          {isWaiting && productsToShow.length === 0 && <h2>Loading...</h2>}
+          {!isWaiting && productsToShow.length === 0 && <h2>Empty.</h2>}
+          {!isWaiting && error && <h2>Error. {error} </h2>}
+          {productsToShow.length > 0 &&
+            <div style={{ opacity: isWaiting ? 0.5 : 1 }}>
+              <Products
+                products={this.getFilteredProducts(productsToShow)}
+                handleProductClick={this.handleProductClick}
+              />
+            </div>}
+        </div>
     );
   }
 }
