@@ -1,5 +1,6 @@
 const Facade = require('../../lib/facade');
 const AccountSchema = require('./schema');
+const ProductSchema = require('../product/schema');
 
 class AccountFacade extends Facade {
   createAccount(body, company) {
@@ -37,7 +38,7 @@ class AccountFacade extends Facade {
     return this.Schema.findByIdAndUpdate(
       { _id: id },
       { $push: { selectedProducts: product } }
-    ).then(() => this.Schema.findById(id).populate('selectedProducts'));
+    ).then(() => ProductSchema.findById(product));
   }
 }
 
