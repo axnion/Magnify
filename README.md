@@ -1,4 +1,5 @@
-# Magnify (School Project for course "Agile development and engineering practices")
+# Magnify 
+#### (School Project for course "Agile development and engineering practices")
 
 To set up dev server:
 
